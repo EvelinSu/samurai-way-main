@@ -1,11 +1,20 @@
 import React from 'react';
-import './App.css';
+import './styles/App.css';
+import {SSiteContainer, SSiteContent, SSiteWrapper} from "./layout/styled";
+import Sidebar from "./layout/Sidebar/Sidebar";
+import Profile from "./pages/Profile/Profile";
 
 function App() {
   return (
-    <div className="App">
-     Hello, samurai! Let's go!
-    </div>
+      <SSiteWrapper>
+          <SSiteContainer>
+              <Sidebar />
+              <SSiteContent>
+                  <Profile/>
+              </SSiteContent>
+          </SSiteContainer>
+      </SSiteWrapper>
+
   );
 }
 
