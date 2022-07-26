@@ -27,7 +27,6 @@ export const SSiteContent = styled.div( props => ({
     display: "flex",
     flexDirection: "column",
     overflow: "auto",
-    borderRadius: theme.blockSettings.borderRadius,
     width: "100%",
     gap: 20,
     columnGap: 25,

@@ -9,12 +9,6 @@ import {theme} from "../../styles/constants";
 
 const Profile: FC<TProfile> = () => {
 
-
-    const a = 1;
-
-    const b = typeof a
-
-    console.log(b)
     return (
         <>
             <SFlexBlock alignItems={"center"}>

@@ -13,6 +13,7 @@ export const SPostText = styled.div((props) => ({
     padding: "15px 20px",
     borderRadius: 15,
     position: "relative",
+    wordBreak: "break-word",
     "&:after": {
         content: '""',
         position: "absolute",

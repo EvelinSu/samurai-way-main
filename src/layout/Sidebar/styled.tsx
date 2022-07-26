@@ -1,11 +1,12 @@
 import styled from "styled-components";
 import {TSSidebarProps, TSSidebarItemIconProps, TSSidebarItemProps} from "./types";
 import {theme} from "../../styles/constants";
+import {Link} from "react-router-dom";
 
 export const SSidebar = styled.div<TSSidebarProps>((props) => ({
     display: "flex",
     flexDirection: "column",
-    background: theme.colors.primary,
+    backgroundColor: theme.colors.primary,
     transition: "0.2s",
     padding: "13px",
     gap: 15,
@@ -15,7 +16,7 @@ export const SSidebar = styled.div<TSSidebarProps>((props) => ({
     width: 74,
 }))
 
-export const SSidebarItem = styled.div<TSSidebarItemProps>(({isActive, ...props}) => ({
+export const SSidebarItem = styled(Link)<TSSidebarItemProps>(({isActive, ...props}) => ({
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
@@ -23,6 +24,7 @@ export const SSidebarItem = styled.div<TSSidebarItemProps>(({isActive, ...props}
     cursor: "pointer",
     transition: "0.1s",
     margin: props.margin,
+    textDecoration: "none",
     position: "relative",
     "&:after": {
         content: `'${props.label} '`,

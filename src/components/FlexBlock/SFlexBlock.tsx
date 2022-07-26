@@ -13,7 +13,7 @@ export const SFlexBlock = styled.div<TFlexBlockProps>((props)=> ({
     backgroundColor: props.backgroundColor,
     maxWidth: props.maxWidth,
     color: props.color,
-    width: props.width || "100%",
+    width: props.width,
     height: props.height,
     opacity: props.opacity,
     overflow: props.overflow,

@@ -9,7 +9,7 @@ export type TFlexBlockProps = {
     padding?: Property.Padding,
     backgroundColor?: Property.BackgroundColor,
     maxWidth?: Property.MaxWidth,
-    width?: Property.Width,
+    width?: string | number,
     color?: Property.Color,
     height?: Property.Height,
     opacity?: Property.Opacity,

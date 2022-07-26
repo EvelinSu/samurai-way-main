@@ -21,7 +21,7 @@ const Posts: FC<TPosts> = () => {
                 </SFlexBlock>
             </SFlexBlock>
             <SFlexBlock gap={25} flexDirection={"column"}>
-                {postsArr.map(({id, text, likes, ...props}) => (
+                {postsArr.map(({id, text, likes}) => (
                     <Post key={id} text={text} likes={likes} />
                 ))}
             </SFlexBlock>
@@ -31,12 +31,12 @@ const Posts: FC<TPosts> = () => {
 
 export default Posts;
 
-type postsArr = Array<TPostProps>
-
 const postsArr = [
     {
         id: 0,
-        text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit",
+        text: "Lorem ipsum" +
+            " dolorddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd" +
+            " sit amet, consectetur adipiscing elit",
         likes: 4,
     },
     {

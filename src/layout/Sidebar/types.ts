@@ -8,6 +8,8 @@ export type TSSidebarItemProps = {
     label?: string,
     onClick?: () => void,
     isActive?: boolean,
+    activeTab?: string
+    to?: any,
 }
 
 export type TSSidebarItemIconProps = {
@@ -20,6 +22,7 @@ export type TNavLink = {
     id: number,
     label: string,
     icon: JSX.Element,
+    link?: string,
     margin?: Property.Margin,
 }
 
