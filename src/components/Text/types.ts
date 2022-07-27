@@ -8,4 +8,5 @@ export type TSTextProps = {
     isEllipsis?: boolean,
     opacity?: string | number,
     fontWeight?: Property.FontWeight,
+    fontSize?: Property.FontSize,
 }

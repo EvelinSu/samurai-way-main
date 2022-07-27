@@ -7,20 +7,27 @@ import MusicIcon from "../../assets/icons/MusicIcon";
 import SettingsIcon from "../../assets/icons/SettingsIcon";
 import LogoutIcon from "../../assets/icons/LogoutIcon";
 import {TNavLinks, TSidebarProps} from "./types";
+import {useHistory, useLocation} from "react-router-dom";
 
 const Sidebar: FC<TSidebarProps> = () => {
-    const [activeTab, setActiveTab] = useState(navLinks[0].label)
+
+    const history = useHistory();
+
+    const location = useLocation();
+    console.log(location.pathname)
+
     return (
         <SSidebar>
-            {navLinks.map(({link, icon, label, id, margin}) => (
-                    <SSidebarItem to={link}
+            {navLinks.map(({ link, icon, label, id, margin}) => (
+                    <SSidebarItem
                                   label={label}
-                                  key={id} margin={margin}
-                                  isActive={activeTab === label}
-                                  onClick={() => setActiveTab(label)}
+                                  key={id}
+                                  margin={margin}
+                                  isActive={ link ? location.pathname.includes(link) : false}
+                                  onClick={ () => link && history.push(link) }
                     >
-                        <SSidebarItemIcon isActive={activeTab === label}>
-                            {icon}
+                        <SSidebarItemIcon isActive={  link ? location.pathname.includes(link) : false }>
+                            { icon }
                         </SSidebarItemIcon>
                     </SSidebarItem>
             ))}

@@ -16,7 +16,7 @@ export const SSidebar = styled.div<TSSidebarProps>((props) => ({
     width: 74,
 }))
 
-export const SSidebarItem = styled(Link)<TSSidebarItemProps>(({isActive, ...props}) => ({
+export const SSidebarItem = styled.div<TSSidebarItemProps>(({isActive, ...props}) => ({
     display: "flex",
     flexDirection: "column",
     alignItems: "center",

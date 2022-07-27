@@ -15,10 +15,9 @@ function App() {
                     <Sidebar />
                     <SSiteContent>
                         <Switch>
-                            <Route path={"//"} component={Profile} />
-                            <Route path={"/profile"} component={Profile} />
-                            <Route path={"/messages"} component={Dialogs} />
-                            <Route path={""} component={PageNotFound} />
+                            <Route path="/(|profile)"  component={Profile} exact />
+                            <Route path={"/messages/:id?"} component={Dialogs} exact />
+                            <Route path={"*"} component={PageNotFound} exact />
                         </Switch>
                     </SSiteContent>
                 </SSiteContainer>

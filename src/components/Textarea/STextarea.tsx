@@ -6,10 +6,9 @@ export const STextarea = styled.textarea<TSTextarea>((props) => ({
     height: props.height || 150,
     borderRadius: theme.blockSettings.borderRadius,
     backgroundColor: "rgba(255,255,255, 0.05)",
-    padding: "10px 20px",
+    padding: "10px 15px",
     width: "100%",
     border: "1px solid transparent",
-
     "::placeholder":{
         color: theme.colors.text,
         opacity: 0.3

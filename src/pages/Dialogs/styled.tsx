@@ -1,52 +1,83 @@
 import styled from "styled-components";
 import {theme} from "../../styles/constants";
+import {TSDialogsItemProps} from "./types";
 
 export const SDialogs = styled.div((props) => ({
     display: "flex",
     flexDirection: "row",
     overflow: "hidden",
+    gap: 20,
+    height: "100%",
 }))
 
 export const SDialogsItemsList = styled.div((props) => ({
     display: "flex",
     flexDirection: "column",
-    maxWidth: 300,
+    maxWidth: 250,
+    width: "100%",
     fontSize: 14,
     overflow: "auto",
+    gap: 10,
 }))
-export const SDialogsItem = styled.div((props) => ({
+export const SDialogsItem = styled.div<TSDialogsItemProps>(({isActive, ...props}) => ({
     display: "flex",
     flexDirection: "row",
     alignItems: "center",
     maxWidth: "100%",
     padding: 10,
-    gap: 20,
-    borderBottom: `1px solid ${theme.colors.primaryLight}`,
+    borderRadius: theme.blockSettings.borderRadius,
+    backgroundColor: theme.colors.primaryLight,
+    gap: 15,
     fontSize: 14,
     cursor: "pointer",
-    "&:last-of-type": {
-        borderBottom: "none"
-    },
     "&:hover": {
-        backgroundColor: "rgba(255, 255, 255, 0.1)",
+        backgroundColor: theme.colors.primary,
     },
+    ...isActive && {
+        pointerEvents: "none",
+        backgroundColor: theme.colors.primary,
+    }
 }))
 
 export const SDialogWindow = styled.div((props) => ({
     display: "flex",
     flexDirection: "column",
+    flexGrow: 1,
+    borderRadius: theme.blockSettings.borderRadius,
+    overflow: "hidden",
+    backgroundColor: "rgba(0, 0, 0, 0.05)",
+}))
+
+export const SNoneDialog = styled.div((props) => ({
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    height: "100%",
+    opacity: 0.6,
 
 }))
+
 export const SDialogWindowHeader = styled.div((props) => ({
-    height: 60,
-    padding: 10,
+    display: "flex",
+    flexDirection: "row",
+    padding: "10px 15px",
+    backgroundColor: theme.colors.primary,
+    borderRadius: theme.blockSettings.borderRadius,
+    gap: 20,
+
 }))
+
 export const SDialogWindowBody = styled.div((props) => ({
+    display: "flex",
+    flexDirection: "column",
     flexGrow: 1,
-    padding: 10,
-    overflow: "auto",
+    overflow: "hidden",
+    gap: 20,
 }))
+
 export const SDialogWindowFooter = styled.div((props) => ({
     padding: 10,
-    height: 60,
+
+    borderRadius: theme.blockSettings.borderRadius,
+
 }))

@@ -20,7 +20,6 @@ export const SSiteContainer = styled.div( props => ({
     padding: 30,
     width: "100%",
     maxWidth: 1000,
-
 }))
 
 export const SSiteContent = styled.div( props => ({

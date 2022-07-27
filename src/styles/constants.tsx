@@ -1,22 +1,26 @@
 export const theme = {
-    colors:{
+    colors: {
         primaryDark: "#272c4a",
-        primary: "#2e3951",
+        primary: "#293854",
         primaryLight: "#3f4e6e",
         primaryLighter: "#6d86a2",
         primaryLightest: "#88a2be",
 
-        secondary: "#253052",
+        secondary: "#31375e",
+        secondaryLight: "#474f93",
 
         text: "#eaeaea",
 
-        button:{
+        message: {
+            default: "#495673",
+            mine: "#4a66a1"
+        },
+        button: {
             success: "#5e81b4",
         }
     },
     blockSettings: {
         borderRadius: 15,
     }
-
 
 }
