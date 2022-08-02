@@ -1,6 +1,9 @@
-export type TDialogsProps = {}
+import {TMessageProps} from "../../components/Message/types";
 
-export type TSDialogsItemProps = {
-    isActive: boolean,
-
+export type TDialog = {
+    name: string,
+    messages: Array<TMessageProps>,
+    avatar: string
 }
+
+export type TDialogsProps = {}

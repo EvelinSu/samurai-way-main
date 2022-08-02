@@ -1,6 +1,5 @@
 export type TMessageProps = {
-    id?: number,
-    key?: number,
+    id?: string,
     text: string,
     time: string,
     me?: boolean,

@@ -1,19 +1,19 @@
 import styled from "styled-components";
 import {theme} from "../../../styles/constants";
-import {TSPostPanelProps} from "./Post/types";
+import {TSPostPanelProps} from "./types";
 
 export const SPost = styled.div((props) => ({
     display: "flex",
     flexDirection: "row",
     gap: 20,
 }))
-
-export const SPostText = styled.div((props) => ({
+export const SPostContent = styled.div((props) => ({
+    display: "flex",
+    flexWrap: "wrap",
     backgroundColor: theme.colors.primary,
     padding: "15px 20px",
     borderRadius: 15,
     position: "relative",
-    wordBreak: "break-word",
     "&:after": {
         content: '""',
         position: "absolute",
@@ -27,13 +27,28 @@ export const SPostText = styled.div((props) => ({
     }
 }))
 
+export const SPostText = styled.div((props) => ({
+    display: "flex",
+    wordBreak: "break-word",
+}))
+
+export const SPostDate = styled.div((props) => ({
+    opacity: 0.5,
+    marginLeft: "auto",
+    marginTop: "auto",
+    marginBottom: -5,
+    marginRight: -10,
+    paddingLeft: 10,
+    fontSize: 14,
+}))
+
 export const SPostPanel = styled.div<TSPostPanelProps>((props) => ({
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
-    alignSelf: "center",
+    alignSelf: "flex-end",
     position: "relative",
-
+    marginBottom: 20,
     svg:{
         borderRadius: "50%",
         width: 30,

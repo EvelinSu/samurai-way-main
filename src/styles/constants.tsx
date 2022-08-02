@@ -12,7 +12,7 @@ export const theme = {
         text: "#eaeaea",
 
         message: {
-            default: "#495673",
+            default: "#25324d",
             mine: "#4a66a1"
         },
         button: {

@@ -17,9 +17,9 @@ export const SSiteContainer = styled.div( props => ({
     gap: 30,
     columnGap: 45,
     rowGap: 40,
-    padding: 30,
     width: "100%",
     maxWidth: 1000,
+
 }))
 
 export const SSiteContent = styled.div( props => ({
@@ -30,4 +30,6 @@ export const SSiteContent = styled.div( props => ({
     gap: 20,
     columnGap: 25,
     rowGap: 25,
+    padding: "30px 30px 30px 0",
+    resize: "horizontal",
 }))

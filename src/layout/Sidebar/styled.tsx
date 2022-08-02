@@ -14,6 +14,7 @@ export const SSidebar = styled.div<TSSidebarProps>((props) => ({
     rowGap: 15,
     borderRadius: theme.blockSettings.borderRadius,
     width: 74,
+    margin: "30px 0 30px 30px",
 }))
 
 export const SSidebarItem = styled.div<TSSidebarItemProps>(({isActive, ...props}) => ({

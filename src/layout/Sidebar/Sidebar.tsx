@@ -14,31 +14,29 @@ const Sidebar: FC<TSidebarProps> = () => {
     const history = useHistory();
 
     const location = useLocation();
-    console.log(location.pathname)
 
     return (
         <SSidebar>
-            {navLinks.map(({ link, icon, label, id, margin}) => (
-                    <SSidebarItem
-                                  label={label}
-                                  key={id}
-                                  margin={margin}
-                                  isActive={ link ? location.pathname.includes(link) : false}
-                                  onClick={ () => link && history.push(link) }
-                    >
-                        <SSidebarItemIcon isActive={  link ? location.pathname.includes(link) : false }>
-                            { icon }
-                        </SSidebarItemIcon>
-                    </SSidebarItem>
+            {navLinks.map(({link, icon, label, id, margin}) => (
+                <SSidebarItem
+                    label={label}
+                    key={id}
+                    margin={margin}
+                    isActive={link ? location.pathname.includes(link) : false}
+                    onClick={() => link && history.push(link)}
+                >
+                    <SSidebarItemIcon isActive={link ? location.pathname.includes(link) : false}>
+                        {icon}
+                    </SSidebarItemIcon>
+                </SSidebarItem>
             ))}
         </SSidebar>
     );
 };
 
-
 export default Sidebar;
 
-const navLinks : TNavLinks = [
+const navLinks: TNavLinks = [
     {
         id: 0,
         label: "Profile",

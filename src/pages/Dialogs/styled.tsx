@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import {theme} from "../../styles/constants";
-import {TSDialogsItemProps} from "./types";
+import {TSDialogItemProps} from "./DialogItem/types";
 
 export const SDialogs = styled.div((props) => ({
     display: "flex",
@@ -10,16 +10,24 @@ export const SDialogs = styled.div((props) => ({
     height: "100%",
 }))
 
-export const SDialogsItemsList = styled.div((props) => ({
+export const SDialogsSidebar = styled.div((props) => ({
     display: "flex",
     flexDirection: "column",
     maxWidth: 250,
     width: "100%",
     fontSize: 14,
+    gap: 10,
+}))
+
+export const SDialogsItemsList = styled.div((props) => ({
+    display: "flex",
+    flexDirection: "column",
+    width: "100%",
     overflow: "auto",
     gap: 10,
 }))
-export const SDialogsItem = styled.div<TSDialogsItemProps>(({isActive, ...props}) => ({
+
+export const SDialogItem = styled.div<TSDialogItemProps>(({isActive, ...props}) => ({
     display: "flex",
     flexDirection: "row",
     alignItems: "center",
@@ -36,10 +44,11 @@ export const SDialogsItem = styled.div<TSDialogsItemProps>(({isActive, ...props}
     ...isActive && {
         pointerEvents: "none",
         backgroundColor: theme.colors.primary,
-    }
+    },
+
 }))
 
-export const SDialogWindow = styled.div((props) => ({
+export const SDialogContainer = styled.div((props) => ({
     display: "flex",
     flexDirection: "column",
     flexGrow: 1,
