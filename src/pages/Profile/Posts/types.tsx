@@ -1,4 +1,6 @@
-export type TPosts = {}
+export type TPostsProps = {
+
+}
 
 export type TPost = {
     id: string,
