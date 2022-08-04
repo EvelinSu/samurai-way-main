@@ -7,7 +7,7 @@ import Posts from "./Posts/Posts";
 import {STitle} from "../../components/Text/STitle";
 import {theme} from "../../styles/constants";
 
-const Profile: FC<TProfile> = () => {
+const Profile: FC<TProfile> = (props) => {
 
     return (
         <>
