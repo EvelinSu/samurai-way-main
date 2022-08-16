@@ -6,7 +6,6 @@ import FavoriteIcon from "../../../assets/icons/FavoriteIcon";
 import {TPostProps} from "./types";
 import FavoriteFillIcon from "../../../assets/icons/FavoriteFillIcon";
 import {SText} from "../../../components/Text/SText";
-import {getStringDate} from "../../../commoon/utils";
 
 
 
@@ -24,7 +23,7 @@ const Post: FC<TPostProps> = (props) => {
                 <SPostText>
                     {props.text || <SText opacity={0.3}> Пост без слов, все и так понятно</SText>}
                 </SPostText>
-                <SPostDate>{ getStringDate(props.date) }</SPostDate>
+                <SPostDate>{ props.date }</SPostDate>
             </SPostContent>
 
             <SPostPanel likes={likes} onClick={() => onClickHandler()}>

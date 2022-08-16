@@ -85,8 +85,9 @@ export const SDialogWindowBody = styled.div((props) => ({
 }))
 
 export const SDialogWindowFooter = styled.div((props) => ({
+    display: "flex",
+    gap: 20,
     padding: 10,
-
     borderRadius: theme.blockSettings.borderRadius,
 
 }))

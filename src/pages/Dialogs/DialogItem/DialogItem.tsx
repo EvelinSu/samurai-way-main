@@ -5,24 +5,25 @@ import {SDialogItem} from "../styled";
 import React, {FC} from "react";
 import {TDialogItemProps} from "./types";
 
-const DialogItem: FC<TDialogItemProps> = ({onClick, avatar, name, messages, isActive}, ...props) => {
+const DialogItem: FC<TDialogItemProps> = ({onClick, avatar, name, lastMessage, isActive}, ...props) => {
     const onClickHandler = () => {
         onClick()
     }
     return (
         <SDialogItem onClick={() => onClickHandler()} isActive={isActive}>
             <SAvatar size={40} src={avatar} />
-            <SFlexBlock gap={5} flexDirection={"column"} overflow={"hidden"}>
+            <SFlexBlock width={"100%"} gap={5} flexDirection={"column"} overflow={"hidden"}>
                 <SFlexBlock alignItems={"center"} justifyContent={"space-between"}>
                     <SText isEllipsis fontWeight={900}>
                         {name}
                     </SText>
                     <SText opacity={0.5}>
-                        {messages && messages[messages.length - 1].time}
+                        {lastMessage?.time}
                     </SText>
                 </SFlexBlock>
                 <SText isEllipsis>
-                    {messages && messages[messages.length - 1].text}
+                    {lastMessage?.me && <SText opacity={0.4}>Me: </SText>}
+                    {lastMessage?.text}
                 </SText>
             </SFlexBlock>
         </SDialogItem>

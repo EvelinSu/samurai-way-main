@@ -1,5 +1,6 @@
 export type TPostsProps = {
-
+    posts: Array<TPost>
+    addPost: (text: string) => void
 }
 
 export type TPost = {
@@ -7,7 +8,7 @@ export type TPost = {
     text: string,
     likes: number,
     isLiked: boolean,
-    date: Date,
+    date: string,
 }
 
 export type TPostProps = {
@@ -15,7 +16,7 @@ export type TPostProps = {
     text: string,
     likes: number,
     isLiked: boolean
-    date: Date,
+    date: string,
 }
 
 export type TSPostPanelProps = {

@@ -1,7 +1,9 @@
-import {TMessageProps} from "../../../components/Message/types";
+import {TMessage} from "../../../components/Message/types";
 
 export type TDialogContentProps = {
-    messages: Array<TMessageProps>
+    messages?: Array<TMessage>
     name: string,
     avatar: string,
+    callback: (text: string) => void
+
 }

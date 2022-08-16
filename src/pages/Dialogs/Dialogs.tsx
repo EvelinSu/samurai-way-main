@@ -1,8 +1,7 @@
-import React, {FC, useState} from 'react';
-import {TDialog, TDialogsProps} from "./types";
+import React, {FC} from 'react';
+import {TDialogsProps} from "./types";
 import DialogItem from "./DialogItem/DialogItem";
 import {useHistory, useParams} from "react-router-dom";
-import {v1} from "uuid";
 import {
     SDialogs,
     SDialogsItemsList, SDialogsSidebar,
@@ -10,21 +9,26 @@ import {
     SNoneDialog
 } from "./styled";
 import DialogContent from "./DialogContent/DialogContent";
-import {state} from "../../redux/state";
 
-const Dialogs: FC<TDialogsProps> = () => {
-    const [dialogs, setDialogs] = useState(state.dialogsPage)
+const Dialogs: FC<TDialogsProps> = ({sendMessage, dialogs, messages}) => {
 
     const {id} = useParams<{ id: string }>();
     const history = useHistory();
+    const activeMessagesId = id ? dialogs[id].messagesId : "0"
+    const activeMessages = messages.filter(el => activeMessagesId.includes(el.id))
+    const onClickHandler = (key: string) => {
+        history.push(`/messages/${key}`)
+    }
+
     return (
         <SDialogs>
             <SDialogContainer>
                 {id ? (
                     <DialogContent
+                        callback={(value) => sendMessage(value, id)}
                         name={dialogs[id].name}
                         avatar={dialogs[id].avatar}
-                        messages={dialogs[id].messages}
+                        messages={activeMessages}
                     />
                 ) : (
                     <SNoneDialog>
@@ -34,14 +38,14 @@ const Dialogs: FC<TDialogsProps> = () => {
             </SDialogContainer>
             <SDialogsSidebar>
                 <SDialogsItemsList>
-                    {Object.entries(dialogs).map(([ key, value ]) => {
-                        const {name, avatar, messages} = value;
+                    {Object.entries(dialogs).map(([key, value]) => {
+                        const {name, avatar} = value;
                         return (
                             <DialogItem
-                                onClick={() => history.push(`/messages/${key}`)}
+                                onClick={() => onClickHandler(key)}
                                 name={name}
                                 avatar={avatar}
-                                messages={messages}
+                                lastMessage={messages.find(el => el.id === dialogs[key].messagesId[dialogs[key].messagesId.length -1])}
                                 isActive={id === key}
                                 key={key}
                             />

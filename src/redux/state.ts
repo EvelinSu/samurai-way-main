@@ -1,18 +1,25 @@
 import {v1} from "uuid";
 import {TPost} from "../pages/Profile/Posts/types";
 import {TDialog} from "../pages/Dialogs/types";
+import {getStringDate} from "../common/utils";
+import {TMessage} from "../components/Message/types";
+import {rerenderEntireTree} from "../render";
 
 type TProfilePage = {
     posts: Array<TPost>
 }
-type TRootState = {
+export type TRootState = {
     profilePage: TProfilePage
     dialogsPage: Dictionary<TDialog>
+    dialogsMessages: Array<TMessage>
 }
 
-type Dictionary<T> = {
+export type Dictionary<T> = {
     [Key: string]: T;
 }
+
+const defaultDate = "давно"
+console.log(typeof defaultDate)
 
 export const state: TRootState = {
     profilePage: {
@@ -22,14 +29,14 @@ export const state: TRootState = {
                 text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit",
                 likes: 4,
                 isLiked: false,
-                date: new Date(2022, 0, 32)
+                date: "давно",
             },
             {
                 id: v1(),
                 text: "Lorem ipsum dolor sit amet, consectetur adipiscing elitLorem ipsum dolor sit amet, consectetur adipiscing elitLorem ipsum dolor sit amet, consectetur adipiscing elitLorem ipsum dolor sit amet, consectetur adipiscing elit",
                 likes: 2,
                 isLiked: true,
-                date: new Date(2021, 4, 5),
+                date: "давно"
             }
         ],
     },
@@ -37,115 +44,67 @@ export const state: TRootState = {
         "1": {
             name: "Kisa",
             avatar: "https://i.imgur.com/N3ErVCc.png",
-            messages: [
-                {
-                    id: v1(),
-                    text: "Lorem ipsum ing sit ametLorem ipsum ing sit ametLorem ipsum ing sit ametLorem ipsum ing sit ametLorem ipsum ing sit ametLorem ipsum ing sit amet",
-                    time: "15:54",
-                    me: true,
-                },
-                {
-                    id: v1(),
-                    text: "consectetur adipiscing elitLorem ipsum dolor sit amet",
-                    time: "15:54",
-                },
-                {
-                    id: v1(),
-                    text: "Lorem ipsum ing sit amet",
-                    time: "15:54",
-                    me: true,
-                },
-                {
-                    id: v1(),
-                    text: "consectetur adipiscing elitLorem ipsum dolor sit amet",
-                    time: "15:54",
-                },
-                {
-                    id: v1(),
-                    text: "Lorem ipsum ing sit amet",
-                    time: "15:54",
-                    me: true,
-                },
-                {
-                    id: v1(),
-                    text: "consectetur adipiscing elitLorem ipsum dolor sit amet",
-                    time: "15:54",
-                },
-                {
-                    id: v1(),
-                    text: "Lorem ipsum ing sit ametLorem ipsum ing sit ametLorem ipsum ing sit ametLorem ipsum ing sit ametLorem ipsum ing sit amet",
-                    time: "15:54",
-                    me: true,
-                },
-                {
-                    id: v1(),
-                    text: "consectetur adipiscing elitLorem ipsum dolor sit ametconsectetur adipiscing elitLorem ipsum dolor sit ametconsectetur adipiscing elitLorem ipsum dolor sit ametconsectetur adipiscing elitLorem ipsum dolor sit amet",
-                    time: "15:54",
-                },
-                {
-                    id: v1(),
-                    text: "Lorem ipsum ing sit amet",
-                    time: "15:54",
-                    me: true,
-                },
-                {
-                    id: v1(),
-                    text: "consectetur adipiscing elitLorem ipsum dolor sit amet",
-                    time: "15:54",
-                },
-                {
-                    id: v1(),
-                    text: "Lorem ipsum ing sit ametLorem ipsum ing sit ametLorem ipsum ing sit amet",
-                    time: "15:54",
-                    me: true,
-                },
-                {
-                    id: v1(),
-                    text: "consectetur adipiscing elitLorem ipsum dolor sit amet",
-                    time: "15:54",
-                },
-            ],
+            messagesId: ["1", "2", "4"]
 
         },
         "2": {
             name: "Kuki",
             avatar: "https://i.imgur.com/a2GuVCv.png",
-            messages: [
-                {
-                    id: v1(),
-                    text: "Lorem ipsum t amet,scing elitLorem ipsum dolor sit amet",
-                    time: "15:44",
-                    me: true,
-                },
-                {
-                    id: v1(),
-                    text: "olor sit amet, consectetur adipiscing elitLorem ipsum dolor sit amet",
-                    time: "15:24",
-                },
-            ],
+            messagesId: ["3", "5"]
         },
         "3": {
             name: "Pushok",
             avatar: "https://i.imgur.com/1Skz4Sj.png",
-            messages: [
-                {
-                    id: v1(),
-                    text: "Lorem ipsum dolor sit amet, consectetur adipiscing elitLorem ipsum dolor sit amet",
-                    time: "15:24",
-                    me: true,
-                },
-                {
-                    id: v1(),
-                    text: "Lorem ipsum dolor sit amet, consectetur adipiscing elitLorem ipsum dolor sit amet",
-                    time: "15:53",
-                },
-                {
-                    id: v1(),
-                    text: "Lorem ipsum dolor sit amet, consectetur adipiscing elitLorem ipsum dolor sit amet",
-                    time: "15:14",
-                },
-            ],
+            messagesId: ["6"],
 
         }
-    }
+    },
+
+    dialogsMessages: [
+        {
+            id: "1",
+            text: "Lorem ipsum ing sit ametLorem ipsum ing sit ametLorem ipsum ing sit ametLorem ipsum ing sit ametLorem ipsum ing sit ametLorem ipsum ing sit amet",
+            time: defaultDate,
+            me: true,
+        },
+        {
+            id: "2",
+            text: "consectetur adipiscing elitLorem ipsum dolor sit amet",
+            time: defaultDate,
+        },
+        {
+            id: "3",
+            text: "Lorem ipsum ing sit amet",
+            time: defaultDate,
+            me: true,
+        },
+        {
+            id: "4",
+            text: "consectetur adipiscing elitLorem ipsum dolor sit amet",
+            time: defaultDate,
+
+        },
+        {
+            id: "5",
+            text: "Lorem ipsum ing sit amet",
+            time: defaultDate,
+            me: true,
+        },
+        {
+            id: "6",
+            text: "consectetur adipiscing elitLorem ipsum dolor sit amet",
+            time: defaultDate,
+        }
+    ]
+}
+
+export const addPost = (text: string) => (
+    state.profilePage.posts.unshift({id: v1(), text, likes: 0, isLiked: false, date: getStringDate(new Date())})
+)
+
+export const sendMessage = (text: string, activeDialogKey: string) => {
+    let messageId = v1()
+    state.dialogsMessages.push({id: messageId, text, time: getStringDate(new Date()), me: true})
+    state.dialogsPage[activeDialogKey].messagesId.push(messageId)
+    rerenderEntireTree(state)
 }

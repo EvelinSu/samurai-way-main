@@ -10,6 +10,8 @@ export const SMessage = styled.div<TSMessageProps>(props => ({
     rowGap: 10,
     fontSize: 14,
     color: "#fff",
+    wordBreak: "break-word",
+    whiteSpace: "pre-line",
     ...props.isMine && {
         flexDirection: "row-reverse",
     }

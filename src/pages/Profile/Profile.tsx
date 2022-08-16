@@ -1,5 +1,5 @@
 import React, {FC} from 'react';
-import {TProfile} from "./types";
+import {TProfileProps} from "./types";
 import {SFlexBlock} from "../../components/FlexBlock/SFlexBlock";
 import {SAvatar} from "../../components/Avatar/SAvatar";
 import {SText} from "../../components/Text/SText";
@@ -7,7 +7,7 @@ import Posts from "./Posts/Posts";
 import {STitle} from "../../components/Text/STitle";
 import {theme} from "../../styles/constants";
 
-const Profile: FC<TProfile> = (props) => {
+const Profile: FC<TProfileProps> = ({addPost, posts, ...props}) => {
 
     return (
         <>
@@ -28,7 +28,7 @@ const Profile: FC<TProfile> = (props) => {
                     </SText>
                 </SFlexBlock>
             </SFlexBlock>
-            <Posts/>
+            <Posts posts={posts} addPost={addPost}/>
         </>
     );
 };

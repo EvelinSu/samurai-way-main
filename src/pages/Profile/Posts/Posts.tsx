@@ -6,21 +6,18 @@ import Post from "./Post";
 import {STextarea} from "../../../components/Textarea/STextarea";
 import Button from "../../../components/Button/Button";
 import {theme} from "../../../styles/constants";
-import {v1} from "uuid";
 import {SText} from "../../../components/Text/SText";
-import {state} from "../../../redux/state";
 
-const Posts: FC<TPostsProps> = () => {
-    const [posts, setPosts] = useState(state.profilePage.posts)
+const Posts: FC<TPostsProps> = ({posts, addPost, ...props}) => {
     const [inputText, setInputText] = useState('')
-    const addPost = (text: string) => setPosts([{id: v1(), text, likes: 0, isLiked: false, date: new Date()}, ...posts])
+
     const onChangeSetInputText = (e: React.ChangeEvent<HTMLTextAreaElement>) => setInputText(e.currentTarget.value)
     const onClickAddPost = () => {
         addPost(inputText)
         setInputText('')
     }
     const onKeyDownAddPost = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
-        if (e.shiftKey && e.key === 'Enter' || e.ctrlKey && e.key === 'Enter') {
+        if ((e.shiftKey && e.key === 'Enter') || (e.ctrlKey && e.key === 'Enter')) {
             return setInputText(inputText + `\n`)
         }
         if (e.key === 'Enter') {
@@ -36,7 +33,7 @@ const Posts: FC<TPostsProps> = () => {
                     <STitle color={theme.colors.primaryLightest}>
                         Мои посты
                     </STitle>
-                    <SText opacity={0.4}>
+                    <SText opacity={0.4} title={'Всего постов'}>
                         ({posts.length})
                     </SText>
                 </SFlexBlock>
@@ -47,7 +44,7 @@ const Posts: FC<TPostsProps> = () => {
                     placeholder={"Введите текст поста..."}
                 />
                 <SFlexBlock justifyContent={"flex-end"}>
-                    <Button onClick={() => onClickAddPost()} label={"Отправить"} />
+                    <Button onClick={onClickAddPost} label={"Отправить"} />
                 </SFlexBlock>
             </SFlexBlock>
             {posts.length > 0

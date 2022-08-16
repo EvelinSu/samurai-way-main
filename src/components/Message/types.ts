@@ -1,11 +1,21 @@
-export type TMessageProps = {
-    id?: string,
+export type TMessage = {
+    id: string,
     text: string,
     time: string,
     me?: boolean,
     name?: string,
     avatar?: string,
 }
+
+export type TMessageProps = {
+    text: string,
+    time: string,
+    me?: boolean,
+    name?: string,
+    avatar?: string,
+
+}
+
 
 export type TSMessageTextProps = {
     opacity?: number,
