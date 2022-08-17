@@ -27,6 +27,7 @@ const App: React.FC <TAppProps> = ({sendMessage, addPost, state, ...props}) => {
                         <Switch>
                             <Route path="/profile"  render={() => profile} exact />
                             <Redirect from="/" to="/profile" exact/>
+                            <Redirect from="/samurai-way-main/" to="/profile" exact/> // for gh pages
                             <Route path={"/messages/:id?"} render={() => dialogs}  exact />
                             <Route path={"*"} component={PageNotFound} exact />
                         </Switch>
