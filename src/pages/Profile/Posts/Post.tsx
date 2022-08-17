@@ -21,7 +21,7 @@ const Post: FC<TPostProps> = (props) => {
             <SAvatar src={"https://i.imgur.com/VlEAeU2.png"} />
             <SPostContent>
                 <SPostText>
-                    {props.text || <SText opacity={0.3}> Пост без слов, все и так понятно</SText>}
+                    {props.text}
                 </SPostText>
                 <SPostDate>{ props.date }</SPostDate>
             </SPostContent>

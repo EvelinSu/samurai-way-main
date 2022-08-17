@@ -13,7 +13,7 @@ const Posts: FC<TPostsProps> = ({posts, addPost, ...props}) => {
 
     const onChangeSetInputText = (e: React.ChangeEvent<HTMLTextAreaElement>) => setInputText(e.currentTarget.value)
     const onClickAddPost = () => {
-        addPost(inputText)
+        inputText && addPost(inputText)
         setInputText('')
     }
     const onKeyDownAddPost = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
@@ -44,7 +44,7 @@ const Posts: FC<TPostsProps> = ({posts, addPost, ...props}) => {
                     placeholder={"Введите текст поста..."}
                 />
                 <SFlexBlock justifyContent={"flex-end"}>
-                    <Button onClick={onClickAddPost} label={"Отправить"} />
+                    <Button onClick={onClickAddPost} isDisabled={!inputText} label={"Отправить"} />
                 </SFlexBlock>
             </SFlexBlock>
             {posts.length > 0
