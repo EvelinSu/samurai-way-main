@@ -1,5 +1,4 @@
 import React from 'react';
-import './styles/App.css';
 import {SSiteContainer, SSiteContent, SSiteWrapper} from "./layout/styled";
 import Sidebar from "./layout/Sidebar/Sidebar";
 import Profile from "./pages/Profile/Profile";
@@ -27,7 +26,6 @@ const App: React.FC <TAppProps> = ({sendMessage, addPost, state, ...props}) => {
                         <Switch>
                             <Route path="/profile"  render={() => profile} exact />
                             <Redirect from="/" to="/profile" exact/>
-                            <Redirect from="/samurai-way-main/" to="/profile" exact/> // for gh pages
                             <Route path={"/messages/:id?"} render={() => dialogs}  exact />
                             <Route path={"*"} component={PageNotFound} exact />
                         </Switch>

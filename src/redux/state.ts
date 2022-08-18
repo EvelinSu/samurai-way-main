@@ -3,7 +3,6 @@ import {TPost} from "../pages/Profile/Posts/types";
 import {TDialog} from "../pages/Dialogs/types";
 import {getStringDate} from "../common/utils";
 import {TMessage} from "../components/Message/types";
-import {rerenderEntireTree} from "../render";
 
 type TProfilePage = {
     posts: Array<TPost>
@@ -18,8 +17,14 @@ export type Dictionary<T> = {
     [Key: string]: T;
 }
 
+let onChangeState = () => { console.log('state')}
+
+export const subscribe = (observer: () => void) => {
+    onChangeState = observer
+}
+
+
 const defaultDate = "давно"
-console.log(typeof defaultDate)
 
 export const state: TRootState = {
     profilePage: {
@@ -98,13 +103,19 @@ export const state: TRootState = {
     ]
 }
 
-export const addPost = (text: string) => (
+
+
+
+
+
+export const addPost = (text: string) => {
     state.profilePage.posts.unshift({id: v1(), text, likes: 0, isLiked: false, date: getStringDate(new Date())})
-)
+    onChangeState()
+}
 
 export const sendMessage = (text: string, activeDialogKey: string) => {
     let messageId = v1()
     state.dialogsMessages.push({id: messageId, text, time: getStringDate(new Date()), me: true})
     state.dialogsPage[activeDialogKey].messagesId.push(messageId)
-    rerenderEntireTree(state)
+    onChangeState()
 }
