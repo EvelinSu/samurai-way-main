@@ -9,6 +9,7 @@ export const SSiteWrapper = styled.div( props => ({
     height: "100vh",
     width: "100%",
     color: theme.colors.text,
+    minWidth: 800,
 }))
 
 export const SSiteContainer = styled.div( props => ({
