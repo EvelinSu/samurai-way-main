@@ -23,6 +23,15 @@ export const subscribe = (observer: () => void) => {
     onChangeState = observer
 }
 
+export const PATH = {
+    profile: '/profile',
+    messages: '/messages',
+    music: '/music',
+    news: '/news',
+    settings: '/settings'
+
+}
+
 
 const defaultDate = "давно"
 

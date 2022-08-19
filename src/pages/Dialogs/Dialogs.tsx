@@ -9,6 +9,7 @@ import {
     SNoneDialog
 } from "./styled";
 import DialogContent from "./DialogContent/DialogContent";
+import {PATH} from "../../redux/state";
 
 const Dialogs: FC<TDialogsProps> = ({sendMessage, dialogs, messages}) => {
 
@@ -17,7 +18,7 @@ const Dialogs: FC<TDialogsProps> = ({sendMessage, dialogs, messages}) => {
     const activeMessagesId = id ? dialogs[id].messagesId : "0"
     const activeMessages = messages.filter(el => activeMessagesId.includes(el.id))
     const onClickHandler = (key: string) => {
-        history.push(`/messages/${key}`)
+        history.push(`${PATH.messages}/${key}`)
     }
 
     return (
