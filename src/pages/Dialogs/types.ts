@@ -1,4 +1,4 @@
-import {Dictionary} from "../../redux/state";
+import {Dictionary, TActions, TRootState, TStore} from "../../redux/state";
 import {TMessage} from "../../components/Message/types";
 
 export type TDialog = {
@@ -8,8 +8,7 @@ export type TDialog = {
 }
 
 export type TDialogsProps = {
-    dialogs: Dictionary<TDialog>
-    messages: Array<TMessage>
-    sendMessage: (text: string, id: string) => void
+    state: TRootState
+    dispatch: (action: TActions) => void
 
 }

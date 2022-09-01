@@ -3,19 +3,17 @@ import {SSiteContainer, SSiteContent, SSiteWrapper} from "./layout/styled";
 import Sidebar from "./layout/Sidebar/Sidebar";
 import Profile from "./pages/Profile/Profile";
 import Dialogs from "./pages/Dialogs/Dialogs";
-import {BrowserRouter, HashRouter, Redirect, Route, Switch} from "react-router-dom";
+import {HashRouter, Redirect, Route, Switch} from "react-router-dom";
 import PageNotFound from "./pages/PageNotFound";
-import {PATH, TRootState} from "./redux/state";
+import {PATH, TStore} from "./redux/state";
 
 type TAppProps = {
-    state: TRootState
-    addPost: (text: string) => void
-    sendMessage: (text: string, id: string) => void
+    store: TStore
 }
 
-const App: React.FC <TAppProps> = ({sendMessage, addPost, state, ...props}) => {
-    const profile = <Profile posts={state.profilePage.posts} addPost={addPost}/>
-    const dialogs = <Dialogs dialogs={state.dialogsPage} messages={state.dialogsMessages} sendMessage={sendMessage}/>
+const App: React.FC <TAppProps> = ({store, ...props}) => {
+    const profile = <Profile state={store.getState()} dispatch={store.dispatch.bind(store)}/>
+    const dialogs = <Dialogs state={store.getState()} dispatch={store.dispatch.bind(store)}/>
 
     return (
         <HashRouter>

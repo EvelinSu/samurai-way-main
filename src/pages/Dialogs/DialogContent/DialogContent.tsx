@@ -12,16 +12,25 @@ import Button from "../../../components/Button/Button";
 import {TMessage} from "../../../components/Message/types";
 
 
-const DialogContent: FC<TDialogContentProps> = ({name, avatar, messages, callback}) => {
-    const [inputText, setInputText] = useState('')
-    const onClickHandler = () => {
-        if(inputText) {
-            callback(inputText)
-            setInputText('')
+const DialogContent: FC<TDialogContentProps> = ({name, avatar, messages, sendMessage, setNewMessageText, newMessageText}) => {
+    const onKeyPress = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
+        if(e.key === 'Enter' && e.shiftKey) {
+            return
+        }
+        if(e.key === 'Enter') {
+            e.preventDefault()
+            onClickHandler()
         }
     }
-    const onChangeSetInputText = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-        setInputText(e.currentTarget.value)
+
+    const onClickHandler = () => {
+        if(newMessageText.trim() !== '') {
+            sendMessage(newMessageText.trim())
+            setNewMessageText('')
+        }
+    }
+    const onChangeSetNewMessageText = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+        setNewMessageText(e.currentTarget.value)
     }
 
     return (
@@ -53,9 +62,9 @@ const DialogContent: FC<TDialogContentProps> = ({name, avatar, messages, callbac
                 </SScrollContainer>
             </SDialogWindowBody>
             <SDialogWindowFooter>
-                <STextarea onChange={onChangeSetInputText} value={inputText} height={"60px"} placeholder={"Write" +
+                <STextarea onKeyPress={onKeyPress} onChange={onChangeSetNewMessageText} value={newMessageText} height={"60px"} placeholder={"Write" +
                     " your message..."} />
-                <Button isDisabled={!inputText} label={'Send'} onClick={onClickHandler}/>
+                <Button isDisabled={newMessageText.trim() === ''} label={'Send'} onClick={onClickHandler}/>
             </SDialogWindowFooter>
         </Fragment>
     );
