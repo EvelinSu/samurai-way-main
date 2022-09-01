@@ -1,4 +1,4 @@
-import React, {FC, useState} from 'react';
+import React, {FC} from 'react';
 import {TPostsProps} from "./types";
 import {SFlexBlock} from "../../../components/FlexBlock/SFlexBlock";
 import {STitle} from "../../../components/Text/STitle";
@@ -8,17 +8,20 @@ import Button from "../../../components/Button/Button";
 import {theme} from "../../../styles/constants";
 import {SText} from "../../../components/Text/SText";
 
-const Posts: FC<TPostsProps> = ({posts, addPost, ...props}) => {
-    const [inputText, setInputText] = useState('')
+const Posts: FC<TPostsProps> = ({posts, addPost, newPostText, setNewPostText, ...props}) => {
 
-    const onChangeSetInputText = (e: React.ChangeEvent<HTMLTextAreaElement>) => setInputText(e.currentTarget.value)
-    const onClickAddPost = () => {
-        inputText && addPost(inputText)
-        setInputText('')
+    const onChangeSetInputText = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+        setNewPostText(e.currentTarget.value)
     }
-    const onKeyDownAddPost = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
-        if ((e.shiftKey && e.key === 'Enter') || (e.ctrlKey && e.key === 'Enter')) {
-            return setInputText(inputText + `\n`)
+    const onClickAddPost = () => {
+        if(newPostText.trim() !== '') {
+            newPostText && addPost(newPostText.trim())
+            setNewPostText('')
+        }
+    }
+    const onKeyPressAddPost = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
+        if (e.key === 'Enter' && e.shiftKey) {
+            return
         }
         if (e.key === 'Enter') {
             e.preventDefault();
@@ -38,13 +41,13 @@ const Posts: FC<TPostsProps> = ({posts, addPost, ...props}) => {
                     </SText>
                 </SFlexBlock>
                 <STextarea
-                    onKeyDown={onKeyDownAddPost}
-                    value={inputText}
+                    onKeyPress={onKeyPressAddPost}
+                    value={newPostText}
                     onChange={onChangeSetInputText}
                     placeholder={"Введите текст поста..."}
                 />
                 <SFlexBlock justifyContent={"flex-end"}>
-                    <Button onClick={onClickAddPost} isDisabled={!inputText} label={"Отправить"} />
+                    <Button onClick={onClickAddPost} isDisabled={newPostText.trim() === ''} label={"Отправить"} />
                 </SFlexBlock>
             </SFlexBlock>
             {posts.length > 0

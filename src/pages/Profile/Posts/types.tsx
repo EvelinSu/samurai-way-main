@@ -1,6 +1,8 @@
 export type TPostsProps = {
     posts: Array<TPost>
     addPost: (text: string) => void
+    setNewPostText: (text: string) => void
+    newPostText: string
 }
 
 export type TPost = {

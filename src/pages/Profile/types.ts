@@ -1,6 +1,7 @@
 import {TPost} from "./Posts/types";
+import {TActions, TRootState} from "../../redux/state";
 
 export type TProfileProps = {
-    posts: Array<TPost>
-    addPost: (text: string) => void
+    dispatch: (action: TActions) => void
+    state: TRootState
 }

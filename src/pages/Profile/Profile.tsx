@@ -6,13 +6,19 @@ import {SText} from "../../components/Text/SText";
 import Posts from "./Posts/Posts";
 import {STitle} from "../../components/Text/STitle";
 import {theme} from "../../styles/constants";
+import {addPostAC, changeNewPostTextAC} from "../../redux/state";
 
-const Profile: FC<TProfileProps> = ({addPost, posts, ...props}) => {
+const Profile: FC<TProfileProps> = ({dispatch, state}) => {
+
+    const posts = state.profilePage.posts
+    const addPost = (text: string) => dispatch(addPostAC(text))
+    const setNewPostText = (text: string) => dispatch(changeNewPostTextAC(text))
+    const newPostText = state.profilePage.newPostText
 
     return (
         <>
             <SFlexBlock alignItems={"center"}>
-                <SAvatar size={180} src={"https://i.imgur.com/VlEAeU2.png"}/>
+                <SAvatar size={180} src={"https://i.imgur.com/VlEAeU2.png"} />
                 <SFlexBlock flexDirection={"column"}>
                     <STitle color={theme.colors.primaryLightest}>
                         Nickname
@@ -28,7 +34,7 @@ const Profile: FC<TProfileProps> = ({addPost, posts, ...props}) => {
                     </SText>
                 </SFlexBlock>
             </SFlexBlock>
-            <Posts posts={posts} addPost={addPost}/>
+            <Posts posts={posts} addPost={addPost} setNewPostText={setNewPostText} newPostText={newPostText} />
         </>
     );
 };

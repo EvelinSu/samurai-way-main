@@ -70,6 +70,8 @@ export const SMessageTitle = styled.span(props => ({
 
 export const SMessageText = styled.span<TSMessageTextProps>(props => ({
     opacity: props.opacity,
+    wordBreak: "break-word",
+
 }))
 
 export const SMessageTime = styled.div(props => ({
