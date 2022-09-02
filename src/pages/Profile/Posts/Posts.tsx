@@ -10,9 +10,8 @@ import {SText} from "../../../components/Text/SText";
 
 const Posts: FC<TPostsProps> = ({posts, addPost, newPostText, setNewPostText, ...props}) => {
 
-    const onChangeSetInputText = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-        setNewPostText(e.currentTarget.value)
-    }
+    const onChangeSetPostText = (e: React.ChangeEvent<HTMLTextAreaElement>) =>  setNewPostText(e.currentTarget.value)
+
     const onClickAddPost = () => {
         if(newPostText.trim() !== '') {
             newPostText && addPost(newPostText.trim())
@@ -34,7 +33,7 @@ const Posts: FC<TPostsProps> = ({posts, addPost, newPostText, setNewPostText, ..
             <SFlexBlock gap={20} flexDirection={"column"}>
                 <SFlexBlock alignItems={"center"} gap={10}>
                     <STitle color={theme.colors.primaryLightest}>
-                        Мои посты
+                        My posts
                     </STitle>
                     <SText opacity={0.4} title={'Всего постов'}>
                         ({posts.length})
@@ -43,11 +42,11 @@ const Posts: FC<TPostsProps> = ({posts, addPost, newPostText, setNewPostText, ..
                 <STextarea
                     onKeyPress={onKeyPressAddPost}
                     value={newPostText}
-                    onChange={onChangeSetInputText}
-                    placeholder={"Введите текст поста..."}
+                    onChange={onChangeSetPostText}
+                    placeholder={"Write a new post..."}
                 />
                 <SFlexBlock justifyContent={"flex-end"}>
-                    <Button onClick={onClickAddPost} isDisabled={newPostText.trim() === ''} label={"Отправить"} />
+                    <Button onClick={onClickAddPost} isDisabled={newPostText.trim() === ''} label={"Send"} />
                 </SFlexBlock>
             </SFlexBlock>
             {posts.length > 0
@@ -66,7 +65,7 @@ const Posts: FC<TPostsProps> = ({posts, addPost, newPostText, setNewPostText, ..
                     justifyContent={"center"}
                     opacity={0.3}
                 >
-                    Постов еще нет
+                    there are no posts
                 </SFlexBlock>
             }
         </>

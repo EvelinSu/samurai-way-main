@@ -1,6 +1,5 @@
 import styled from "styled-components";
 import {theme} from "../../styles/constants";
-import {TSDialogItemProps} from "./DialogItem/types";
 
 export const SDialogs = styled.div((props) => ({
     display: "flex",
@@ -27,26 +26,6 @@ export const SDialogsItemsList = styled.div((props) => ({
     gap: 10,
 }))
 
-export const SDialogItem = styled.div<TSDialogItemProps>(({isActive, ...props}) => ({
-    display: "flex",
-    flexDirection: "row",
-    alignItems: "center",
-    maxWidth: "100%",
-    padding: 10,
-    borderRadius: theme.blockSettings.borderRadius,
-    backgroundColor: theme.colors.primaryLight,
-    gap: 15,
-    fontSize: 14,
-    cursor: "pointer",
-    "&:hover": {
-        backgroundColor: theme.colors.primary,
-    },
-    ...isActive && {
-        pointerEvents: "none",
-        backgroundColor: theme.colors.primary,
-    },
-
-}))
 
 export const SDialogContainer = styled.div((props) => ({
     display: "flex",

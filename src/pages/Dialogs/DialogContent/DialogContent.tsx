@@ -7,12 +7,20 @@ import {SText} from "../../../components/Text/SText";
 import {SScrollContainer} from "../../../components/ScrollContainer/ScrollContainer";
 import Message from "../../../components/Message/Message";
 import {STextarea} from "../../../components/Textarea/STextarea";
-import {TDialogContentProps} from "./types";
 import Button from "../../../components/Button/Button";
-import {TMessage} from "../../../components/Message/types";
+import {TMessage} from "../../../redux/types";
 
+type TDialogContentProps = {
+    messages?: Array<TMessage>
+    name: string,
+    avatar: string,
+    sendMessage: (text: string) => void
+    newMessageText: string
+    setNewMessageText: (text: string) => void
+    lastSeen: string
+}
 
-const DialogContent: FC<TDialogContentProps> = ({name, avatar, messages, sendMessage, setNewMessageText, newMessageText}) => {
+const DialogContent: FC<TDialogContentProps> = ({lastSeen, name, avatar, messages, sendMessage, setNewMessageText, newMessageText}) => {
     const onKeyPress = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
         if(e.key === 'Enter' && e.shiftKey) {
             return
@@ -44,14 +52,14 @@ const DialogContent: FC<TDialogContentProps> = ({name, avatar, messages, sendMes
                         {name}
                     </STitle>
                     <SText opacity={0.5} fontSize={"14px"}>
-                        Последняя активность: сегодня
+                        last seen: {lastSeen || 'recently'}
                     </SText>
                 </SFlexBlock>
             </SDialogWindowHeader>
             <SDialogWindowBody>
                 <SScrollContainer>
                     {
-                        messages ? messages.map((message: TMessage) => (
+                        messages ? messages.map((message) => (
                             <Message key={message.id}
                                      text={message.text}
                                      time={message.time}

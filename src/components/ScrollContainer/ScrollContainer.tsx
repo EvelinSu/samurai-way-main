@@ -7,5 +7,4 @@ export const SScrollContainer = styled.div(props => ({
     overflowY: "auto",
     overflowX: "hidden",
     padding: 20,
-
 }))

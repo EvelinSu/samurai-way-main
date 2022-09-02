@@ -1,6 +1,9 @@
 import styled from "styled-components";
-import {TSTitleProps} from "./types";
 
+
+type TSTitleProps = {
+    color?: string
+}
 export const STitle = styled.span<TSTitleProps>((props) => ({
     fontWeight: "bold",
     fontSize: 18,

@@ -1,6 +1,11 @@
 import React, {FC} from 'react';
-import {TButtonProps} from "./types";
 import {SButton} from "./styled";
+
+type TButtonProps = {
+    label: string,
+    onClick: () => void
+    isDisabled?: boolean
+}
 
 const Button: FC<TButtonProps> = ({isDisabled, onClick, ...props}) => {
     const onClickHandler = () => {

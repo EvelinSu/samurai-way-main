@@ -1,5 +1,4 @@
 import React, {FC} from 'react';
-import {TMessageProps} from "./types";
 import {
     SMessage,
     SMessageAvatar,
@@ -9,6 +8,15 @@ import {
     SMessageTime,
     SMessageTitle
 } from "./styled";
+
+type TMessageProps = {
+    text: string,
+    time: string,
+    me?: boolean,
+    name?: string,
+    avatar?: string,
+
+}
 
 const Message: FC<TMessageProps> = ({ text, time, me, name, avatar, ...props}) => {
     return (

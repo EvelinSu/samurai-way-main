@@ -1,5 +1,9 @@
 import styled from "styled-components";
-import {TSAvatar} from "./types";
+
+type TSAvatar = {
+    size?: number,
+    border?: boolean
+}
 
 export const SAvatar = styled.img<TSAvatar>(({border, ...props}) => ({
     objectFit: "cover",

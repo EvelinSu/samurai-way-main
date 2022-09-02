@@ -1,7 +1,10 @@
 import styled from "styled-components";
-import {TSTextarea} from "./types";
 import {theme} from "../../styles/constants";
+import {Property} from "csstype";
 
+export type TSTextarea = {
+    height?: Property.Height
+}
 export const STextarea = styled.textarea<TSTextarea>((props) => ({
     height: props.height || 150,
     borderRadius: theme.blockSettings.borderRadius,

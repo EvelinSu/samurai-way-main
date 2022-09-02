@@ -1,4 +1,4 @@
-import {TNavLinks} from "./types";
+
 import UserIcon from "../../assets/icons/UserIcon";
 import MessageIcon from "../../assets/icons/MessageIcon";
 import PaperIcon from "../../assets/icons/PaperIcon";
@@ -6,7 +6,19 @@ import MusicIcon from "../../assets/icons/MusicIcon";
 import SettingsIcon from "../../assets/icons/SettingsIcon";
 import LogoutIcon from "../../assets/icons/LogoutIcon";
 import React from "react";
-import {PATH} from "../../redux/state";
+import {PATH} from "../../redux/store";
+import {Property} from "csstype";
+
+type TNavLink = {
+    id: number,
+    label: string,
+    icon: JSX.Element,
+    link?: string,
+    margin?: Property.Margin,
+    disabled?: boolean
+}
+
+type TNavLinks = Array<TNavLink>
 
 export const navLinks: TNavLinks = [
     {
@@ -26,12 +38,15 @@ export const navLinks: TNavLinks = [
         label: "News",
         icon: <PaperIcon />,
         link: PATH.news,
+        disabled: true
     },
     {
         id: 3,
         label: "Music",
         icon: <MusicIcon />,
         link: PATH.music,
+        disabled: true
+
     },
     {
         id: 4,
@@ -39,10 +54,12 @@ export const navLinks: TNavLinks = [
         icon: <SettingsIcon />,
         margin: "auto 0 0 0",
         link: PATH.settings,
+        disabled: true
     },
     {
         id: 5,
         label: "LogOut",
-        icon: <LogoutIcon />
+        icon: <LogoutIcon />,
+        disabled: true
     }
 ]

@@ -1,9 +1,17 @@
 import {SAvatar} from "../../../components/Avatar/SAvatar";
 import {SFlexBlock} from "../../../components/FlexBlock/SFlexBlock";
 import {SText} from "../../../components/Text/SText";
-import {SDialogItem} from "../styled";
 import React, {FC} from "react";
-import {TDialogItemProps} from "./types";
+import {TMessage} from "../../../redux/types";
+import {SDialogItem} from "./styled";
+
+type TDialogItemProps = {
+    name: string,
+    avatar: string,
+    isActive: boolean,
+    lastMessage?: TMessage,
+    onClick: () => void,
+}
 
 const DialogItem: FC<TDialogItemProps> = ({onClick, avatar, name, lastMessage, isActive}, ...props) => {
     const onClickHandler = () => {

@@ -32,5 +32,4 @@ export const SSiteContent = styled.div( props => ({
     columnGap: 25,
     rowGap: 25,
     padding: "30px 30px 30px 0",
-    resize: "horizontal",
 }))

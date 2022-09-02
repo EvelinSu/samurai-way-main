@@ -5,7 +5,8 @@ import Profile from "./pages/Profile/Profile";
 import Dialogs from "./pages/Dialogs/Dialogs";
 import {HashRouter, Redirect, Route, Switch} from "react-router-dom";
 import PageNotFound from "./pages/PageNotFound";
-import {PATH, TStore} from "./redux/state";
+import {PATH} from "./redux/store";
+import {TStore} from "./redux/types";
 
 type TAppProps = {
     store: TStore

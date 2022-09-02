@@ -1,13 +1,17 @@
 import React, {FC} from 'react';
-import {TProfileProps} from "./types";
 import {SFlexBlock} from "../../components/FlexBlock/SFlexBlock";
 import {SAvatar} from "../../components/Avatar/SAvatar";
 import {SText} from "../../components/Text/SText";
 import Posts from "./Posts/Posts";
 import {STitle} from "../../components/Text/STitle";
 import {theme} from "../../styles/constants";
-import {addPostAC, changeNewPostTextAC} from "../../redux/state";
+import {addPostAC, changeNewPostTextAC} from "../../redux/profileReduser";
+import {TActions, TRootState} from "../../redux/types";
 
+type TProfileProps = {
+    dispatch: (action: TActions) => void
+    state: TRootState
+}
 const Profile: FC<TProfileProps> = ({dispatch, state}) => {
 
     const posts = state.profilePage.posts
@@ -24,13 +28,13 @@ const Profile: FC<TProfileProps> = ({dispatch, state}) => {
                         Nickname
                     </STitle>
                     <SText>
-                        описание 1
+                        The evil plunder darkly pulls the mainland.
                     </SText>
                     <SText>
-                        описание 2
+                        Jolly, wet wind. you won't ransack the quarter-deck.
                     </SText>
                     <SText>
-                        описание 3
+                        Well, belay.
                     </SText>
                 </SFlexBlock>
             </SFlexBlock>

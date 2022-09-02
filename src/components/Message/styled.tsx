@@ -1,7 +1,10 @@
 import styled from "styled-components";
-import {TSMessageContainerProps, TSMessageProps, TSMessageTextProps} from "./types";
 import {theme} from "../../styles/constants";
 
+
+export type TSMessageProps = {
+    isMine?: boolean,
+}
 export const SMessage = styled.div<TSMessageProps>(props => ({
     display: "flex",
     alignItems: "flex-end",
@@ -25,6 +28,10 @@ export const SMessageAvatar = styled.img(props => ({
     objectFit: "cover",
 }))
 
+
+export type TSMessageContainerProps = {
+    isMine?: boolean,
+}
 export const SMessageContainer = styled.div<TSMessageContainerProps>((props) => ({
     display: "flex",
     flexDirection: "column",
@@ -68,6 +75,9 @@ export const SMessageTitle = styled.span(props => ({
     cursor: "pointer",
 }))
 
+export type TSMessageTextProps = {
+    opacity?: number,
+}
 export const SMessageText = styled.span<TSMessageTextProps>(props => ({
     opacity: props.opacity,
     wordBreak: "break-word",

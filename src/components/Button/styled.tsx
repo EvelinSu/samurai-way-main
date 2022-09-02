@@ -1,6 +1,9 @@
 import styled from "styled-components";
 import {theme} from "../../styles/constants";
-import {TSButtonProps} from "./types";
+
+type TSButtonProps = {
+    disabled?: boolean
+}
 
 export const SButton = styled.button<TSButtonProps>(({disabled, ...props}) => ({
     padding: "7px 15px",

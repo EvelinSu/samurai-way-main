@@ -1,8 +1,8 @@
 import styled from "styled-components";
-import {TSSidebarProps, TSSidebarItemIconProps, TSSidebarItemProps} from "./types";
 import {theme} from "../../styles/constants";
-import {Link} from "react-router-dom";
+import {Property} from "csstype";
 
+type TSSidebarProps = {}
 export const SSidebar = styled.div<TSSidebarProps>((props) => ({
     display: "flex",
     flexDirection: "column",
@@ -17,7 +17,16 @@ export const SSidebar = styled.div<TSSidebarProps>((props) => ({
     margin: "30px 0 30px 30px",
 }))
 
-export const SSidebarItem = styled.div<TSSidebarItemProps>(({isActive, ...props}) => ({
+type TSSidebarItemProps = {
+    margin?: Property.Margin,
+    label?: string,
+    onClick?: () => void,
+    isActive?: boolean,
+    activeTab?: string
+    to?: string,
+    disabled?: boolean
+}
+export const SSidebarItem = styled.div<TSSidebarItemProps>(({disabled, isActive, ...props}) => ({
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
@@ -61,8 +70,15 @@ export const SSidebarItem = styled.div<TSSidebarItemProps>(({isActive, ...props}
             }
         }
     },
+    ...disabled && {
+        pointerEvents: "none",
+        opacity: 0.3,
+    }
 }))
 
+type TSSidebarItemIconProps = {
+    isActive?: boolean,
+}
 export const SSidebarItemIcon = styled.div<TSSidebarItemIconProps>(({isActive, ...props}) => ({
     display: "flex",
     alignItems: "center",
