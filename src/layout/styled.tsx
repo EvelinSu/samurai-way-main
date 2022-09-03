@@ -3,27 +3,30 @@ import {theme} from "../styles/constants";
 
 export const SSiteWrapper = styled.div( props => ({
     display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
+    justifyContent: "center",
+    gap: 30,
+    columnGap: 30,
     background: `linear-gradient(to left bottom, ${theme.colors.secondary}, ${theme.colors.primaryLight})`,
     height: "100vh",
     width: "100%",
     color: theme.colors.text,
     minWidth: 800,
+
 }))
 
 export const SSiteContainer = styled.div( props => ({
     display: "flex",
     height: "100%",
-    gap: 30,
-    columnGap: 45,
-    rowGap: 40,
     width: "100%",
-    maxWidth: 1000,
+    maxWidth: 880,
 
 }))
 
-export const SSiteContent = styled.div( props => ({
+type TSSiteContent = {
+    stylized?: boolean
+}
+
+export const SSiteContent = styled.div<TSSiteContent>(({stylized}) => ({
     display: "flex",
     flexDirection: "column",
     overflow: "auto",
@@ -32,4 +35,13 @@ export const SSiteContent = styled.div( props => ({
     columnGap: 25,
     rowGap: 25,
     padding: "30px 30px 30px 0",
+    ...stylized && {
+        padding: "30px",
+        margin: "30px 0",
+        borderRadius: theme.blockSettings.borderRadius,
+        background: `linear-gradient(to left bottom, ${theme.colors.secondary}, ${theme.colors.primaryLight})`,
+
+    }
+
+
 }))

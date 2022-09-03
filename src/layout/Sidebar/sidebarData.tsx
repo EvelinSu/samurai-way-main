@@ -6,8 +6,8 @@ import MusicIcon from "../../assets/icons/MusicIcon";
 import SettingsIcon from "../../assets/icons/SettingsIcon";
 import LogoutIcon from "../../assets/icons/LogoutIcon";
 import React from "react";
-import {PATH} from "../../redux/store";
 import {Property} from "csstype";
+import {PATH} from "../../redux/types";
 
 type TNavLink = {
     id: number,

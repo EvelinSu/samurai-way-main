@@ -1,11 +1,7 @@
-import {TPost} from "../pages/Profile/Posts/types";
-import {changeNewMessageTextAC, sendMessageAC} from "./dialogsReduser";
-import {addPostAC, changeNewPostTextAC} from "./profileReduser";
+import {changeNewMessageTextAC, sendMessageAC, TDialogsPage} from "./dialogsReduser";
+import {addPostAC, changeNewPostTextAC, TProfilePage} from "./profileReduser";
 
-export type TProfilePage = {
-    newPostText: string
-    posts: Array<TPost>
-}
+
 
 export type TMessage = {
     id: string,
@@ -17,6 +13,7 @@ export type TMessage = {
 }
 
 export type TDialog = {
+    newMessageText: string
     name: string,
     messagesId: Array<string>,
     avatar: string
@@ -24,31 +21,16 @@ export type TDialog = {
 }
 
 
-
-export type TDialogsPage = {
-    dialogs: Dictionary<TDialog>
-    dialogsMessages: Array<TMessage>
-    newMessageText: string
-}
-export type TRootState = {
-    profilePage: TProfilePage
-    dialogsPage: TDialogsPage
-}
-
-type Dictionary<T> = {
-    [Key: string]: T;
-}
-
-export type TStore = {
-    _state: TRootState
-    _callSubscriber: () => void
-    subscribe: (observer: () => void) => void
-    getState: () => TRootState
-    dispatch: (action: TActions) => void
-}
-
 export type TActions =
     ReturnType<typeof addPostAC>
     | ReturnType<typeof changeNewPostTextAC>
     | ReturnType<typeof sendMessageAC>
     | ReturnType<typeof changeNewMessageTextAC>
+
+export const PATH = {
+    profile: '/profile',
+    messages: '/messages',
+    music: '/music',
+    news: '/news',
+    settings: '/settings'
+}

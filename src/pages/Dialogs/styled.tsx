@@ -1,12 +1,15 @@
 import styled from "styled-components";
 import {theme} from "../../styles/constants";
 
-export const SDialogs = styled.div((props) => ({
+
+
+export const SDialogs = styled.div(props => ({
     display: "flex",
     flexDirection: "row",
     overflow: "hidden",
     gap: 20,
     height: "100%",
+
 }))
 
 export const SDialogsSidebar = styled.div((props) => ({

@@ -1,8 +1,31 @@
 import {v1} from "uuid";
 import {getStringDate} from "../common/utils";
-import {TActions, TProfilePage} from "./types";
+import {TActions} from "./types";
 
-const profileReducer = (state: TProfilePage, action: TActions) => {
+export type TProfilePage = typeof initialState
+
+const initialState = ({
+    newPostText: '',
+    posts: [
+        {
+            id: v1(),
+            text: "Rinse three oz of blueberries in one container of gravy. ",
+            likes: 4,
+            isLiked: false,
+            date: '1 hour ago',
+        },
+        {
+            id: v1(),
+            text: "Arg! Pieces o' beauty are forever golden. Scurvy, jolly skiffs awkwardly pull a small, lively lagoon. The lad drinks with fortune, mark the seychelles until it waves. ",
+            likes: 2,
+            isLiked: true,
+            date: '1 hour ago'
+        }
+    ],
+})
+
+
+const profileReducer = (state: TProfilePage = initialState, action: TActions): TProfilePage => {
     switch (action.type) {
         case "ADD-POST":
             const newPost = {

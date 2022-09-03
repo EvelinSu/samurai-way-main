@@ -1,10 +1,11 @@
 import React from 'react';
+import {SSiteContent} from "../layout/styled";
 
 const PageNotFound = () => {
     return (
-        <div>
+        <SSiteContent>
             Page not found
-        </div>
+        </SSiteContent>
     );
 };
 
