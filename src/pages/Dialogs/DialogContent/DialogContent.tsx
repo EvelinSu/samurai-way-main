@@ -20,19 +20,27 @@ type TDialogContentProps = {
     lastSeen: string
 }
 
-const DialogContent: FC<TDialogContentProps> = ({lastSeen, name, avatar, messages, sendMessage, setNewMessageText, newMessageText}) => {
+const DialogContent: FC<TDialogContentProps> = ({
+    lastSeen,
+    name,
+    avatar,
+    messages,
+    sendMessage,
+    setNewMessageText,
+    newMessageText,
+}) => {
     const onKeyPress = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
-        if(e.key === 'Enter' && e.shiftKey) {
+        if (e.key === 'Enter' && e.shiftKey) {
             return
         }
-        if(e.key === 'Enter') {
+        if (e.key === 'Enter') {
             e.preventDefault()
             onClickHandler()
         }
     }
 
     const onClickHandler = () => {
-        if(newMessageText.trim() !== '') {
+        if (newMessageText.trim() !== '') {
             sendMessage(newMessageText.trim())
             setNewMessageText('')
         }
@@ -60,19 +68,26 @@ const DialogContent: FC<TDialogContentProps> = ({lastSeen, name, avatar, message
                 <SScrollContainer>
                     {
                         messages ? messages.map((message) => (
-                            <Message key={message.id}
-                                     text={message.text}
-                                     time={message.time}
-                                     me={message.me}
+                            <Message
+                                key={message.id}
+                                text={message.text}
+                                time={message.time}
+                                me={message.me}
                             />
-                        )):'none'
+                        )) : 'none'
                     }
                 </SScrollContainer>
             </SDialogWindowBody>
             <SDialogWindowFooter>
-                <STextarea onKeyPress={onKeyPress} onChange={onChangeSetNewMessageText} value={newMessageText} height={"60px"} placeholder={"Write" +
-                    " your message..."} />
-                <Button isDisabled={newMessageText.trim() === ''} label={'Send'} onClick={onClickHandler}/>
+                <STextarea
+                    onKeyPress={onKeyPress}
+                    onChange={onChangeSetNewMessageText}
+                    value={newMessageText}
+                    height={"60px"}
+                    placeholder={"Write" +
+                        " your message..."}
+                />
+                <Button isDisabled={newMessageText.trim() === ''} label={'Send'} onClick={onClickHandler} />
             </SDialogWindowFooter>
         </Fragment>
     );
