@@ -9,9 +9,8 @@ import {TReduxStore} from "../../redux/reduxStore";
 import PostsContainer from "./Posts/PostsContainer";
 
 export type TProfileProps = {
-    store: TReduxStore
 }
-const Profile: FC<TProfileProps> = ({store}) => {
+const Profile: FC<TProfileProps> = () => {
 
     return (
         <SSiteContent stylized>
@@ -32,7 +31,7 @@ const Profile: FC<TProfileProps> = ({store}) => {
                     </SText>
                 </SFlexBlock>
             </SFlexBlock>
-            <PostsContainer store={store} />
+            <PostsContainer />
         </SSiteContent>
     );
 };

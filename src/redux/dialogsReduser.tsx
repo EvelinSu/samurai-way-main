@@ -7,8 +7,10 @@ let defaultDate = '1 hour ago'
 type Dictionary<T> = {
     [Key: string]: T;
 }
+export type TDialogs = Dictionary<TDialog>
+
 export type TDialogsPage = {
-    dialogs: Dictionary<TDialog>
+    dialogs: TDialogs
     dialogsMessages: Array<TMessage>
 }
 const initialState = {

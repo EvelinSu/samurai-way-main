@@ -6,15 +6,11 @@ import Dialogs from "./pages/Dialogs/Dialogs";
 import {HashRouter, Redirect, Route, Switch} from "react-router-dom";
 import PageNotFound from "./pages/PageNotFound";
 import {PATH} from "./redux/types";
-import {TReduxStore} from "./redux/reduxStore";
 
-type TAppProps = {
-    store: TReduxStore
-}
 
-const App: React.FC<TAppProps> = ({store}) => {
-    const profile = <Profile store={store} />
-    const dialogs = <Dialogs store={store} state={store.getState()} />
+const App: React.FC = (props) => {
+    const profile = <Profile />
+    const dialogs = <Dialogs />
 
     return (
         <HashRouter>

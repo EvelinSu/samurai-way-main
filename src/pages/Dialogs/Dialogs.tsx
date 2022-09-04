@@ -1,24 +1,18 @@
 import React, {FC} from 'react';
-import DialogItem from "./DialogItem/DialogItem";
 import {useHistory, useParams} from "react-router-dom";
 import {
     SDialogs,
-    SDialogsItemsList, SDialogsSidebar,
+    SDialogsSidebar,
     SDialogContainer,
     SNoneDialog
 } from "./styled";
 import {PATH} from "../../redux/types";
 import {SSiteContent} from "../../layout/styled";
-import {TReduxStore, TRootState} from "../../redux/reduxStore";
 import DialogContentContainer from "./DialogContent/DialogContentContainer";
+import DialogsItemsListContainer from "./DialogsItemsList/DialogsItemsListContainer";
 
-type TDialogsProps = {
-    state: TRootState
-    store: TReduxStore
-}
-const Dialogs: FC<TDialogsProps> = ({store, state}) => {
-    const dialogs = state.dialogsPage.dialogs
-    const messages = state.dialogsPage.dialogsMessages
+type TDialogsProps = {}
+const Dialogs: FC<TDialogsProps> = (props) => {
 
     const {id} = useParams<{ id: string }>();
     const history = useHistory();
@@ -29,31 +23,13 @@ const Dialogs: FC<TDialogsProps> = ({store, state}) => {
         <SSiteContent>
             <SDialogs>
                 <SDialogContainer>
-                    {id ? (
-                        <DialogContentContainer store={store} id={id} />
-                    ) : (
-                        <SNoneDialog>
-                            Select a chat
-                        </SNoneDialog>
-                    )}
+                    {id
+                        ? <DialogContentContainer id={id} />
+                        : <SNoneDialog>Select a chat </SNoneDialog>
+                    }
                 </SDialogContainer>
                 <SDialogsSidebar>
-                    <SDialogsItemsList>
-                        {Object.entries(dialogs).map(([key, value]) => {
-                            const {name, avatar} = value;
-                            return (
-                                <DialogItem
-                                    onClick={() => onClickHandler(key)}
-                                    name={name}
-                                    avatar={avatar}
-                                    lastMessage={messages.find(
-                                        (el) => el.id === dialogs[key].messagesId[dialogs[key].messagesId.length - 1])}
-                                    isActive={id === key}
-                                    key={key}
-                                />
-                            )
-                        })}
-                    </SDialogsItemsList>
+                    <DialogsItemsListContainer id={id} onClickHandler={onClickHandler} />
                 </SDialogsSidebar>
             </SDialogs>
         </SSiteContent>
