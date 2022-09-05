@@ -1,4 +1,4 @@
-import React, {FC, Fragment, useState} from "react";
+import React, {FC, Fragment} from "react";
 import {SDialogWindowBody, SDialogWindowFooter, SDialogWindowHeader} from "../styled";
 import {SAvatar} from "../../../components/Avatar/SAvatar";
 import {SFlexBlock} from "../../../components/FlexBlock/SFlexBlock";
@@ -7,46 +7,45 @@ import {SText} from "../../../components/Text/SText";
 import {SScrollContainer} from "../../../components/ScrollContainer/ScrollContainer";
 import Message from "../../../components/Message/Message";
 import {TMessage} from "../../../redux/types";
-import DialogSendMessageContainer from "./DialogSendMessageContainer";
+import {TDialogs} from "../../../redux/dialogsReduser";
+import {DialogSendMessageContainer} from "./DialogSendMessageContainer";
 
 type TDialogContentProps = {
-    messages?: Array<TMessage>
-    name: string,
-    avatar: string,
-    lastSeen: string,
+    dialogs: TDialogs
+    messages: TMessage[]
     id: string
 }
 
 const DialogContent: FC<TDialogContentProps> = ({
-    lastSeen,
-    name,
-    avatar,
+    dialogs,
     messages,
     id
 
 }) => {
 
+    const activeMessagesId = id ? dialogs[id].messagesId : "0"
+    const activeMessages = messages.filter((el) => activeMessagesId.includes(el.id))
 
     return (
         <Fragment>
             <SDialogWindowHeader>
                 <SAvatar size={40}
-                         src={avatar}
+                         src={dialogs[id].avatar}
                 />
                 <SFlexBlock gap={1} flexDirection={"column"}>
                     <STitle>
-                        {name}
+                        {dialogs[id].name}
                     </STitle>
                     <SText opacity={0.5} fontSize={"14px"}>
-                        last seen: {lastSeen || 'recently'}
+                        last seen: {dialogs[id].lastSeen || 'recently'}
                     </SText>
                 </SFlexBlock>
             </SDialogWindowHeader>
             <SDialogWindowBody>
                 <SScrollContainer>
                     {
-                        messages
-                            ? messages.map((message) => (
+                        activeMessages
+                            ? activeMessages.map((message) => (
                                 <Message
                                     key={message.id}
                                     text={message.text}

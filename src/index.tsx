@@ -2,22 +2,14 @@ import React from 'react';
 import './styles/index.css';
 import ReactDOM from "react-dom";
 import App from "./App";
-import StoreContext from "./StoreContext";
 import store from "./redux/reduxStore";
+import {Provider} from "react-redux";
 
 
-export let rerenderEntireTree = () => {
-    ReactDOM.render(
-        <StoreContext.Provider value={store}>
-            <App />
-        </StoreContext.Provider>,
-        document.getElementById('root')
-    );
-}
-
-rerenderEntireTree()
-
-store.subscribe(() => {
-    rerenderEntireTree()
-})
+ReactDOM.render(
+    <Provider store={store}>
+        <App />
+    </Provider>,
+    document.getElementById('root')
+);
 

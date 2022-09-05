@@ -8,8 +8,8 @@ import {
 } from "./styled";
 import {PATH} from "../../redux/types";
 import {SSiteContent} from "../../layout/styled";
-import DialogContentContainer from "./DialogContent/DialogContentContainer";
-import DialogsItemsListContainer from "./DialogsItemsList/DialogsItemsListContainer";
+import {DialogContentContainer} from "./DialogContent/DialogContentContainer";
+import {DialogsItemsListContainer} from "./DialogsItemsList/DialogsItemsListContainer";
 
 type TDialogsProps = {}
 const Dialogs: FC<TDialogsProps> = (props) => {

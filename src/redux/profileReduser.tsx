@@ -1,10 +1,14 @@
 import {v1} from "uuid";
 import {getStringDate} from "../common/utils";
 import {TActions} from "./types";
+import {TPost} from "../pages/Profile/Posts/types";
 
-export type TProfilePage = typeof initialState
+export type TProfilePage = {
+    newPostText: string,
+    posts: Array<TPost>
+}
 
-const initialState = ({
+const initialState: TProfilePage = ({
     newPostText: '',
     posts: [
         {
@@ -24,27 +28,30 @@ const initialState = ({
     ],
 })
 
-
 const profileReducer = (state: TProfilePage = initialState, action: TActions): TProfilePage => {
     switch (action.type) {
-        case "ADD-POST":
-            const newPost = {
+        case "ADD-POST": {
+            const newPost: TPost = {
                 id: v1(),
                 text: action.postText,
                 likes: 0,
                 isLiked: false,
                 date: getStringDate(new Date())
             }
-            state.posts.unshift(newPost)
-            return state
-        case "CHANGE-NEW-POST-TEXT":
-            state.newPostText = action.newPostText
-            return state
+            let stateCopy = {...state}
+            stateCopy.posts = [ newPost, ...state.posts]
+            return stateCopy
+        }
+
+        case "CHANGE-NEW-POST-TEXT": {
+            let stateCopy = {...state}
+            stateCopy.newPostText = action.newPostText
+            return stateCopy
+        }
         default:
             return state
     }
 }
-
 
 export const addPostAC = (text: string) => ({
     type: "ADD-POST",
@@ -55,7 +62,5 @@ export const changeNewPostTextAC = (text: string) => ({
     type: "CHANGE-NEW-POST-TEXT",
     newPostText: text
 } as const)
-
-
 
 export default profileReducer

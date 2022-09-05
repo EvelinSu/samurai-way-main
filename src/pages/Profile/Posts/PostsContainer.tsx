@@ -1,33 +1,31 @@
-import React, {FC} from 'react';
+import React from 'react';
 import Posts from "./Posts";
 import {addPostAC, changeNewPostTextAC} from "../../../redux/profileReduser";
-import StoreContext from "../../../StoreContext";
+import {connect} from "react-redux";
+import {TRootState} from "../../../redux/reduxStore";
+import {Dispatch} from "redux";
+import {TPost} from "./types";
 
-const PostsContainer: FC = () => {
-    return (
-        <StoreContext.Consumer>
-            {
-                store => {
-                    const state = store.getState().profilePage
-                    const posts = state.posts
+type TMapStateToProps = {
+    posts: Array<TPost>
+    newPostText: string
+}
+export const mapStateToProps = (state: TRootState): TMapStateToProps => {
+    return {
+        posts: state.profilePage.posts,
+        newPostText: state.profilePage.newPostText,
+    }
+}
 
-                    const addPost = (text: string) => store.dispatch(addPostAC(text))
-                    const setNewPostText = (text: string) => store.dispatch(changeNewPostTextAC(text))
-                    const newPostText = state.newPostText
+type TMapDispatchStateToProps = {
+    setNewPostText: (text: string) => void
+    addPost: (text: string) => void
+}
+export const mapDispatchToProps = (dispatch: Dispatch): TMapDispatchStateToProps => {
+    return {
+        addPost: (text) =>  dispatch(addPostAC(text)),
+        setNewPostText:  (text) => dispatch(changeNewPostTextAC(text))
+    }
+}
 
-                    return (
-                        <Posts posts={posts}
-                               addPost={addPost}
-                               setNewPostText={setNewPostText}
-                               newPostText={newPostText}
-                        />
-
-                    )
-                }
-            }
-        </StoreContext.Consumer>
-    )
-
-};
-
-export default PostsContainer;
+export const PostsContainer = connect(mapStateToProps, mapDispatchToProps)(Posts)

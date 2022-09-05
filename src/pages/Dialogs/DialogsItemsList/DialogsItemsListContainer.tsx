@@ -1,32 +1,40 @@
 import React from 'react';
-import StoreContext from "../../../StoreContext";
 import DialogsItemsList from "./DialogsItemsList";
+import {TRootState} from "../../../redux/reduxStore";
+import {connect} from "react-redux";
+import {Dispatch} from "redux";
+import {TDialogs} from "../../../redux/dialogsReduser";
+import {TMessage} from "../../../redux/types";
 
-type TDialogsItemsListContainer = {
-    id: string
-    onClickHandler: (key: string) => void
+
+type TMapStateToProps = {
+    dialogs: TDialogs
+    messages: Array<TMessage>
+    ownProps: TOwnProps
 }
 
-const DialogsItemsListContainer: React.FC<TDialogsItemsListContainer> = ({id, onClickHandler}) => {
-    return (
-        <StoreContext.Consumer>
-            {
-                store => {
-                    const state = store.getState()
-                    const dialogs = state.dialogsPage.dialogs
-                    const messages = state.dialogsPage.dialogsMessages
-                    return (
-                        <DialogsItemsList
-                            dialogs={dialogs}
-                            messages={messages}
-                            id={id}
-                            onClickHandler={onClickHandler}
-                        />
-                    )
-                }
-            }
-        </StoreContext.Consumer>
-    );
-};
+type TOwnProps = {
+    onClickHandler: (key: string) => void
+    id: string
+}
+export const mapStateToProps = (state: TRootState, ownProps: TOwnProps): TMapStateToProps => {
+    return {
+        dialogs: state.dialogsPage.dialogs,
+        messages: state.dialogsPage.dialogsMessages,
+        ownProps: {
+            id: ownProps.id,
+            onClickHandler: ownProps.onClickHandler
+        }
+    }
+}
 
-export default DialogsItemsListContainer;
+type TMapDispatchStateToProps = {
+
+}
+export const mapDispatchToProps = (dispatch: Dispatch): TMapDispatchStateToProps => {
+    return {
+
+    }
+}
+
+export const DialogsItemsListContainer = connect(mapStateToProps, mapDispatchToProps)(DialogsItemsList)

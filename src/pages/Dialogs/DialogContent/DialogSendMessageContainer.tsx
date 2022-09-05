@@ -1,37 +1,36 @@
 import React from 'react';
-import {STextarea} from "../../../components/Textarea/STextarea";
-import Button from "../../../components/Button/Button";
-import StoreContext from "../../../StoreContext";
-import store from "../../../redux/reduxStore";
+import store, {TRootState} from "../../../redux/reduxStore";
 import {changeNewMessageTextAC, sendMessageAC} from "../../../redux/dialogsReduser";
 import DialogSendMessage from "./DialogSendMessage";
-import dialogs from "../Dialogs";
+import {Dispatch} from "redux";
+import {connect} from "react-redux";
 
-type TDialogSendMessageContainer = {
-    id: string
+
+type TMapStateToProps = {
+    newMessageText: string
+    ownProps: TOwnProps
+}
+type TOwnProps = {
+    id: string,
+}
+export const mapStateToProps = (state: TRootState, ownProps: TOwnProps): TMapStateToProps => {
+    return {
+        newMessageText: state.dialogsPage.dialogs[ownProps.id].newMessageText,
+        ownProps: {
+            id: ownProps.id,
+        }
+    }
 }
 
-const DialogSendMessageContainer: React.FC<TDialogSendMessageContainer> = ({id}) => {
+type TMapDispatchStateToProps = {
+    setNewMessageText: (text: string) => void
+    sendMessage: (text: string) => void
+}
+export const mapDispatchToProps = (dispatch: Dispatch, ownProps: TOwnProps): TMapDispatchStateToProps => {
+    return {
+        sendMessage: (text: string) => store.dispatch(sendMessageAC(text, ownProps.id)),
+        setNewMessageText: (text: string) => store.dispatch(changeNewMessageTextAC(text, ownProps.id))
+    }
+}
 
-    return (
-        <StoreContext.Consumer>
-            {
-                store => {
-                    const sendMessage = (text: string) => store.dispatch(sendMessageAC(text, id))
-                    const setNewMessageText = (text: string) => store.dispatch(changeNewMessageTextAC(text, id))
-                    const newMessageText = store.getState().dialogsPage.dialogs[id].newMessageText
-
-                    return (
-                        <DialogSendMessage
-                            newMessageText={newMessageText}
-                            setNewMessageText={setNewMessageText}
-                            sendMessage={sendMessage}
-                        />
-                    )
-                }
-            }
-        </StoreContext.Consumer>
-    );
-};
-
-export default DialogSendMessageContainer;
+export const DialogSendMessageContainer = connect(mapStateToProps, mapDispatchToProps)(DialogSendMessage)

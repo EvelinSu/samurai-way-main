@@ -6,7 +6,6 @@ type TDialogSendMessage = {
     newMessageText: string
     setNewMessageText: (text: string) => void
     sendMessage: (text: string) => void
-
 }
 
 const DialogSendMessage: React.FC<TDialogSendMessage> = ({newMessageText, setNewMessageText, sendMessage}) => {

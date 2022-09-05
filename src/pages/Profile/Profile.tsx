@@ -5,8 +5,7 @@ import {SText} from "../../components/Text/SText";
 import {STitle} from "../../components/Text/STitle";
 import {theme} from "../../styles/constants";
 import {SSiteContent} from "../../layout/styled";
-import {TReduxStore} from "../../redux/reduxStore";
-import PostsContainer from "./Posts/PostsContainer";
+import {PostsContainer} from "./Posts/PostsContainer";
 
 export type TProfileProps = {
 }

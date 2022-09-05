@@ -1,7 +1,7 @@
 import React, {FC} from 'react';
 import DialogItem from "../DialogItem/DialogItem";
 import {SDialogsItemsList} from "../styled";
-import {TDialog, TMessage} from "../../../redux/types";
+import {TMessage} from "../../../redux/types";
 import {TDialogs} from "../../../redux/dialogsReduser";
 
 type TDialogsItemsList = {

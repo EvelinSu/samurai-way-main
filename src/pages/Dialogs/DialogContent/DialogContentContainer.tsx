@@ -1,40 +1,41 @@
-import React, {FC} from "react";
-
+import React from "react";
 import DialogContent from "./DialogContent";
-import StoreContext from "../../../StoreContext";
+import {connect} from "react-redux";
+import {TRootState} from "../../../redux/reduxStore";
+import {changeNewMessageTextAC, sendMessageAC, TDialogs} from "../../../redux/dialogsReduser";
+import {Dispatch} from "redux";
+import {TMessage} from "../../../redux/types";
 
-type TDialogContentContainerProps = {
+
+type TMapStateToProps = {
+    dialogs: TDialogs
+    messages: Array<TMessage>
+    ownProps: TOwnProps,
+}
+type TOwnProps = {
     id: string
-
 }
 
-const DialogContentContainer: FC<TDialogContentContainerProps> = ({id}) => {
-    return (
-        <StoreContext.Consumer>
-            {
-                store => {
-                    const dialogs = store.getState().dialogsPage.dialogs
-                    const messages = store.getState().dialogsPage.dialogsMessages
+let mapStateToProps = (state: TRootState, ownProps: TOwnProps): TMapStateToProps => {
+    return {
+        dialogs: state.dialogsPage.dialogs,
+        messages: state.dialogsPage.dialogsMessages,
+        ownProps: {
+            id: ownProps.id,
+        }
+    }
+}
 
-                    const activeMessagesId = id ? dialogs[id].messagesId : "0"
-                    const activeMessages = messages.filter((el) => activeMessagesId.includes(el.id))
+type TMapDispatchToProps = {
+    changeNewMessageText: (text: string, id: string) => void
+    sendMessage: (text: string, id: string) => void
+}
+let mapDispatchToProps = (dispatch: Dispatch): TMapDispatchToProps => {
+    return {
+        changeNewMessageText: (text, id) => dispatch(changeNewMessageTextAC(text, id)),
+        sendMessage:  (text, id) => dispatch(sendMessageAC(text, id)),
 
-                    return (
-                        <DialogContent
-                            name={dialogs[id].name}
-                            lastSeen={dialogs[id].lastSeen}
-                            avatar={dialogs[id].avatar}
-                            messages={activeMessages}
-                            id={id}
-                        />
-                    )
-                }
+    }
+}
 
-            }
-        </StoreContext.Consumer>
-
-    );
-};
-
-export default DialogContentContainer;
-
+export const DialogContentContainer = connect(mapStateToProps, mapDispatchToProps)(DialogContent)

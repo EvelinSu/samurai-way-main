@@ -1,19 +1,21 @@
 import {v1} from "uuid";
 import {getStringDate} from "../common/utils";
 import {TActions, TDialog, TMessage} from "./types";
+import {stat} from "fs";
 
 let defaultDate = '1 hour ago'
 
 type Dictionary<T> = {
     [Key: string]: T;
 }
+
 export type TDialogs = Dictionary<TDialog>
 
 export type TDialogsPage = {
     dialogs: TDialogs
     dialogsMessages: Array<TMessage>
 }
-const initialState = {
+const initialState: TDialogsPage = {
     dialogs: {
         "1": {
             newMessageText: '',
@@ -78,7 +80,7 @@ const initialState = {
 
 export const dialogsReducer = (state: TDialogsPage = initialState, action: TActions): TDialogsPage => {
     switch (action.type) {
-        case "SEND-MESSAGE":
+        case "SEND-MESSAGE": {
             let messageId = v1()
             const newMessage: TMessage = {
                 id: messageId,
@@ -86,12 +88,16 @@ export const dialogsReducer = (state: TDialogsPage = initialState, action: TActi
                 time: getStringDate(new Date()),
                 me: true
             }
-            state.dialogsMessages.push(newMessage)
-            state.dialogs[action.activeDialogKey].messagesId.push(messageId)
-            return state
-        case "CHANGE-NEW-MESSAGE-TEXT":
-            state.dialogs[action.activeDialogKey].newMessageText = action.newMessageText
-            return state
+            let stateCopy = {...state}
+            stateCopy.dialogsMessages = [...state.dialogsMessages, newMessage]
+            stateCopy.dialogs[action.activeDialogKey].messagesId = [...state.dialogs[action.activeDialogKey].messagesId, messageId]
+            return stateCopy
+        }
+        case "CHANGE-NEW-MESSAGE-TEXT": {
+            let stateCopy = {...state}
+            stateCopy.dialogs[action.activeDialogKey].newMessageText = action.newMessageText
+            return stateCopy
+        }
         default:
             return state
     }
