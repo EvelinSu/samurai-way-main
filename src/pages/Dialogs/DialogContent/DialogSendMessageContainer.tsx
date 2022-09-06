@@ -1,6 +1,6 @@
 import React from 'react';
 import store, {TRootState} from "../../../redux/reduxStore";
-import {changeNewMessageTextAC, sendMessageAC} from "../../../redux/dialogsReduser";
+import {changeNewMessageTextAC, sendMessageAC} from "../../../redux/dialogsReducer";
 import DialogSendMessage from "./DialogSendMessage";
 import {Dispatch} from "redux";
 import {connect} from "react-redux";

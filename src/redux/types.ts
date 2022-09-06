@@ -1,5 +1,6 @@
-import {changeNewMessageTextAC, sendMessageAC, TDialogsPage} from "./dialogsReduser";
-import {addPostAC, changeNewPostTextAC, TProfilePage} from "./profileReduser";
+import {changeNewMessageTextAC, sendMessageAC} from "./dialogsReducer";
+import {addPostAC, changeNewPostTextAC} from "./profileReducer";
+import {followUserAC, setUsersAC, unFollowUserAC} from "./usersReducer";
 
 
 
@@ -26,10 +27,14 @@ export type TActions =
     | ReturnType<typeof changeNewPostTextAC>
     | ReturnType<typeof sendMessageAC>
     | ReturnType<typeof changeNewMessageTextAC>
+    | ReturnType<typeof followUserAC>
+    | ReturnType<typeof unFollowUserAC>
+    | ReturnType<typeof setUsersAC>
 
 export const PATH = {
     profile: '/profile',
     messages: '/messages',
+    users: '/users',
     music: '/music',
     news: '/news',
     settings: '/settings'

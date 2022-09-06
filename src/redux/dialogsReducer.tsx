@@ -79,8 +79,9 @@ const initialState: TDialogsPage = {
 }
 
 export const dialogsReducer = (state: TDialogsPage = initialState, action: TActions): TDialogsPage => {
+    let stateCopy;
     switch (action.type) {
-        case "SEND-MESSAGE": {
+        case "SEND-MESSAGE":
             let messageId = v1()
             const newMessage: TMessage = {
                 id: messageId,
@@ -88,16 +89,16 @@ export const dialogsReducer = (state: TDialogsPage = initialState, action: TActi
                 time: getStringDate(new Date()),
                 me: true
             }
-            let stateCopy = {...state}
-            stateCopy.dialogsMessages = [...state.dialogsMessages, newMessage]
+            stateCopy = {
+                ...state,
+                dialogsMessages: [...state.dialogsMessages, newMessage],
+            }
             stateCopy.dialogs[action.activeDialogKey].messagesId = [...state.dialogs[action.activeDialogKey].messagesId, messageId]
             return stateCopy
-        }
-        case "CHANGE-NEW-MESSAGE-TEXT": {
-            let stateCopy = {...state}
+        case "CHANGE-NEW-MESSAGE-TEXT":
+            stateCopy = {...state}
             stateCopy.dialogs[action.activeDialogKey].newMessageText = action.newMessageText
             return stateCopy
-        }
         default:
             return state
     }

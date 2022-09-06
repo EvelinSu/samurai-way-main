@@ -1,6 +1,6 @@
 import React from 'react';
 import Posts from "./Posts";
-import {addPostAC, changeNewPostTextAC} from "../../../redux/profileReduser";
+import {addPostAC, changeNewPostTextAC} from "../../../redux/profileReducer";
 import {connect} from "react-redux";
 import {TRootState} from "../../../redux/reduxStore";
 import {Dispatch} from "redux";

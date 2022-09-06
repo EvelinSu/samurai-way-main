@@ -1,5 +1,5 @@
 import React, {FC} from 'react';
-import {SFlexBlock} from "../../components/FlexBlock/SFlexBlock";
+import {Box} from "../../components/Box/Box";
 import {SAvatar} from "../../components/Avatar/SAvatar";
 import {SText} from "../../components/Text/SText";
 import {STitle} from "../../components/Text/STitle";
@@ -13,9 +13,9 @@ const Profile: FC<TProfileProps> = () => {
 
     return (
         <SSiteContent stylized>
-            <SFlexBlock alignItems={"center"}>
+            <Box alignItems={"center"}>
                 <SAvatar border size={180} src={"https://i.imgur.com/VlEAeU2.png"} />
-                <SFlexBlock flexDirection={"column"}>
+                <Box flexDirection={"column"}>
                     <STitle color={theme.colors.primaryLightest}>
                         Nickname
                     </STitle>
@@ -28,8 +28,8 @@ const Profile: FC<TProfileProps> = () => {
                     <SText>
                         Tunas are the planks of the old urchin.
                     </SText>
-                </SFlexBlock>
-            </SFlexBlock>
+                </Box>
+            </Box>
             <PostsContainer />
         </SSiteContent>
     );

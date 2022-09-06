@@ -1,6 +1,6 @@
 import React, {FC} from 'react';
 import {TPostsProps} from "./types";
-import {SFlexBlock} from "../../../components/FlexBlock/SFlexBlock";
+import {Box} from "../../../components/Box/Box";
 import {STitle} from "../../../components/Text/STitle";
 import Post from "./Post";
 import {STextarea} from "../../../components/Textarea/STextarea";
@@ -30,27 +30,27 @@ const Posts: FC<TPostsProps> = ({posts, addPost, newPostText, setNewPostText, ..
 
     return (
         <>
-            <SFlexBlock gap={20} flexDirection={"column"}>
-                <SFlexBlock alignItems={"center"} gap={10}>
+            <Box gap={20} flexDirection={"column"}>
+                <Box alignItems={"center"} gap={10}>
                     <STitle color={theme.colors.primaryLightest}>
                         My posts
                     </STitle>
                     <SText opacity={0.4} title={'Всего постов'}>
                         ({posts.length})
                     </SText>
-                </SFlexBlock>
+                </Box>
                 <STextarea
                     onKeyPress={onKeyPressAddPost}
                     value={newPostText}
                     onChange={onChangeSetPostText}
                     placeholder={"Write a new post..."}
                 />
-                <SFlexBlock justifyContent={"flex-end"}>
+                <Box justifyContent={"flex-end"}>
                     <Button onClick={onClickAddPost} isDisabled={newPostText.trim() === ''} label={"Send"} />
-                </SFlexBlock>
-            </SFlexBlock>
+                </Box>
+            </Box>
             {posts.length > 0
-                ? <SFlexBlock gap={25} flexDirection={"column"}>
+                ? <Box gap={25} flexDirection={"column"}>
                     {posts.map((post) => (
                         <Post
                             key={post.id}
@@ -60,13 +60,13 @@ const Posts: FC<TPostsProps> = ({posts, addPost, newPostText, setNewPostText, ..
                             date={post.date}
                         />
                     ))}
-                </SFlexBlock>
-                : <SFlexBlock
+                </Box>
+                : <Box
                     justifyContent={"center"}
                     opacity={0.3}
                 >
                     there are no posts
-                </SFlexBlock>
+                </Box>
             }
         </>
     );

@@ -2,7 +2,7 @@ import React from "react";
 import DialogContent from "./DialogContent";
 import {connect} from "react-redux";
 import {TRootState} from "../../../redux/reduxStore";
-import {changeNewMessageTextAC, sendMessageAC, TDialogs} from "../../../redux/dialogsReduser";
+import {changeNewMessageTextAC, sendMessageAC, TDialogs} from "../../../redux/dialogsReducer";
 import {Dispatch} from "redux";
 import {TMessage} from "../../../redux/types";
 

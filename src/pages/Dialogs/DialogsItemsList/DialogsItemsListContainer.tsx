@@ -3,7 +3,7 @@ import DialogsItemsList from "./DialogsItemsList";
 import {TRootState} from "../../../redux/reduxStore";
 import {connect} from "react-redux";
 import {Dispatch} from "redux";
-import {TDialogs} from "../../../redux/dialogsReduser";
+import {TDialogs} from "../../../redux/dialogsReducer";
 import {TMessage} from "../../../redux/types";
 
 

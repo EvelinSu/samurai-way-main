@@ -1,5 +1,5 @@
 import {SAvatar} from "../../../components/Avatar/SAvatar";
-import {SFlexBlock} from "../../../components/FlexBlock/SFlexBlock";
+import {Box} from "../../../components/Box/Box";
 import {SText} from "../../../components/Text/SText";
 import React, {FC} from "react";
 import {TMessage} from "../../../redux/types";
@@ -20,20 +20,20 @@ const DialogItem: FC<TDialogItemProps> = ({onClick, avatar, name, lastMessage, i
     return (
         <SDialogItem onClick={() => onClickHandler()} isActive={isActive}>
             <SAvatar size={40} src={avatar} />
-            <SFlexBlock width={"100%"} gap={5} flexDirection={"column"} overflow={"hidden"}>
-                <SFlexBlock alignItems={"center"} justifyContent={"space-between"}>
+            <Box width={"100%"} gap={5} flexDirection={"column"} overflow={"hidden"}>
+                <Box alignItems={"center"} justifyContent={"space-between"}>
                     <SText isEllipsis fontWeight={900}>
                         {name}
                     </SText>
                     <SText opacity={0.5}>
                         {lastMessage?.time}
                     </SText>
-                </SFlexBlock>
+                </Box>
                 <SText isEllipsis>
                     {lastMessage?.me && <SText opacity={0.4}>Me: </SText>}
                     {lastMessage?.text}
                 </SText>
-            </SFlexBlock>
+            </Box>
         </SDialogItem>
     )
 }

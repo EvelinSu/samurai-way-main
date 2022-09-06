@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import {SFlexBlock} from "../../components/FlexBlock/SFlexBlock";
+import {Box} from "../../components/Box/Box";
 import {theme} from "../../styles/constants";
 
 export const SProfileHeaderImage = styled.img(props => ({
@@ -15,7 +15,7 @@ export const SProfileHeaderImage = styled.img(props => ({
 type TSProfileProps = {
     stylized?: boolean
 }
-export const SProfile = styled(SFlexBlock)<TSProfileProps>(({stylized}) => ({
+export const SProfile = styled(Box)<TSProfileProps>(({stylized}) => ({
     flexDirection: "column",
     height: "100%",
     ...stylized && {

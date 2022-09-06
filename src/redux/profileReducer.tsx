@@ -30,7 +30,7 @@ const initialState: TProfilePage = ({
 
 const profileReducer = (state: TProfilePage = initialState, action: TActions): TProfilePage => {
     switch (action.type) {
-        case "ADD-POST": {
+        case "ADD-POST":
             const newPost: TPost = {
                 id: v1(),
                 text: action.postText,
@@ -38,16 +38,15 @@ const profileReducer = (state: TProfilePage = initialState, action: TActions): T
                 isLiked: false,
                 date: getStringDate(new Date())
             }
-            let stateCopy = {...state}
-            stateCopy.posts = [ newPost, ...state.posts]
-            return stateCopy
-        }
-
-        case "CHANGE-NEW-POST-TEXT": {
-            let stateCopy = {...state}
-            stateCopy.newPostText = action.newPostText
-            return stateCopy
-        }
+            return {
+                ...state,
+                posts: [newPost, ...state.posts]
+            }
+        case "CHANGE-NEW-POST-TEXT":
+            return {
+                ...state,
+                newPostText: action.newPostText
+            }
         default:
             return state
     }

@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import {Property} from "csstype";
 
-type TFlexBlockProps = {
+type TBoxProps = {
     flexDirection?: Property.FlexDirection,
     alignItems?: Property.AlignItems,
     justifyContent?: Property.JustifyContent,
@@ -19,7 +19,7 @@ type TFlexBlockProps = {
     flexGrow?: Property.FlexGrow,
 }
 
-export const SFlexBlock = styled.div<TFlexBlockProps>((props)=> ({
+export const Box = styled.div<TBoxProps>((props)=> ({
     display: "flex",
     flexDirection: props.flexDirection,
     alignItems: props.alignItems,

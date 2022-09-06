@@ -2,7 +2,7 @@ import React, {FC} from 'react';
 import DialogItem from "../DialogItem/DialogItem";
 import {SDialogsItemsList} from "../styled";
 import {TMessage} from "../../../redux/types";
-import {TDialogs} from "../../../redux/dialogsReduser";
+import {TDialogs} from "../../../redux/dialogsReducer";
 
 type TDialogsItemsList = {
     dialogs: TDialogs

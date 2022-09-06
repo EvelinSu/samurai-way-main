@@ -8,6 +8,7 @@ import LogoutIcon from "../../assets/icons/LogoutIcon";
 import React from "react";
 import {Property} from "csstype";
 import {PATH} from "../../redux/types";
+import UsersIcon from "../../assets/icons/UsersIcon";
 
 type TNavLink = {
     id: number,
@@ -35,13 +36,19 @@ export const navLinks: TNavLinks = [
     },
     {
         id: 2,
+        label: "Users",
+        icon: <UsersIcon />,
+        link: PATH.users,
+    },
+    {
+        id: 3,
         label: "News",
         icon: <PaperIcon />,
         link: PATH.news,
         disabled: true
     },
     {
-        id: 3,
+        id: 4,
         label: "Music",
         icon: <MusicIcon />,
         link: PATH.music,
@@ -49,7 +56,7 @@ export const navLinks: TNavLinks = [
 
     },
     {
-        id: 4,
+        id: 5,
         label: "Settings",
         icon: <SettingsIcon />,
         margin: "auto 0 0 0",
@@ -57,7 +64,7 @@ export const navLinks: TNavLinks = [
         disabled: true
     },
     {
-        id: 5,
+        id: 6,
         label: "LogOut",
         icon: <LogoutIcon />,
         disabled: true
