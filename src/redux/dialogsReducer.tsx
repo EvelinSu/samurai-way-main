@@ -1,7 +1,6 @@
 import {v1} from "uuid";
 import {getStringDate} from "../common/utils";
 import {TActions, TDialog, TMessage} from "./types";
-import {stat} from "fs";
 
 let defaultDate = '1 hour ago'
 
@@ -17,27 +16,30 @@ export type TDialogsPage = {
 }
 const initialState: TDialogsPage = {
     dialogs: {
-        "1": {
+        "3": {
+            userId: '3',
+            messagesId: [],
             newMessageText: '',
-            name: "Kisa",
-            avatar: "https://i.imgur.com/N3ErVCc.png",
-            messagesId: ["1", "2", "4"],
-            lastSeen: 'today',
         },
         "2": {
+            userId: '2',
+            messagesId: ["1", "2", "4"],
             newMessageText: '',
-            name: "Kuki",
-            avatar: "https://i.imgur.com/a2GuVCv.png",
-            messagesId: ["3", "5"],
-            lastSeen: '',
         },
-        "3": {
+        "1": {
+            userId: '1',
             newMessageText: '',
-            name: "Pushok",
-            avatar: "https://i.imgur.com/1Skz4Sj.png",
-            messagesId: ["6"],
-            lastSeen: '1 hour ago',
-
+            messagesId: ["3", "5", "10"],
+        },
+        "4": {
+            userId: '4',
+            newMessageText: '',
+            messagesId: ["6", "7", "8", "9", "10"],
+        },
+        "5": {
+            userId: '5',
+            newMessageText: '',
+            messagesId: [],
         }
     },
     dialogsMessages: [
@@ -49,12 +51,14 @@ const initialState: TDialogsPage = {
         },
         {
             id: "2",
-            text: "Ales grow from horrors like heavy-hearted codfishs. ",
+            text: "Ales grow from horrors like heavy-hearted codfishs. Yuck, wow. Breeze of a gutless death, view the horror!",
             time: defaultDate,
         },
         {
             id: "3",
-            text: "Greed is a sunny skull. ",
+            text: "Greed is a sunny skull. Where is the scrawny wave? Ah! Pieces o' adventure are forever old. Furners are the sails of the" +
+                " dead amnesty. Well, never endure a reef.The" +
+                " shark hoists with love, hail the reef.",
             time: defaultDate,
             me: true,
         },
@@ -74,6 +78,29 @@ const initialState: TDialogsPage = {
             id: "6",
             text: "How small. You taste like a sun. ",
             time: defaultDate,
+        },
+        {
+            id: "7",
+            text: "The cannibal falls adventure like a warm sea-dog. ",
+            time: defaultDate,
+        },
+        {
+            id: "8",
+            text: "\"Hobble impatiently like a cold sea-dog. Well, beauty! Never command a whale. The seashell fears with " +
+                "beauty, fight the seychelles until it falls. Fine, swashbuckling jolly rogers smartly fear a rough," +
+                " lively bilge rat. the bung hole ransacks with life, command the seychelles",
+            time: defaultDate,
+        },
+        {
+            id: "9",
+            text: "Cannons fall from endurances like evil shores.",
+            time: defaultDate,
+        },
+        {
+            id: "10",
+            text: "The salty wave greedily drinks the whale.",
+            time: defaultDate,
+            me: true,
         }
     ]
 }

@@ -9,20 +9,22 @@ import Message from "../../../components/Message/Message";
 import {TMessage} from "../../../redux/types";
 import {TDialogs} from "../../../redux/dialogsReducer";
 import {DialogSendMessageContainer} from "./DialogSendMessageContainer";
+import {TUser} from "../../../redux/usersReducer";
 
 type TDialogContentProps = {
     dialogs: TDialogs
     messages: TMessage[]
     id: string
+    user?: TUser,
 }
 
 const DialogContent: FC<TDialogContentProps> = ({
     dialogs,
     messages,
+    user,
     id
 
 }) => {
-
     const activeMessagesId = id ? dialogs[id].messagesId : "0"
     const activeMessages = messages.filter((el) => activeMessagesId.includes(el.id))
 
@@ -30,21 +32,21 @@ const DialogContent: FC<TDialogContentProps> = ({
         <Fragment>
             <SDialogWindowHeader>
                 <SAvatar size={40}
-                         src={dialogs[id].avatar}
+                         src={user && user.avatar}
                 />
                 <Box gap={1} flexDirection={"column"}>
                     <STitle>
-                        {dialogs[id].name}
+                        {user && user.name}
                     </STitle>
                     <SText opacity={0.5} fontSize={"14px"}>
-                        last seen: {dialogs[id].lastSeen || 'recently'}
+                        last seen: {user && user.lastSeen || 'recently'}
                     </SText>
                 </Box>
             </SDialogWindowHeader>
             <SDialogWindowBody>
                 <SScrollContainer>
                     {
-                        activeMessages
+                        activeMessages.length > 0
                             ? activeMessages.map((message) => (
                                 <Message
                                     key={message.id}
@@ -53,7 +55,7 @@ const DialogContent: FC<TDialogContentProps> = ({
                                     me={message.me}
                                 />
                             ))
-                            : 'none'
+                            : ''
                     }
                 </SScrollContainer>
             </SDialogWindowBody>

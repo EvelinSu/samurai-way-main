@@ -22,7 +22,7 @@ const Dialogs: FC<TDialogsProps> = (props) => {
     return (
         <SSiteContent>
             <SDialogs>
-                <SDialogContainer>
+                <SDialogContainer justifyContent={id ? 'initial' : 'center'}>
                     {id
                         ? <DialogContentContainer id={id} />
                         : <SNoneDialog>Select a chat </SNoneDialog>

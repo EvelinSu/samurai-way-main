@@ -12,7 +12,7 @@ export const SMessage = styled.div<TSMessageProps>(props => ({
     columnGap: 10,
     rowGap: 10,
     fontSize: 14,
-    color: "#fff",
+    color: "rgba(255,255,255,0.89)",
     wordBreak: "break-word",
     whiteSpace: "pre-line",
     ...props.isMine && {

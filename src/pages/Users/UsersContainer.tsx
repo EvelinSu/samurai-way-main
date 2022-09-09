@@ -3,7 +3,7 @@ import {connect} from "react-redux";
 import {Dispatch} from "redux";
 import {TRootState} from "../../redux/reduxStore";
 import Users from "./Users";
-import {followUserAC, setUsersAC, TUser, unFollowUserAC} from "../../redux/usersReducer";
+import {followUserToggleAC, setUsersAC, TUser} from "../../redux/usersReducer";
 
 type TMapStateToProps = {
     users: Array<TUser>
@@ -15,14 +15,12 @@ export const mapStateToProps = (state: TRootState): TMapStateToProps => {
 }
 
 type TMapDispatchStateToProps = {
-    follow: (userId: string, myId: string) => void
-    unfollow: (userId: string, myId: string) => void
+    followToggle: (userId: string, isMyFollow: boolean) => void
     setUsers: (users: Array<TUser>) => void
 }
 export const mapDispatchToProps = (dispatch: Dispatch): TMapDispatchStateToProps => {
     return {
-        follow: (UserId, myId) => dispatch(followUserAC(UserId, myId)),
-        unfollow: (UserId, myId) => dispatch(unFollowUserAC(UserId, myId)),
+        followToggle: (UserId, isMyFollow) => dispatch(followUserToggleAC(UserId, isMyFollow)),
         setUsers: (users) => dispatch(setUsersAC(users))
     }
 }

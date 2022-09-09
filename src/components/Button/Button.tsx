@@ -5,6 +5,7 @@ type TButtonProps = {
     label: string,
     onClick: () => void
     isDisabled?: boolean
+    backgroundColor?: string
 }
 
 const Button: FC<TButtonProps> = ({isDisabled, onClick, ...props}) => {
@@ -12,7 +13,7 @@ const Button: FC<TButtonProps> = ({isDisabled, onClick, ...props}) => {
         onClick();
     };
     return (
-       <SButton disabled={isDisabled} onClick={() => onClickHandler()}>
+       <SButton disabled={isDisabled} onClick={() => onClickHandler()} {...props}>
            {props.label}
        </SButton>
     );

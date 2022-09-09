@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import {theme} from "../../styles/constants";
+import {Box} from "../../components/Box/Box";
 
 
 
@@ -30,7 +31,7 @@ export const SDialogsItemsList = styled.div((props) => ({
 }))
 
 
-export const SDialogContainer = styled.div((props) => ({
+export const SDialogContainer = styled(Box)((props) => ({
     display: "flex",
     flexDirection: "column",
     flexGrow: 1,
@@ -40,11 +41,11 @@ export const SDialogContainer = styled.div((props) => ({
 }))
 
 export const SNoneDialog = styled.div((props) => ({
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-    height: "100%",
+    alignSelf: "center",
     opacity: 0.6,
+    borderRadius: theme.blockSettings.borderRadius,
+    backgroundColor: "rgba(255, 255, 255, 0.1)",
+    padding: "3px 15px",
 
 }))
 
@@ -52,8 +53,8 @@ export const SDialogWindowHeader = styled.div((props) => ({
     display: "flex",
     flexDirection: "row",
     padding: "10px 15px",
-    backgroundColor: theme.colors.primary,
-    borderRadius: theme.blockSettings.borderRadius,
+    backgroundColor: "rgba(0, 0, 0, 0.1)",
+    borderRadius: `${theme.blockSettings.borderRadius} 0 ${theme.blockSettings.borderRadius} 0`,
     gap: 20,
 
 }))

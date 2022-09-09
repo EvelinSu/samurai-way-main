@@ -1,7 +1,7 @@
 export const theme = {
     colors: {
         primaryDark: "#272c4a",
-        primary: "#293854",
+        primary: "#293254",
         primaryLight: "#3f4e6e",
         primaryLighter: "#6d86a2",
         primaryLightest: "#88a2be",
@@ -17,6 +17,8 @@ export const theme = {
         },
         button: {
             success: "#5e81b4",
+            active: "#7b64c7",
+            cancel: "rgba(137,138,192,0.6)"
         }
     },
     blockSettings: {

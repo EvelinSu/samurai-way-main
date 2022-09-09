@@ -3,10 +3,11 @@ import {TActions} from "./types";
 export type TUser = {
     id: string,
     avatar: string,
-    direction: string,
+    description: string,
     name: string,
     lastSeen: string,
-    followers: Array<string>
+    followers: Array<string>,
+    isMyFollow: boolean
 }
 
 export type TUsersPage = {
@@ -18,44 +19,59 @@ const initialState: TUsersPage = {
         {
             id: '1',
             name: "Kisa",
-            direction: 'Ooh, yer not enduring me without a faith!',
-            avatar: "https://i.imgur.com/N3ErVCc.png",
+            description: 'Ooh, yer not enduring me without a faith!',
+            avatar: "https://i.imgur.com/F6qPz9E.png",
             lastSeen: 'today',
             followers: ['3', '2'],
+            isMyFollow: false
         },
         {
             id: '2',
             name: "Kuki",
-            avatar: "https://i.imgur.com/a2GuVCv.png",
+            avatar: "https://i.imgur.com/RxAof5Q.png",
             lastSeen: '2 hour ago',
-            direction: 'Never love a bilge rat.',
+            description: 'Never love a bilge rat.',
             followers: ['3'],
-
+            isMyFollow: false
         },
         {
             id: '3',
-            name: "Pushok",
-            avatar: "https://i.imgur.com/1Skz4Sj.png",
+            name: "Bred",
+            avatar: "https://i.imgur.com/S4Qr4IC.png",
             lastSeen: '1 hour ago',
-            direction: 'Oh, shiny jack. go to isla de muerta.',
+            description: 'Oh, shiny jack. go to isla de muerta.',
             followers: ['1'],
+            isMyFollow: true
+        },
+        {
+            id: '4',
+            name: "Maryl",
+            avatar: "https://i.imgur.com/BrMe8Wb.png",
+            lastSeen: '1 hour ago',
+            description: 'Ah, scrawny anchor. you wont rob the bikini atoll.',
+            followers: ['1, 3'],
+            isMyFollow: true
+        },
+        {
+            id: '5',
+            name: "Jack",
+            avatar: "https://i.imgur.com/uwfZokb.png",
+            lastSeen: '1 hour ago',
+            description: 'The cockroach hauls with greed, trade the brig until it grows.',
+            followers: ['1'],
+            isMyFollow: true
         },
     ]
 }
 
 const usersReducer = (state: TUsersPage = initialState, action: TActions): TUsersPage => {
     switch (action.type) {
-        case ('FOLLOW-USER'):
+        case ('FOLLOW-USER-TOGGLE'):
             return {
-                ...state, users: [...state.users.map(el => el.id === action.myId
-                    ? {...el, followers: [...el.followers, action.followUserId]}
-                    : {...el})]
-            }
-        case ('UNFOLLOW-USER'):
-            return {
-                ...state, users: [...state.users.map(el => el.id === action.myId
-                    ? {...el, followers: el.followers.filter(id => id !== action.followUserId)}
-                    : el)]
+                ...state, users: [...state.users.map(el => el.id === action.userId
+                    ? {...el, isMyFollow: action.isMyFollow}
+                    : {...el}
+                )]
             }
         case ("SET-USERS"):
             return {...state, users: action.users}
@@ -63,16 +79,11 @@ const usersReducer = (state: TUsersPage = initialState, action: TActions): TUser
     return state
 }
 
-export const followUserAC = (myId: string, followUserId: string) => ({
-    type: "FOLLOW-USER",
-    myId: myId,
-    followUserId: followUserId
-} as const)
 
-export const unFollowUserAC = (myId: string, followUserId: string) => ({
-    type: "UNFOLLOW-USER",
-    myId: myId,
-    followUserId: followUserId,
+export const followUserToggleAC = (userId: string, isMyFollow: boolean) => ({
+    type: "FOLLOW-USER-TOGGLE",
+    userId: userId,
+    isMyFollow: isMyFollow
 } as const)
 
 export const setUsersAC = (users: Array<TUser>) => ({

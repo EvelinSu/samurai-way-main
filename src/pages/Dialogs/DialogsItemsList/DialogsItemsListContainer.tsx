@@ -5,12 +5,14 @@ import {connect} from "react-redux";
 import {Dispatch} from "redux";
 import {TDialogs} from "../../../redux/dialogsReducer";
 import {TMessage} from "../../../redux/types";
+import {TUser} from "../../../redux/usersReducer";
 
 
 type TMapStateToProps = {
     dialogs: TDialogs
     messages: Array<TMessage>
     ownProps: TOwnProps
+    users: Array<TUser>
 }
 
 type TOwnProps = {
@@ -21,6 +23,7 @@ export const mapStateToProps = (state: TRootState, ownProps: TOwnProps): TMapSta
     return {
         dialogs: state.dialogsPage.dialogs,
         messages: state.dialogsPage.dialogsMessages,
+        users: state.usersPage.users,
         ownProps: {
             id: ownProps.id,
             onClickHandler: ownProps.onClickHandler

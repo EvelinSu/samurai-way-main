@@ -1,6 +1,6 @@
 import {changeNewMessageTextAC, sendMessageAC} from "./dialogsReducer";
 import {addPostAC, changeNewPostTextAC} from "./profileReducer";
-import {followUserAC, setUsersAC, unFollowUserAC} from "./usersReducer";
+import {followUserToggleAC, setUsersAC} from "./usersReducer";
 
 
 
@@ -9,16 +9,13 @@ export type TMessage = {
     text: string,
     time: string,
     me?: boolean,
-    name?: string,
-    avatar?: string,
+    userId?: string
 }
 
 export type TDialog = {
     newMessageText: string
-    name: string,
     messagesId: Array<string>,
-    avatar: string
-    lastSeen: string,
+    userId: string
 }
 
 
@@ -27,8 +24,7 @@ export type TActions =
     | ReturnType<typeof changeNewPostTextAC>
     | ReturnType<typeof sendMessageAC>
     | ReturnType<typeof changeNewMessageTextAC>
-    | ReturnType<typeof followUserAC>
-    | ReturnType<typeof unFollowUserAC>
+    | ReturnType<typeof followUserToggleAC>
     | ReturnType<typeof setUsersAC>
 
 export const PATH = {

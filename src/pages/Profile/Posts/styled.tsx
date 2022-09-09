@@ -10,7 +10,8 @@ export const SPost = styled.div((props) => ({
 export const SPostContent = styled.div((props) => ({
     display: "flex",
     flexWrap: "wrap",
-    backgroundColor: theme.colors.primary,
+    backgroundColor: theme.colors.primaryLight,
+    boxShadow: "0 0 10px 0 rgba(0, 0, 0, 0.1)",
     padding: "15px 20px",
     borderRadius: 15,
     position: "relative",
@@ -19,7 +20,7 @@ export const SPostContent = styled.div((props) => ({
         position: "absolute",
         width: 30,
         height: 15,
-        borderRight: `10px solid ${theme.colors.primary}`,
+        borderRight: `10px solid ${theme.colors.primaryLight}`,
         borderBottomRightRadius: "35%",
         left: -40,
         top: 35,

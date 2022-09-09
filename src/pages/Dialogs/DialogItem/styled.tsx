@@ -11,7 +11,7 @@ export const SDialogItem = styled.div<TSDialogItemProps>(({isActive, ...props}) 
     maxWidth: "100%",
     padding: 10,
     borderRadius: theme.blockSettings.borderRadius,
-    backgroundColor: theme.colors.primaryLight,
+    backgroundColor: "rgba(0, 0, 0, 0.1)",
     gap: 15,
     fontSize: 14,
     cursor: "pointer",

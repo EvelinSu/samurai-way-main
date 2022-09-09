@@ -5,21 +5,26 @@ import {TRootState} from "../../../redux/reduxStore";
 import {changeNewMessageTextAC, sendMessageAC, TDialogs} from "../../../redux/dialogsReducer";
 import {Dispatch} from "redux";
 import {TMessage} from "../../../redux/types";
+import {TUser} from "../../../redux/usersReducer";
 
 
 type TMapStateToProps = {
     dialogs: TDialogs
     messages: Array<TMessage>
     ownProps: TOwnProps,
+    user?: TUser,
 }
+
 type TOwnProps = {
-    id: string
+    id: string,
+
 }
 
 let mapStateToProps = (state: TRootState, ownProps: TOwnProps): TMapStateToProps => {
     return {
         dialogs: state.dialogsPage.dialogs,
         messages: state.dialogsPage.dialogsMessages,
+        user: state.usersPage.users.find(el => el.id === ownProps.id),
         ownProps: {
             id: ownProps.id,
         }
