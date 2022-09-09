@@ -14,10 +14,10 @@ const Profile: FC<TProfileProps> = () => {
     return (
         <SSiteContent stylized>
             <Box alignItems={"center"}>
-                <SAvatar border size={180} src={"https://i.imgur.com/VlEAeU2.png"} />
+                <SAvatar border size={180} src={"https://i.imgur.com/4jbcLBC.png"} />
                 <Box flexDirection={"column"}>
                     <STitle color={theme.colors.primaryLightest}>
-                        Nickname
+                        Bublik
                     </STitle>
                     <SText>
                         The evil plunder darkly pulls the mainland.
