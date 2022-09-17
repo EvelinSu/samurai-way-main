@@ -1,13 +1,13 @@
 import {TActions} from "./types";
+import axios, {AxiosResponse} from "axios";
 
 export type TUser = {
-    id: string,
-    avatar: string,
-    description: string,
+    id: number,
+    photos: { [Key: string]: string },
+    status: string,
     name: string,
-    lastSeen: string,
-    followers: Array<string>,
-    isMyFollow: boolean
+    // lastSeen: string,
+    followed: boolean
 }
 
 export type TUsersPage = {
@@ -15,51 +15,57 @@ export type TUsersPage = {
 }
 
 const initialState: TUsersPage = {
+
     users: [
         {
-            id: '1',
+            id: 1,
             name: "Kisa",
-            description: 'Ooh, yer not enduring me without a faith!',
-            avatar: "https://i.imgur.com/F6qPz9E.png",
-            lastSeen: 'today',
-            followers: ['3', '2'],
-            isMyFollow: false
+            status: 'Ooh, yer not enduring me without a faith!',
+            photos: {
+                small: "https://i.imgur.com/F6qPz9E.png",
+                large: "https://i.imgur.com/F6qPz9E.png"
+            },
+            followed: false
         },
         {
-            id: '2',
+            id: 2,
             name: "Kuki",
-            avatar: "https://i.imgur.com/RxAof5Q.png",
-            lastSeen: '2 hour ago',
-            description: 'Never love a bilge rat.',
-            followers: ['3'],
-            isMyFollow: false
+            photos: {
+                small: "https://i.imgur.com/RxAof5Q.png",
+                large: "https://i.imgur.com/RxAof5Q.png"
+            },
+            status: 'Never love a bilge rat.',
+            followed: false
         },
         {
-            id: '3',
+            id: 3,
             name: "Bred",
-            avatar: "https://i.imgur.com/S4Qr4IC.png",
-            lastSeen: '1 hour ago',
-            description: 'Oh, shiny jack. go to isla de muerta.',
-            followers: ['1'],
-            isMyFollow: true
+            photos: {
+                small: "https://i.imgur.com/S4Qr4IC.png",
+                large: "https://i.imgur.com/S4Qr4IC.png"
+            },
+            status: 'Oh, shiny jack. go to isla de muerta.',
+            followed: true
         },
         {
-            id: '4',
+            id: 4,
             name: "Maryl",
-            avatar: "https://i.imgur.com/BrMe8Wb.png",
-            lastSeen: '1 hour ago',
-            description: 'Ah, scrawny anchor. you wont rob the bikini atoll.',
-            followers: ['1, 3'],
-            isMyFollow: true
+            photos: {
+                small: "https://i.imgur.com/BrMe8Wb.png",
+                large: "https://i.imgur.com/BrMe8Wb.png"
+            },
+            status: 'Ah, scrawny anchor. you wont rob the bikini atoll.',
+            followed: true
         },
         {
-            id: '5',
+            id: 5,
             name: "Jack",
-            avatar: "https://i.imgur.com/uwfZokb.png",
-            lastSeen: '1 hour ago',
-            description: 'The cockroach hauls with greed, trade the brig until it grows.',
-            followers: ['1'],
-            isMyFollow: true
+            photos: {
+                small: "https://i.imgur.com/uwfZokb.png",
+                large: "https://i.imgur.com/uwfZokb.png"
+            },
+            status: 'The cockroach hauls with greed, trade the brig until it grows.',
+            followed: true
         },
     ]
 }
@@ -68,22 +74,20 @@ const usersReducer = (state: TUsersPage = initialState, action: TActions): TUser
     switch (action.type) {
         case ('FOLLOW-USER-TOGGLE'):
             return {
-                ...state, users: [...state.users.map(el => el.id === action.userId
-                    ? {...el, isMyFollow: action.isMyFollow}
+                ...state, users: [...state.users.map(el => String(el.id) === action.userId
+                    ? {...el, followed: !el.followed}
                     : {...el}
                 )]
             }
         case ("SET-USERS"):
-            return {...state, users: action.users}
+            return {...state, users: [...state.users, ...action.users]}
     }
     return state
 }
 
-
-export const followUserToggleAC = (userId: string, isMyFollow: boolean) => ({
+export const followUserToggleAC = (userId: string) => ({
     type: "FOLLOW-USER-TOGGLE",
     userId: userId,
-    isMyFollow: isMyFollow
 } as const)
 
 export const setUsersAC = (users: Array<TUser>) => ({
