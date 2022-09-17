@@ -3,7 +3,8 @@ import {Box} from "../../../components/Box/Box";
 import {SText} from "../../../components/Text/SText";
 import React, {FC} from "react";
 import {TMessage} from "../../../redux/types";
-import {SDialogItem} from "./styled";
+import {SDialogItem, SDialogItemHeader} from "./styled";
+import UserIcon from "../../../assets/icons/UserIcon";
 
 type TDialogItemProps = {
     name: string,
@@ -11,21 +12,23 @@ type TDialogItemProps = {
     isActive: boolean,
     lastMessage?: TMessage,
     onClick: () => void,
+    isMyFollow: boolean
 }
 
-const DialogItem: FC<TDialogItemProps> = ({onClick, avatar, name, lastMessage, isActive}, ...props) => {
+const DialogItem: FC<TDialogItemProps> = ({isMyFollow, onClick, avatar, name, lastMessage, isActive}, ...props) => {
     const onClickHandler = () => {
         onClick()
     }
     return (
         <SDialogItem onClick={() => onClickHandler()} isActive={isActive}>
             <SAvatar size={40} src={avatar} />
-            <Box width={"100%"} gap={5} flexDirection={"column"} overflow={"hidden"}>
-                <Box alignItems={"center"} justifyContent={"space-between"}>
+            <SDialogItemHeader>
+                <Box alignItems={"center"} title={isMyFollow ? "my follow" : ''} gap={"5px"}>
+                    {isMyFollow && <UserIcon size={"14"} />}
                     <SText isEllipsis fontWeight={900}>
                         {name}
                     </SText>
-                    <SText opacity={0.5}>
+                    <SText opacity={0.5} margin={"0 0 0 auto"}>
                         {lastMessage?.time}
                     </SText>
                 </Box>
@@ -33,7 +36,7 @@ const DialogItem: FC<TDialogItemProps> = ({onClick, avatar, name, lastMessage, i
                     {lastMessage?.me && <SText opacity={0.4}>Me: </SText>}
                     {lastMessage?.text}
                 </SText>
-            </Box>
+            </SDialogItemHeader>
         </SDialogItem>
     )
 }

@@ -56,3 +56,21 @@ export const SUserName = styled.div<TUserNameProps>(props => ({
 
     }
 }))
+
+export const SUserStatus = styled.div(props => ({
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    marginBottom: 15,
+    flexGrow: 1,
+
+
+}))
+
+export const SUserStatusText = styled.div(props => ({
+    textOverflow: "ellipsis",
+    overflow: "hidden",
+    height: "min-content",
+    maxHeight: "2.9rem",
+
+}))

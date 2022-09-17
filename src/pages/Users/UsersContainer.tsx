@@ -15,12 +15,12 @@ export const mapStateToProps = (state: TRootState): TMapStateToProps => {
 }
 
 type TMapDispatchStateToProps = {
-    followToggle: (userId: string, isMyFollow: boolean) => void
+    followToggle: (userId: string) => void
     setUsers: (users: Array<TUser>) => void
 }
 export const mapDispatchToProps = (dispatch: Dispatch): TMapDispatchStateToProps => {
     return {
-        followToggle: (UserId, isMyFollow) => dispatch(followUserToggleAC(UserId, isMyFollow)),
+        followToggle: (UserId) => dispatch(followUserToggleAC(UserId)),
         setUsers: (users) => dispatch(setUsersAC(users))
     }
 }

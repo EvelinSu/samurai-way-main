@@ -32,14 +32,14 @@ const DialogContent: FC<TDialogContentProps> = ({
         <Fragment>
             <SDialogWindowHeader>
                 <SAvatar size={40}
-                         src={user && user.avatar}
+                         src={user && user.photos.small}
                 />
                 <Box gap={1} flexDirection={"column"}>
                     <STitle>
                         {user && user.name}
                     </STitle>
                     <SText opacity={0.5} fontSize={"14px"}>
-                        last seen: {user && user.lastSeen || 'recently'}
+                        last seen: {'recently'}
                     </SText>
                 </Box>
             </SDialogWindowHeader>

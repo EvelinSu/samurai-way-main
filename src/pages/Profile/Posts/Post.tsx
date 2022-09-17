@@ -5,7 +5,6 @@ import {SPost, SPostContent, SPostDate, SPostPanel, SPostText} from "./styled";
 import FavoriteIcon from "../../../assets/icons/FavoriteIcon";
 import {TPostProps} from "./types";
 import FavoriteFillIcon from "../../../assets/icons/FavoriteFillIcon";
-import {SText} from "../../../components/Text/SText";
 
 
 

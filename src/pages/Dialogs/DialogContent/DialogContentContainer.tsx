@@ -24,7 +24,7 @@ let mapStateToProps = (state: TRootState, ownProps: TOwnProps): TMapStateToProps
     return {
         dialogs: state.dialogsPage.dialogs,
         messages: state.dialogsPage.dialogsMessages,
-        user: state.usersPage.users.find(el => el.id === ownProps.id),
+        user: state.usersPage.users.find(el => String(el.id) === ownProps.id),
         ownProps: {
             id: ownProps.id,
         }

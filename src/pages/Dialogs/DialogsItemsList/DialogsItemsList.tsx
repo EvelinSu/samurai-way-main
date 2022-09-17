@@ -17,15 +17,17 @@ const DialogsItemsList:FC<TDialogsItemsList> = ({dialogs, messages, onClickHandl
     return (
         <SDialogsItemsList>
             {users.map((user) => {
+                let messagesId = dialogs[user.id].messagesId
                 return (
-                    dialogs[user.id].messagesId.length > 0 &&
+                    (messagesId.length > 0 || user.followed) &&
                     <DialogItem
-                        onClick={() => onClickHandler(user.id)}
+                        onClick={() => onClickHandler(String(user.id))}
                         name={user.name}
-                        avatar={user.avatar}
+                        avatar={user.photos.small}
+                        isMyFollow={user.followed}
                         lastMessage={messages.find(
-                            (el) => el.id === dialogs[user.id].messagesId[dialogs[user.id].messagesId.length - 1])}
-                        isActive={id === user.id}
+                            (el) => el.id === messagesId[messagesId.length - 1] || '')}
+                        isActive={id === String(user.id)}
                         key={user.id}
                     />
                 )
