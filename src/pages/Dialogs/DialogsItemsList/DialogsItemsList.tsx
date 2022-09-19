@@ -17,7 +17,7 @@ const DialogsItemsList:FC<TDialogsItemsList> = ({dialogs, messages, onClickHandl
     return (
         <SDialogsItemsList>
             {users.map((user) => {
-                let messagesId = dialogs[user.id].messagesId
+                let messagesId = dialogs[user.id]?.messagesId || ''
                 return (
                     (messagesId.length > 0 || user.followed) &&
                     <DialogItem
