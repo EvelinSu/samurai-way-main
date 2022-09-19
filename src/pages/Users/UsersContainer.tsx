@@ -2,7 +2,7 @@ import React from 'react';
 import {connect} from "react-redux";
 import {Dispatch} from "redux";
 import {TRootState} from "../../redux/reduxStore";
-import Users from "./Users";
+import UsersC from "./UsersC";
 import {followUserToggleAC, setUsersAC, TUser} from "../../redux/usersReducer";
 
 type TMapStateToProps = {
@@ -25,4 +25,4 @@ export const mapDispatchToProps = (dispatch: Dispatch): TMapDispatchStateToProps
     }
 }
 
-export const UsersContainer = connect(mapStateToProps, mapDispatchToProps)(Users)
+export const UsersContainer = connect(mapStateToProps, mapDispatchToProps)(UsersC)
