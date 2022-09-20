@@ -27,15 +27,16 @@ const User: React.FC<TUserProps> = ({user, id, onClickHandler}) => {
         >
             <BoxShadowContent>
                 <SUserBoxHeader>
-                    <SAvatar
-                        size={isHovered  === id && user.photos.large ? "0px" : '40px'}
-                        opacity={isHovered === id && user.photos.large ? "0" : ''}
-                        src={user.photos.large || userPhoto}
-                    />
-                    <SUserName isHovered={isHovered === id}>{user.name}</SUserName>
+                    {!user.photos.large && (
+                        <SAvatar
+                            size={'40px'}
+                            src={userPhoto}
+                        />
+                    )}
+                    <SUserName title={user.name} isHovered={isHovered === id}>{user.name}</SUserName>
                 </SUserBoxHeader>
                 <Box flexGrow={1} width={"100%"} flexDirection={"column"}>
-                    <SUserStatus>
+                    <SUserStatus title={user.status}>
                         {user.status
                             ? <SUserStatusText>{user.status}</SUserStatusText>
                             : <SUserStatusText opacity={0.3}>the user is silent</SUserStatusText>

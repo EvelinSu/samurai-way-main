@@ -11,62 +11,69 @@ export type TUser = {
 
 export type TUsersPage = {
     users: Array<TUser>
+    pageSize: number,
+    totalUsersCount: number
+    currentPage: number
 }
 
-const initialState: TUsersPage = {
+export const users: Array<TUser> = [
+    {
+        id: 1,
+        name: "Kisa",
+        status: 'Ooh, yer not enduring me without a faith!',
+        photos: {
+            small: "https://i.imgur.com/F6qPz9E.png",
+            large: "https://i.imgur.com/F6qPz9E.png"
+        },
+        followed: false
+    },
+    {
+        id: 2,
+        name: "Kuki",
+        photos: {
+            small: "https://i.imgur.com/RxAof5Q.png",
+            large: "https://i.imgur.com/RxAof5Q.png"
+        },
+        status: 'Never love a bilge rat.',
+        followed: false
+    },
+    {
+        id: 3,
+        name: "Bred",
+        photos: {
+            small: "https://i.imgur.com/S4Qr4IC.png",
+            large: "https://i.imgur.com/S4Qr4IC.png"
+        },
+        status: 'Oh, shiny jack. go to isla de muerta.',
+        followed: true
+    },
+    {
+        id: 4,
+        name: "Maryl",
+        photos: {
+            small: "https://i.imgur.com/BrMe8Wb.png",
+            large: "https://i.imgur.com/BrMe8Wb.png"
+        },
+        status: 'Ah, scrawny anchor. you wont rob the bikini atoll.',
+        followed: true
+    },
+    {
+        id: 5,
+        name: "Jack",
+        photos: {
+            small: "https://i.imgur.com/uwfZokb.png",
+            large: "https://i.imgur.com/uwfZokb.png"
+        },
+        status: 'The cockroach hauls with greed, trade the brig until it grows.',
+        followed: true
+    },
+]
 
-    users: [
-        {
-            id: 1,
-            name: "Kisa",
-            status: 'Ooh, yer not enduring me without a faith!',
-            photos: {
-                small: "https://i.imgur.com/F6qPz9E.png",
-                large: "https://i.imgur.com/F6qPz9E.png"
-            },
-            followed: false
-        },
-        {
-            id: 2,
-            name: "Kuki",
-            photos: {
-                small: "https://i.imgur.com/RxAof5Q.png",
-                large: "https://i.imgur.com/RxAof5Q.png"
-            },
-            status: 'Never love a bilge rat.',
-            followed: false
-        },
-        {
-            id: 3,
-            name: "Bred",
-            photos: {
-                small: "https://i.imgur.com/S4Qr4IC.png",
-                large: "https://i.imgur.com/S4Qr4IC.png"
-            },
-            status: 'Oh, shiny jack. go to isla de muerta.',
-            followed: true
-        },
-        {
-            id: 4,
-            name: "Maryl",
-            photos: {
-                small: "https://i.imgur.com/BrMe8Wb.png",
-                large: "https://i.imgur.com/BrMe8Wb.png"
-            },
-            status: 'Ah, scrawny anchor. you wont rob the bikini atoll.',
-            followed: true
-        },
-        {
-            id: 5,
-            name: "Jack",
-            photos: {
-                small: "https://i.imgur.com/uwfZokb.png",
-                large: "https://i.imgur.com/uwfZokb.png"
-            },
-            status: 'The cockroach hauls with greed, trade the brig until it grows.',
-            followed: true
-        },
-    ]
+const initialState: TUsersPage = {
+    users: [],
+    pageSize: 12,
+    totalUsersCount: 60,
+    currentPage: 1
 }
 
 const usersReducer = (state: TUsersPage = initialState, action: TActions): TUsersPage => {
@@ -79,19 +86,33 @@ const usersReducer = (state: TUsersPage = initialState, action: TActions): TUser
                 )]
             }
         case ("SET-USERS"):
-            return {...state, users: [...state.users]}
+            // return {...state, users: [...state.users]}
+            return {...state, users: [...action.users]}
+        case "SET-CURRENT-PAGE":
+            return {...state, currentPage: action.currentPage}
+        case "SET-TOTAL-USERS-COUNT":
+            return {...state, totalUsersCount: action.usersCount}
     }
     return state
 }
 
 export const followUserToggleAC = (userId: string) => ({
     type: "FOLLOW-USER-TOGGLE",
-    userId: userId,
+    userId,
 } as const)
 
 export const setUsersAC = (users: Array<TUser>) => ({
     type: "SET-USERS",
-    users: users
+    users
+} as const)
+
+export const setCurrentPageAC = (currentPage: number) => ({
+    type: "SET-CURRENT-PAGE",
+    currentPage
+} as const)
+export const setTotalUsersCountAC = (usersCount: number) => ({
+    type: "SET-TOTAL-USERS-COUNT",
+    usersCount
 } as const)
 
 export default usersReducer

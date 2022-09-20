@@ -6,6 +6,7 @@ import axios from "axios";
 import User from "./User";
 import PagePanel from "../PagePanel";
 import Input from "../../components/Form/Input";
+import Pagination from "../../components/Pagination/Pagination";
 
 type TUsersProps = {
     users: Array<TUser>
@@ -35,6 +36,7 @@ const Users: React.FC<TUsersProps> = ({users, followToggle, ...props}) => {
                     <User id={String(user.id)} user={user} onClickHandler={onClickHandler}/>
                 ))}
             </Grid>
+            <Pagination pagesCount={1} onClick={() => alert('шо ты тут делаешь')}/>
         </SSiteContent>
     );
 };
