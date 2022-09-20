@@ -31,8 +31,9 @@ const DialogContent: FC<TDialogContentProps> = ({
     return (
         <Fragment>
             <SDialogWindowHeader>
-                <SAvatar size={40}
-                         src={user && user.photos.small}
+                <SAvatar
+                    size={40}
+                    src={user && user.photos.small }
                 />
                 <Box gap={1} flexDirection={"column"}>
                     <STitle>
@@ -60,7 +61,7 @@ const DialogContent: FC<TDialogContentProps> = ({
                 </SScrollContainer>
             </SDialogWindowBody>
             <SDialogWindowFooter>
-                <DialogSendMessageContainer id={id}/>
+                <DialogSendMessageContainer id={id} />
             </SDialogWindowFooter>
         </Fragment>
     );

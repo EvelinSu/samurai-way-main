@@ -5,10 +5,11 @@ import React, {FC} from "react";
 import {TMessage} from "../../../redux/types";
 import {SDialogItem, SDialogItemHeader} from "./styled";
 import UserIcon from "../../../assets/icons/UserIcon";
+import defaultPhoto from '../../../assets/img/default-photo.png'
 
 type TDialogItemProps = {
-    name: string,
-    avatar: string,
+    name?: string,
+    avatar?: string,
     isActive: boolean,
     lastMessage?: TMessage,
     onClick: () => void,
@@ -21,7 +22,7 @@ const DialogItem: FC<TDialogItemProps> = ({isMyFollow, onClick, avatar, name, la
     }
     return (
         <SDialogItem onClick={() => onClickHandler()} isActive={isActive}>
-            <SAvatar size={40} src={avatar} />
+            <SAvatar size={40} src={avatar || defaultPhoto} />
             <SDialogItemHeader>
                 <Box alignItems={"center"} title={isMyFollow ? "my follow" : ''} gap={"5px"}>
                     {isMyFollow && <UserIcon size={"14"} />}
