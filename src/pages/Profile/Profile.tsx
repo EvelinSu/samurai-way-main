@@ -7,17 +7,23 @@ import {theme} from "../../styles/constants";
 import {SSiteContent} from "../../layout/styled";
 import {PostsContainer} from "./Posts/PostsContainer";
 
-export type TProfileProps = {
+export const me = {
+    name: "Bublik",
+    avatar: "https://i.imgur.com/0x0jeYA.png",
 }
+
+type TProfileProps = {
+}
+
 const Profile: FC<TProfileProps> = () => {
 
     return (
         <SSiteContent stylized>
             <Box alignItems={"center"}>
-                <SAvatar border size={180} src={"https://i.imgur.com/4jbcLBC.png"} />
+                <SAvatar border size={180} src={me.avatar} />
                 <Box flexDirection={"column"}>
                     <STitle color={theme.colors.primaryLightest}>
-                        Bublik
+                        {me.name}
                     </STitle>
                     <SText>
                         The evil plunder darkly pulls the mainland.
@@ -30,7 +36,7 @@ const Profile: FC<TProfileProps> = () => {
                     </SText>
                 </Box>
             </Box>
-            <PostsContainer />
+            <PostsContainer avatar={me.avatar} />
         </SSiteContent>
     );
 };

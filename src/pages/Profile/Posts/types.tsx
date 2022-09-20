@@ -3,6 +3,7 @@ export type TPostsProps = {
     addPost: (text: string) => void
     setNewPostText: (text: string) => void
     newPostText: string
+    avatar: string
 }
 
 export type TPost = {
@@ -19,6 +20,7 @@ export type TPostProps = {
     likes: number,
     isLiked: boolean
     date: string,
+    avatar: string
 }
 
 export type TSPostPanelProps = {

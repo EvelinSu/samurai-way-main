@@ -19,7 +19,15 @@ export const SUserBox = styled(Box)<TUserBox>((props) => ({
     backgroundPosition: "center",
     backgroundSize: "cover",
     borderRadius: theme.blockSettings.borderRadius,
+}))
 
+
+export const SUserBoxHeader = styled.div((props) => ({
+    display: "flex",
+    alignItems: "center",
+    height: 60,
+    maxWidth: "100%",
+    gap: 15,
 }))
 
 export const BoxShadowContent = styled(Box)(props => ({
@@ -31,12 +39,11 @@ export const BoxShadowContent = styled(Box)(props => ({
     gap: 20,
     padding: 15,
     borderRadius: "inherit",
-    boxShadow: "inset 0 0 100px 100px rgba(0, 0, 0, 0.8)",
-    transition: "0.7s",
+    boxShadow: `inset 0 0 100px 200px ${theme.colors.primaryDarkAlpha}`,
+    transition: "0.3s",
     "&:hover": {
         color: "rgba(255, 255, 255, 0.3)",
-        boxShadow: "inset 0 0 100px 1px rgba(0, 0, 0, 0.8)",
-
+        boxShadow: `inset 0 0 100px 50px ${theme.colors.primaryDarkAlpha}`,
 
     }
 }))
@@ -46,14 +53,16 @@ type TUserNameProps = {
 }
 
 export const SUserName = styled.div<TUserNameProps>(props => ({
-    fontSize: 24,
+    fontSize: 18,
     color: theme.colors.primaryLightest,
     fontWeight: 600,
     transition: "0.5s",
+    textOverflow: "ellipsis",
+    overflow: "hidden",
     ...props.isHovered && {
         textShadow: "0 0 5px rgba(0, 0, 0, 1)",
         opacity: 0.5,
-
+        color: "#fff",
     }
 }))
 
@@ -62,15 +71,18 @@ export const SUserStatus = styled.div(props => ({
     justifyContent: "center",
     alignItems: "center",
     marginBottom: 15,
+    fontSize: 14,
     flexGrow: 1,
-
-
 }))
 
-export const SUserStatusText = styled.div(props => ({
+type TSUserStatusTextProps = {
+    opacity?: number
+}
+
+export const SUserStatusText = styled.div<TSUserStatusTextProps>(props => ({
     textOverflow: "ellipsis",
     overflow: "hidden",
-    height: "min-content",
-    maxHeight: "2.9rem",
-
+    maxHeight: "2.4rem",
+    minHeight: "2.4rem",
+    opacity: props.opacity,
 }))

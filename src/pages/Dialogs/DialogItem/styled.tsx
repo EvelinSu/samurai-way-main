@@ -26,8 +26,8 @@ export const SDialogItem = styled.div<TSDialogItemProps>(({isActive, ...props}) 
 
 }))
 
-
 export const SDialogItemHeader = styled.div(props => ({
+    display: "flex",
     width: "100%",
     gap: "5",
     flexDirection: "column",

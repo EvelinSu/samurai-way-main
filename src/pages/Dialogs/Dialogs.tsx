@@ -10,6 +10,7 @@ import {PATH} from "../../redux/types";
 import {SSiteContent} from "../../layout/styled";
 import {DialogContentContainer} from "./DialogContent/DialogContentContainer";
 import {DialogsItemsListContainer} from "./DialogsItemsList/DialogsItemsListContainer";
+import PagePanel from "../PagePanel";
 
 type TDialogsProps = {}
 const Dialogs: FC<TDialogsProps> = (props) => {
@@ -21,6 +22,8 @@ const Dialogs: FC<TDialogsProps> = (props) => {
 
     return (
         <SSiteContent>
+            <PagePanel title="Messages">
+            </PagePanel>
             <SDialogs>
                 <SDialogContainer justifyContent={id ? 'initial' : 'center'}>
                     {id

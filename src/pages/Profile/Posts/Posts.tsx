@@ -53,6 +53,7 @@ const Posts: FC<TPostsProps> = ({posts, addPost, newPostText, setNewPostText, ..
                 ? <Box gap={25} flexDirection={"column"}>
                     {posts.map((post) => (
                         <Post
+                            avatar={props.avatar}
                             key={post.id}
                             text={post.text}
                             likes={post.likes}

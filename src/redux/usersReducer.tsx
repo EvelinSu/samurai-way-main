@@ -1,8 +1,7 @@
 import {TActions} from "./types";
-import axios, {AxiosResponse} from "axios";
 
 export type TUser = {
-    id: number,
+    id: number | string,
     photos: { [Key: string]: string },
     status: string,
     name: string,
@@ -80,7 +79,7 @@ const usersReducer = (state: TUsersPage = initialState, action: TActions): TUser
                 )]
             }
         case ("SET-USERS"):
-            return {...state, users: [...state.users, ...action.users]}
+            return {...state, users: [...state.users]}
     }
     return state
 }

@@ -17,7 +17,7 @@ const Post: FC<TPostProps> = (props) => {
     }
     return (
         <SPost>
-            <SAvatar src={"https://i.imgur.com/4jbcLBC.png"} />
+            <SAvatar src={props.avatar} />
             <SPostContent>
                 <SPostText>
                     {props.text}

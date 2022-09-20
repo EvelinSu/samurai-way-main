@@ -9,11 +9,19 @@ import {TPost} from "./types";
 type TMapStateToProps = {
     posts: Array<TPost>
     newPostText: string
+    ownProps: TOwnProps
 }
-export const mapStateToProps = (state: TRootState): TMapStateToProps => {
+
+type TOwnProps = {
+    avatar: string
+}
+export const mapStateToProps = (state: TRootState, ownProps: TOwnProps): TMapStateToProps => {
     return {
         posts: state.profilePage.posts,
         newPostText: state.profilePage.newPostText,
+        ownProps: {
+            avatar: ownProps.avatar
+        }
     }
 }
 
