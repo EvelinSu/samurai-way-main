@@ -1,5 +1,6 @@
 export const theme = {
     colors: {
+        primaryDarkAlpha: "rgba(34,39,68,0.84)",
         primaryDark: "#272c4a",
         primary: "#293254",
         primaryLight: "#3f4e6e",
@@ -19,6 +20,9 @@ export const theme = {
             success: "#5e81b4",
             active: "#7b64c7",
             cancel: "rgba(137,138,192,0.6)"
+        },
+        input: {
+            default: "rgba(255, 255, 255, 0.1)",
         }
     },
     blockSettings: {

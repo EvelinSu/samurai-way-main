@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 type TSAvatar = {
-    size?: number,
+    size?: number | string,
     border?: boolean
     opacity?: string | number
 }

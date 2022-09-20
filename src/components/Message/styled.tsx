@@ -36,7 +36,7 @@ export const SMessageContainer = styled.div<TSMessageContainerProps>((props) => 
     display: "flex",
     flexDirection: "column",
     position: "relative",
-    padding: " 5px 10px",
+    padding: "10px 10px",
     backgroundColor: theme.colors.message.default,
     borderRadius: "10px 10px 10px 10px",
     maxWidth: "90%",
