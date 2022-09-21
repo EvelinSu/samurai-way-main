@@ -1,32 +1,20 @@
 import React, {Component} from 'react';
 import {connect} from "react-redux";
-import {Dispatch} from "redux";
 import {TRootState} from "../../redux/reduxStore";
 import {
-    followUserToggleAC,
-    setCurrentPageAC,
-    setUsersAC,
-    setTotalUsersCountAC,
+    followToggle,
+    setCurrentPage,
+    setUsers,
+    setTotalUsersCount,
     TUser,
-    toggleLoaderAC
+    toggleLoader
 } from "../../redux/usersReducer";
 import Users from "./Users";
 import axios from "axios";
 
-type TUsersProps = {
-    users: Array<TUser>
-    followToggle: (userId: string) => void
-    setUsers: (users: Array<TUser>) => void
-    totalUsersCount: number
-    currentPage: number
-    pageSize: number
-    setCurrentPage: (page: number) => void
-    setTotalUsersCount: (usersCount: number) => void
-    isFetching: boolean
-    toggleLoader: (isFetching: boolean) => void
-}
+type TUsersRequestContainerProps = TMapStateToProps & TMapDispatchToProps
 
-class UsersAContainer extends Component<TUsersProps> {
+class UsersRequestContainer extends Component<TUsersRequestContainerProps> {
     componentDidMount() {
         this.props.toggleLoader(true)
         axios.get(
@@ -68,7 +56,7 @@ class UsersAContainer extends Component<TUsersProps> {
     }
 }
 
-type TMapStateToProps = {
+export type TMapStateToProps = {
     users: Array<TUser>
     pageSize: number
     totalUsersCount: number
@@ -85,22 +73,14 @@ export const mapStateToProps = (state: TRootState): TMapStateToProps => {
     }
 }
 
-type TMapDispatchStateToProps = {
+type TMapDispatchToProps = {
     followToggle: (userId: string) => void
     setUsers: (users: Array<TUser>) => void
     setCurrentPage: (page: number) => void
     setTotalUsersCount: (usersCount: number) => void
     toggleLoader: (isFetching: boolean) => void
-
-}
-export const mapDispatchToProps = (dispatch: Dispatch): TMapDispatchStateToProps => {
-    return {
-        followToggle: (UserId) => dispatch(followUserToggleAC(UserId)),
-        setUsers: (users) => dispatch(setUsersAC(users)),
-        setCurrentPage: (page) => dispatch(setCurrentPageAC(page)),
-        toggleLoader: (isFetching) => dispatch(toggleLoaderAC(isFetching)),
-        setTotalUsersCount: (usersCount) => dispatch(setTotalUsersCountAC(usersCount))
-    }
 }
 
-export const UsersContainer = connect(mapStateToProps, mapDispatchToProps)(UsersAContainer)
+export const UsersContainer = connect(mapStateToProps, {
+    followToggle, setUsers, setCurrentPage, toggleLoader, setTotalUsersCount
+})(UsersRequestContainer)

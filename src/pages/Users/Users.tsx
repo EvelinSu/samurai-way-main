@@ -1,24 +1,19 @@
 import React from 'react';
 import {SSiteContent} from "../../layout/styled";
 import {Grid} from "../../components/Grid/Grid";
-import {TUser} from "../../redux/usersReducer";
 import User from "./User";
 import PagePanel from "../PagePanel";
 import Input from "../../components/Form/Input";
 import Pagination from "../../components/Pagination/Pagination";
 import LoaderIcon from "../../assets/loaders/loader";
+import {TMapStateToProps} from "./UsersContainer";
 
 type TUsersProps = {
-    users: Array<TUser>
     followToggle: (userId: string) => void
-    totalUsersCount: number
-    pageSize: number
-    currentPage: number
     onPaginationClick: (activePage: number) => void
-    isFetching: boolean
 }
 
-const Users: React.FC<TUsersProps> = ({users, followToggle, ...props}) => {
+const Users: React.FC<TMapStateToProps & TUsersProps> = ({users, followToggle, ...props}) => {
     const onClickHandler = (userId: string) => {
         followToggle(userId)
     }

@@ -100,25 +100,25 @@ const usersReducer = (state: TUsersPage = initialState, action: TActions): TUser
     return state
 }
 
-export const followUserToggleAC = (userId: string) => ({
+export const followToggle = (userId: string) => ({
     type: "FOLLOW-USER-TOGGLE",
     userId,
 } as const)
 
-export const setUsersAC = (users: Array<TUser>) => ({
+export const setUsers = (users: Array<TUser>) => ({
     type: "SET-USERS",
     users
 } as const)
 
-export const setCurrentPageAC = (currentPage: number) => ({
+export const setCurrentPage = (currentPage: number) => ({
     type: "SET-CURRENT-PAGE",
     currentPage
 } as const)
-export const setTotalUsersCountAC = (usersCount: number) => ({
+export const setTotalUsersCount = (usersCount: number) => ({
     type: "SET-TOTAL-USERS-COUNT",
     usersCount
 } as const)
-export const toggleLoaderAC = (isFetching: boolean) => ({
+export const toggleLoader = (isFetching: boolean) => ({
     type: "TOGGLE-LOADER",
     isFetching
 } as const)
