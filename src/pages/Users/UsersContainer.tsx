@@ -1,9 +1,52 @@
-import React from 'react';
+import React, {Component} from 'react';
 import {connect} from "react-redux";
 import {Dispatch} from "redux";
 import {TRootState} from "../../redux/reduxStore";
-import UsersC from "./UsersC";
 import {followUserToggleAC, setCurrentPageAC, setUsersAC, setTotalUsersCountAC, TUser} from "../../redux/usersReducer";
+import Users from "./Users";
+import axios from "axios";
+
+type TUsersProps = {
+    users: Array<TUser>
+    followToggle: (userId: string) => void
+    setUsers: (users: Array<TUser>) => void
+    totalUsersCount: number
+    currentPage: number
+    pageSize: number
+    setCurrentPage: (page: number) => void
+    setTotalUsersCount: (usersCount: number) => void
+}
+
+class UsersAContainer extends Component<TUsersProps> {
+    componentDidMount() {
+        axios.get(
+            `https://social-network.samuraijs.com/api/1.0/users?page=${this.props.currentPage}&count=${this.props.pageSize}`).then(
+            response => {
+                this.props.setUsers(response.data.items)
+                this.props.setTotalUsersCount(response.data.totalCount)
+            }
+        )
+    }
+    onPaginationClick = (activePage: number) => {
+        this.props.setCurrentPage(activePage)
+        axios.get(
+            `https://social-network.samuraijs.com/api/1.0/users?page=${activePage}&count=${this.props.pageSize}`).then(
+            response =>  this.props.setUsers(response.data.items)
+        )
+    }
+    render() {
+        return (
+            <Users
+                pageSize={this.props.pageSize}
+                users={this.props.users}
+                currentPage={this.props.currentPage}
+                followToggle={this.props.followToggle}
+                totalUsersCount={this.props.totalUsersCount}
+                onPaginationClick={this.onPaginationClick}
+            />
+        )
+    }
+}
 
 type TMapStateToProps = {
     users: Array<TUser>
@@ -36,4 +79,4 @@ export const mapDispatchToProps = (dispatch: Dispatch): TMapDispatchStateToProps
     }
 }
 
-export const UsersContainer = connect(mapStateToProps, mapDispatchToProps)(UsersC)
+export const UsersContainer = connect(mapStateToProps, mapDispatchToProps)(UsersAContainer)

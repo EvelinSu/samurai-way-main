@@ -1,8 +1,7 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import {SSiteContent} from "../../layout/styled";
 import {Grid} from "../../components/Grid/Grid";
 import {TUser} from "../../redux/usersReducer";
-import axios from "axios";
 import User from "./User";
 import PagePanel from "../PagePanel";
 import Input from "../../components/Form/Input";
@@ -11,7 +10,10 @@ import Pagination from "../../components/Pagination/Pagination";
 type TUsersProps = {
     users: Array<TUser>
     followToggle: (userId: string) => void
-    setUsers: (users: Array<TUser>) => void
+    totalUsersCount: number
+    pageSize: number
+    currentPage: number
+    onPaginationClick: (activePage: number) => void
 }
 
 const Users: React.FC<TUsersProps> = ({users, followToggle, ...props}) => {
@@ -19,24 +21,28 @@ const Users: React.FC<TUsersProps> = ({users, followToggle, ...props}) => {
         followToggle(userId)
     }
 
-    useEffect(() => {
-        axios.get("https://social-network.samuraijs.com/api/1.0/users").then(response => {
-                props.setUsers(response.data.items)
-            })
-    }, [])
-
+    let pagesCount = Math.ceil(props.totalUsersCount / props.pageSize)
 
     return (
         <SSiteContent>
             <PagePanel title="Users">
-                <Input placeholder={'Заготовка для поиска'}/>
+                <Input placeholder={'Заготовка для поиска'} />
             </PagePanel>
             <Grid columns={"repeat(auto-fill, minmax(150px, 1fr))"}>
                 {users.map((user) => (
-                    <User id={String(user.id)} user={user} onClickHandler={onClickHandler}/>
+                    <User
+                        key={user.id}
+                        user={user}
+                        id={String(user.id)}
+                        onClickHandler={onClickHandler}
+                    />
                 ))}
             </Grid>
-            <Pagination pagesCount={1} onClick={() => alert('шо ты тут делаешь')}/>
+            <Pagination
+                onClick={props.onPaginationClick}
+                activePage={props.currentPage}
+                pagesCount={pagesCount || 1}
+            />
         </SSiteContent>
     );
 };
