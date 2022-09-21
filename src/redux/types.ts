@@ -1,6 +1,12 @@
 import {changeNewMessageTextAC, sendMessageAC} from "./dialogsReducer";
-import {addPostAC, changeNewPostTextAC} from "./profileReducer";
-import {followToggle, setCurrentPage, setUsers, setTotalUsersCount, toggleLoader} from "./usersReducer";
+import {addPostAC, changeNewPostTextAC, profileToggleLoader, setActiveProfile} from "./profileReducer";
+import {
+    followToggle,
+    setCurrentPage,
+    setUsers,
+    setTotalUsersCount,
+    usersToggleLoader
+} from "./usersReducer";
 
 
 
@@ -28,7 +34,9 @@ export type TActions =
     | ReturnType<typeof setUsers>
     | ReturnType<typeof setCurrentPage>
     | ReturnType<typeof setTotalUsersCount>
-    | ReturnType<typeof toggleLoader>
+    | ReturnType<typeof usersToggleLoader>
+    | ReturnType<typeof setActiveProfile>
+    | ReturnType<typeof profileToggleLoader>
 
 export const PATH = {
     profile: '/profile',

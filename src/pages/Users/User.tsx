@@ -3,10 +3,10 @@ import {BoxShadowContent, SUserBox, SUserBoxHeader, SUserName, SUserStatus, SUse
 import {SAvatar} from "../../components/Avatar/SAvatar";
 import userPhoto from "../../assets/img/default-photo.png";
 import {Box} from "../../components/Box/Box";
-import {SText} from "../../components/Text/SText";
 import Button from "../../components/Button/Button";
 import {theme} from "../../styles/constants";
 import {TUser} from "../../redux/usersReducer";
+import {NavLink} from "react-router-dom";
 
 type TUserProps = {
     user: TUser
@@ -26,15 +26,17 @@ const User: React.FC<TUserProps> = ({user, id, onClickHandler}) => {
             onMouseLeave={() => (setIsHovered(''))}
         >
             <BoxShadowContent>
-                <SUserBoxHeader>
-                    {!user.photos.large && (
-                        <SAvatar
-                            size={'40px'}
-                            src={userPhoto}
-                        />
-                    )}
-                    <SUserName title={user.name} isHovered={isHovered === id}>{user.name}</SUserName>
-                </SUserBoxHeader>
+                <NavLink to={'/profile/' + user.id}>
+                    <SUserBoxHeader>
+                        {!user.photos.large && (
+                            <SAvatar
+                                size={'40px'}
+                                src={userPhoto}
+                            />
+                        )}
+                        <SUserName title={user.name} isHovered={isHovered === id}>{user.name}</SUserName>
+                    </SUserBoxHeader>
+                </NavLink>
                 <Box flexGrow={1} width={"100%"} flexDirection={"column"}>
                     <SUserStatus title={user.status}>
                         {user.status

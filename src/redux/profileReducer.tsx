@@ -3,12 +3,58 @@ import {getStringDate} from "../common/utils";
 import {TActions} from "./types";
 import {TPost} from "../pages/Profile/Posts/types";
 
+export type TActiveProfile = {
+    aboutMe: string,
+    contacts: {
+        facebook: string,
+        website: string,
+        vk: string,
+        twitter: string,
+        instagram: string,
+        youtube: string,
+        github: string,
+        mainLink: string
+    },
+    lookingForAJob: boolean,
+    lookingForAJobDescription: string,
+    fullName: string,
+    userId: number | string,
+    photos: {
+        small: string,
+        large: string
+    }
+}
+
 export type TProfilePage = {
+    isFetching: boolean,
+    activeProfile: TActiveProfile,
     newPostText: string,
     posts: Array<TPost>
 }
 
 const initialState: TProfilePage = ({
+    isFetching: true,
+    activeProfile: {
+        aboutMe: '',
+        contacts: {
+            facebook: '',
+            website: '',
+            vk: "",
+            twitter: "",
+            instagram: "",
+            youtube: "",
+            github: "",
+            mainLink: ""
+        },
+        lookingForAJob: false,
+        lookingForAJobDescription: '',
+        fullName: "",
+        userId: 1000000,
+        photos: {
+            small: "",
+            large: ""
+        }
+    },
     newPostText: '',
     posts: [
         {
@@ -47,6 +93,10 @@ const profileReducer = (state: TProfilePage = initialState, action: TActions): T
                 ...state,
                 newPostText: action.newPostText
             }
+        case "SET-ACTIVE-PROFILE":
+            return {...state, activeProfile: action.activeProfile}
+        case "TOGGLE-LOADER":
+            return {...state, isFetching: action.isFetching}
         default:
             return state
     }
@@ -60,6 +110,15 @@ export const addPostAC = (text: string) => ({
 export const changeNewPostTextAC = (text: string) => ({
     type: "CHANGE-NEW-POST-TEXT",
     newPostText: text
+} as const)
+
+export const setActiveProfile = (activeProfile: TActiveProfile) => ({
+    type: "SET-ACTIVE-PROFILE",
+    activeProfile
+} as const)
+export const profileToggleLoader = (isFetching: boolean) => ({
+    type: "TOGGLE-LOADER",
+    isFetching
 } as const)
 
 export default profileReducer

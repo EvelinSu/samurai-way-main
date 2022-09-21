@@ -118,7 +118,7 @@ export const setTotalUsersCount = (usersCount: number) => ({
     type: "SET-TOTAL-USERS-COUNT",
     usersCount
 } as const)
-export const toggleLoader = (isFetching: boolean) => ({
+export const usersToggleLoader = (isFetching: boolean) => ({
     type: "TOGGLE-LOADER",
     isFetching
 } as const)

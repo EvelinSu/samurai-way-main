@@ -7,20 +7,20 @@ import {
     setUsers,
     setTotalUsersCount,
     TUser,
-    toggleLoader
+    usersToggleLoader
 } from "../../redux/usersReducer";
 import Users from "./Users";
 import axios from "axios";
 
 type TUsersRequestContainerProps = TMapStateToProps & TMapDispatchToProps
 
-class UsersRequestContainer extends Component<TUsersRequestContainerProps> {
+class UsersAPI extends Component<TUsersRequestContainerProps> {
     componentDidMount() {
-        this.props.toggleLoader(true)
+        this.props.usersToggleLoader(true)
         axios.get(
             `https://social-network.samuraijs.com/api/1.0/users?page=${this.props.currentPage}&count=${this.props.pageSize}`).then(
             response => {
-                this.props.toggleLoader(false)
+                this.props.usersToggleLoader(false)
                 this.props.setUsers(response.data.items)
                 this.props.setTotalUsersCount(response.data.totalCount)
             }
@@ -28,13 +28,13 @@ class UsersRequestContainer extends Component<TUsersRequestContainerProps> {
     }
 
     onPaginationClick = (activePage: number) => {
-        this.props.toggleLoader(true)
+        this.props.usersToggleLoader(true)
         this.props.setCurrentPage(activePage)
         axios.get(
             `https://social-network.samuraijs.com/api/1.0/users?page=${activePage}&count=${this.props.pageSize}`).then(
             response => {
                 this.props.setUsers(response.data.items)
-                this.props.toggleLoader(false)
+                this.props.usersToggleLoader(false)
 
             }
         )
@@ -78,9 +78,9 @@ type TMapDispatchToProps = {
     setUsers: (users: Array<TUser>) => void
     setCurrentPage: (page: number) => void
     setTotalUsersCount: (usersCount: number) => void
-    toggleLoader: (isFetching: boolean) => void
+    usersToggleLoader: (isFetching: boolean) => void
 }
 
 export const UsersContainer = connect(mapStateToProps, {
-    followToggle, setUsers, setCurrentPage, toggleLoader, setTotalUsersCount
-})(UsersRequestContainer)
+    followToggle, setUsers, setCurrentPage, usersToggleLoader, setTotalUsersCount
+})(UsersAPI)

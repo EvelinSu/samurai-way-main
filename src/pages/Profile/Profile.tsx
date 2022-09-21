@@ -7,6 +7,9 @@ import {theme} from "../../styles/constants";
 import {SSiteContent} from "../../layout/styled";
 import {PostsContainer} from "./Posts/PostsContainer";
 import Button from "../../components/Button/Button";
+import {TActiveProfile} from "../../redux/profileReducer";
+import userPhoto from "../../assets/img/default-photo.png";
+
 
 export const me = {
     name: "Bublik",
@@ -14,17 +17,19 @@ export const me = {
 }
 
 type TProfileProps = {
+    activeProfile: TActiveProfile
 }
 
-const Profile: FC<TProfileProps> = () => {
+const Profile: FC<TProfileProps> = ({activeProfile}) => {
 
     return (
+
         <SSiteContent stylized>
             <Box alignItems={"center"}>
-                <SAvatar border size={180} src={me.avatar} />
+                <SAvatar border size={180} src={activeProfile.photos.large || userPhoto} />
                 <Box flexDirection={"column"}>
                     <STitle color={theme.colors.primaryLightest}>
-                        {me.name}
+                        {activeProfile.fullName}
                     </STitle>
                     <SText>
                         The evil plunder darkly pulls the mainland.
@@ -41,7 +46,7 @@ const Profile: FC<TProfileProps> = () => {
                     <Button label={'friends'} onClick={() => alert(".... yes")}/>
                 </Box>
             </Box>
-            <PostsContainer avatar={me.avatar} />
+            <PostsContainer avatar={activeProfile.photos.small || userPhoto} />
         </SSiteContent>
     );
 };

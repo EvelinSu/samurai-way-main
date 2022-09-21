@@ -56,6 +56,11 @@ code {
     color: inherit;
 }
 
+a {
+    text-decoration: none;
+    max-width: 100%;
+}
+
 button, svg, img {
     user-select: none;
     -moz-user-select: none;
