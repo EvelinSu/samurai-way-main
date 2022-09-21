@@ -3,17 +3,17 @@ import DialogItem from "../DialogItem/DialogItem";
 import {SDialogsItemsList} from "../styled";
 import {TMessage} from "../../../redux/types";
 import {TDialogs} from "../../../redux/dialogsReducer";
-import {TUser, users} from "../../../redux/usersReducer";
+import {TUser} from "../../../redux/usersReducer";
 
 type TDialogsItemsList = {
     dialogs: TDialogs
     messages: Array<TMessage>
     onClickHandler: (key: string) => void
     id: string
-    // users: Array<TUser>
+    users: Array<TUser>
 }
 
-const DialogsItemsList:FC<TDialogsItemsList> = ({dialogs, messages, onClickHandler,  id}) => {
+const DialogsItemsList:FC<TDialogsItemsList> = ({dialogs, messages, onClickHandler, users, id}) => {
     return (
         <SDialogsItemsList>
             {users.map((user) => {

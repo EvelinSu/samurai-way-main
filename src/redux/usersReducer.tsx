@@ -16,7 +16,7 @@ export type TUsersPage = {
     currentPage: number
 }
 
-export const users: Array<TUser> = [
+const users = [
     {
         id: 1,
         name: "Kisa",
@@ -72,7 +72,7 @@ export const users: Array<TUser> = [
 const initialState: TUsersPage = {
     users: [],
     pageSize: 12,
-    totalUsersCount: 60,
+    totalUsersCount: 12,
     currentPage: 1
 }
 
