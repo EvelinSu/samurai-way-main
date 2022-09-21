@@ -6,6 +6,7 @@ import {STitle} from "../../components/Text/STitle";
 import {theme} from "../../styles/constants";
 import {SSiteContent} from "../../layout/styled";
 import {PostsContainer} from "./Posts/PostsContainer";
+import Button from "../../components/Button/Button";
 
 export const me = {
     name: "Bublik",
@@ -34,6 +35,10 @@ const Profile: FC<TProfileProps> = () => {
                     <SText>
                         Tunas are the planks of the old urchin.
                     </SText>
+                </Box>
+                <Box flexDirection={"column"} gap={20} margin={"0 0 auto auto"}>
+                    <Button label={'follow'} onClick={() => alert("ITS.... DOESNT'T  WORK")}/>
+                    <Button label={'friends'} onClick={() => alert(".... yes")}/>
                 </Box>
             </Box>
             <PostsContainer avatar={me.avatar} />
