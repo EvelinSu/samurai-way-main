@@ -14,6 +14,7 @@ export type TUsersPage = {
     pageSize: number,
     totalUsersCount: number
     currentPage: number
+    isFetching: boolean
 }
 
 const users = [
@@ -73,7 +74,8 @@ const initialState: TUsersPage = {
     users: [],
     pageSize: 12,
     totalUsersCount: 12,
-    currentPage: 1
+    currentPage: 1,
+    isFetching: true
 }
 
 const usersReducer = (state: TUsersPage = initialState, action: TActions): TUsersPage => {
@@ -92,6 +94,8 @@ const usersReducer = (state: TUsersPage = initialState, action: TActions): TUser
             return {...state, currentPage: action.currentPage}
         case "SET-TOTAL-USERS-COUNT":
             return {...state, totalUsersCount: action.usersCount}
+        case "TOGGLE-LOADER":
+            return {...state, isFetching: action.isFetching}
     }
     return state
 }
@@ -113,6 +117,10 @@ export const setCurrentPageAC = (currentPage: number) => ({
 export const setTotalUsersCountAC = (usersCount: number) => ({
     type: "SET-TOTAL-USERS-COUNT",
     usersCount
+} as const)
+export const toggleLoaderAC = (isFetching: boolean) => ({
+    type: "TOGGLE-LOADER",
+    isFetching
 } as const)
 
 export default usersReducer

@@ -6,6 +6,7 @@ import User from "./User";
 import PagePanel from "../PagePanel";
 import Input from "../../components/Form/Input";
 import Pagination from "../../components/Pagination/Pagination";
+import LoaderIcon from "../../assets/loaders/loader";
 
 type TUsersProps = {
     users: Array<TUser>
@@ -14,6 +15,7 @@ type TUsersProps = {
     pageSize: number
     currentPage: number
     onPaginationClick: (activePage: number) => void
+    isFetching: boolean
 }
 
 const Users: React.FC<TUsersProps> = ({users, followToggle, ...props}) => {
@@ -28,16 +30,20 @@ const Users: React.FC<TUsersProps> = ({users, followToggle, ...props}) => {
             <PagePanel title="Users">
                 <Input placeholder={'Заготовка для поиска'} />
             </PagePanel>
-            <Grid columns={"repeat(auto-fill, minmax(150px, 1fr))"}>
-                {users.map((user) => (
-                    <User
-                        key={user.id}
-                        user={user}
-                        id={String(user.id)}
-                        onClickHandler={onClickHandler}
-                    />
-                ))}
-            </Grid>
+            {
+                props.isFetching
+                    ? <LoaderIcon />
+                    : <Grid columns={"repeat(auto-fill, minmax(150px, 1fr))"}>
+                        {users.map((user) => (
+                            <User
+                                key={user.id}
+                                user={user}
+                                id={String(user.id)}
+                                onClickHandler={onClickHandler}
+                            />
+                        ))}
+                    </Grid>
+            }
             <Pagination
                 onClick={props.onPaginationClick}
                 activePage={props.currentPage}
