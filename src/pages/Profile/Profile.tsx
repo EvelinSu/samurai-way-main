@@ -10,6 +10,7 @@ import Button from "../../components/Button/Button";
 import {TActiveProfile} from "../../redux/profileReducer";
 import userPhoto from "../../assets/img/default-photo.png";
 import IconLink from "../../components/IconLink/IconLink";
+import {iconsDictionary} from "../../assets/icons/contacts/_iconsDictionary";
 
 export const me = {
     name: "Bublik",
@@ -22,19 +23,15 @@ type TProfileProps = {
 
 const Profile: FC<TProfileProps> = ({activeProfile}) => {
 
-    const mappedContacts = Object.entries(activeProfile.contacts).map(() => {
-        let el = activeProfile.contacts
-        return {
-            "facebook": el.facebook,
-            "website": el.website,
-            "vk": el.vk,
-            "twitter": el.twitter,
-            "instagram": el.instagram,
-            "youtube": el.youtube,
-            "github": el.github,
-            "mainLink": el.mainLink
+    const mappedContacts = Object.entries(activeProfile.contacts).map((contact) => {
+        if (contact[1]) {
+            return {
+                label: contact[0],
+                link: contact[1],
+                icon: iconsDictionary[contact[0]]
+            }
         }
-    })
+    }).filter(el => el)
 
     return (
 
@@ -49,9 +46,19 @@ const Profile: FC<TProfileProps> = ({activeProfile}) => {
                         {activeProfile.aboutMe || '- the user is silent -'}
                     </SText>
                     <Box>
-                        {mappedContacts.map((el, index) => {
-                            <IconLink key={index}/>
-                        })}
+                        {
+                            mappedContacts.length > 0
+                            ? mappedContacts.map((el) => (
+                                <IconLink
+                                    key={el?.label}
+                                    label={el?.label}
+                                    link={el?.link}
+                                    icon={el?.icon}
+                                />
+                            ))
+                            : <SText opacity={0.3}>
+                                - no contacts -
+                            </SText>}
                     </Box>
                     <SText>
                         Tunas are the planks of the old urchin.
