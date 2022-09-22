@@ -1,11 +1,21 @@
-import React from 'react';
-import HomeIcon from "../../assets/icons/HomeIcon";
+import React, {ReactNode} from 'react';
 import {SIconLink} from "./styled";
 
-const IconLink = () => {
+type TIconLinkProps = {
+    link?: string
+    label?: string
+    icon?: string
+}
+
+const IconLink: React.FC<TIconLinkProps> = (props) => {
     return (
-        <SIconLink>
-            <HomeIcon/>
+        <SIconLink
+            title={props.label}
+            href={props.link}
+            target="_ blank"
+            isDisabled={!props.link}
+        >
+            {props.icon}
         </SIconLink>
     );
 };
