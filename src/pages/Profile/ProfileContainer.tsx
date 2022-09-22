@@ -15,7 +15,7 @@ type TPathParams = {
 
 class ProfileContainer extends Component<TProfileContainerProps> {
     componentDidMount() {
-        let userId = this.props.match.params.id
+        let userId = this.props.match.params.id || '2'
         this.props.profileToggleLoader(true)
         axios.get(`https://social-network.samuraijs.com/api/1.0/profile/${userId}`)
              .then(response => {

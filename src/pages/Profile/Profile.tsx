@@ -9,7 +9,7 @@ import {PostsContainer} from "./Posts/PostsContainer";
 import Button from "../../components/Button/Button";
 import {TActiveProfile} from "../../redux/profileReducer";
 import userPhoto from "../../assets/img/default-photo.png";
-
+import IconLink from "../../components/IconLink/IconLink";
 
 export const me = {
     name: "Bublik",
@@ -22,6 +22,20 @@ type TProfileProps = {
 
 const Profile: FC<TProfileProps> = ({activeProfile}) => {
 
+    const mappedContacts = Object.entries(activeProfile.contacts).map(() => {
+        let el = activeProfile.contacts
+        return {
+            "facebook": el.facebook,
+            "website": el.website,
+            "vk": el.vk,
+            "twitter": el.twitter,
+            "instagram": el.instagram,
+            "youtube": el.youtube,
+            "github": el.github,
+            "mainLink": el.mainLink
+        }
+    })
+
     return (
 
         <SSiteContent stylized>
@@ -31,19 +45,21 @@ const Profile: FC<TProfileProps> = ({activeProfile}) => {
                     <STitle color={theme.colors.primaryLightest}>
                         {activeProfile.fullName}
                     </STitle>
-                    <SText>
-                        The evil plunder darkly pulls the mainland.
+                    <SText opacity={!activeProfile.aboutMe ? 0.3 : 1}>
+                        {activeProfile.aboutMe || '- the user is silent -'}
                     </SText>
-                    <SText>
-                        Faith, madness, and passion.
-                    </SText>
+                    <Box>
+                        {mappedContacts.map((el, index) => {
+                            <IconLink key={index}/>
+                        })}
+                    </Box>
                     <SText>
                         Tunas are the planks of the old urchin.
                     </SText>
                 </Box>
                 <Box flexDirection={"column"} gap={20} margin={"0 0 auto auto"}>
-                    <Button label={'follow'} onClick={() => alert("ITS.... DOESNT'T  WORK")}/>
-                    <Button label={'friends'} onClick={() => alert(".... yes")}/>
+                    <Button label={'follow'} onClick={() => alert("ITS.... DOESNT'T  WORK")} />
+                    <Button label={'friends'} onClick={() => alert(".... yes")} />
                 </Box>
             </Box>
             <PostsContainer avatar={activeProfile.photos.small || userPhoto} />
