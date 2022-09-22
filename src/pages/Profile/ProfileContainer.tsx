@@ -5,16 +5,19 @@ import {connect} from "react-redux";
 import Profile from "./Profile";
 import {profileToggleLoader, setActiveProfile, TActiveProfile} from "../../redux/profileReducer";
 import LoaderIcon from "../../assets/loaders/loader";
-import {withRouter} from "react-router-dom";
+import {RouteComponentProps, withRouter} from "react-router-dom";
 
-type TProfileContainerProps = TMapStateToProps & TMapDispatchToProps
+type TProfileContainerProps = RouteComponentProps<TPathParams> & TMapStateToProps & TMapDispatchToProps
 
-// const activeUserId = useParams<{ id: string }>()
+type TPathParams = {
+    id: string
+}
 
-class ProfileAPI extends Component<TProfileContainerProps> {
+class ProfileContainer extends Component<TProfileContainerProps> {
     componentDidMount() {
+        let userId = this.props.match.params.id
         this.props.profileToggleLoader(true)
-        axios.get(`https://social-network.samuraijs.com/api/1.0/profile/${'25991'}`)
+        axios.get(`https://social-network.samuraijs.com/api/1.0/profile/${userId}`)
              .then(response => {
                      this.props.setActiveProfile(response.data)
                      this.props.profileToggleLoader(false)
@@ -48,5 +51,6 @@ type TMapDispatchToProps = {
     profileToggleLoader: (isFetching: boolean) => void
 }
 
+let WithUrlDataComponent = withRouter<any, any>(ProfileContainer)
 
-export const ProfileContainer = connect(mapStateToProps, {setActiveProfile, profileToggleLoader})(ProfileAPI)
+export default connect(mapStateToProps, {setActiveProfile, profileToggleLoader})(WithUrlDataComponent)

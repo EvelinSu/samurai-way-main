@@ -14,7 +14,7 @@ import axios from "axios";
 
 type TUsersRequestContainerProps = TMapStateToProps & TMapDispatchToProps
 
-class UsersAPI extends Component<TUsersRequestContainerProps> {
+class UsersContainer extends Component<TUsersRequestContainerProps> {
     componentDidMount() {
         this.props.usersToggleLoader(true)
         axios.get(
@@ -81,6 +81,6 @@ type TMapDispatchToProps = {
     usersToggleLoader: (isFetching: boolean) => void
 }
 
-export const UsersContainer = connect(mapStateToProps, {
+export default connect(mapStateToProps, {
     followToggle, setUsers, setCurrentPage, usersToggleLoader, setTotalUsersCount
-})(UsersAPI)
+})(UsersContainer)

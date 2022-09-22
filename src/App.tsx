@@ -5,8 +5,8 @@ import Dialogs from "./pages/Dialogs/Dialogs";
 import {HashRouter, Redirect, Route, Switch} from "react-router-dom";
 import PageNotFound from "./pages/PageNotFound";
 import {PATH} from "./redux/types";
-import {UsersContainer} from "./pages/Users/UsersContainer";
-import {ProfileContainer} from "./pages/Profile/ProfileContainer";
+import UsersContainer from "./pages/Users/UsersContainer";
+import ProfileContainer from "./pages/Profile/ProfileContainer";
 
 const App: React.FC = (props) => {
     const profile = <ProfileContainer />
