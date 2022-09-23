@@ -4,33 +4,19 @@ import {useHistory, useLocation} from "react-router-dom";
 import {navLinks} from "./sidebarData";
 import LogoutIcon from "../../assets/icons/LogoutIcon";
 import Modal from "../../components/modal/Modal";
-import axios from "axios";
-import {useDispatch, useSelector} from "react-redux";
-import {TRootState} from "../../redux/reduxStore";
-import {setAuthUserDataAC, TAuth} from "../../redux/authReducer";
+
 import LoginIcon from "../../assets/icons/LoginIcon";
 
-type TSidebarProps = {}
+type TSidebarProps = {
+    myId: string | number,
+    isAuth: boolean
+}
 
-const Sidebar: FC<TSidebarProps> = () => {
+const Sidebar: FC<TSidebarProps> = ({isAuth, myId}) => {
     const history = useHistory();
     const location = useLocation();
 
     const [isOpened, setIsOpened] = useState<boolean>(false)
-    const auth = useSelector<TRootState, boolean>(state => state.auth.isAuth)
-    const dispatch = useDispatch()
-
-    useEffect(() => {
-        axios.get(`https://social-network.samuraijs.com/api/1.0/auth/me`, {
-            withCredentials: true
-        })
-             .then(response => {
-                     if (response.data.resultCode === 0) {
-                         dispatch(setAuthUserDataAC(response.data.data))
-                     }
-                 }
-             )
-    }, [])
 
     return (
         <SSidebar>
@@ -49,16 +35,16 @@ const Sidebar: FC<TSidebarProps> = () => {
                 </SSidebarItem>
             ))}
             <SSidebarItem
-                label={auth ? 'LogOut' : 'LogIn'}
+                label={isAuth ? 'LogOut' : 'LogIn'}
                 onClick={() => setIsOpened(true)}
                 disabled={false}
             >
                 <SSidebarItemIcon>
-                    {auth ? <LogoutIcon /> : <LoginIcon/>}
+                    {isAuth ? <LogoutIcon /> : <LoginIcon/>}
 
                 </SSidebarItemIcon>
             </SSidebarItem>
-            {auth
+            {isAuth
                 ? <Modal type={"default"} isOpened={isOpened} setIsOpened={setIsOpened} />
                 : <Modal type={"auth"} isOpened={isOpened} setIsOpened={setIsOpened} />
             }

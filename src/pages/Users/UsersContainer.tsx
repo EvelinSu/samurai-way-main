@@ -39,7 +39,6 @@ class UsersContainer extends Component<TUsersRequestContainerProps> {
                 setTimeout(() => {
                     this.props.usersToggleLoader(false)
                 }, 500)
-
             }
         )
     }

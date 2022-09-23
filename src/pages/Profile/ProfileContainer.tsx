@@ -14,15 +14,15 @@ type TPathParams = {
 }
 
 class ProfileContainer extends Component<TProfileContainerProps> {
+
     componentDidMount() {
-        let userId = this.props.match.params.id || '2'
+        let userId = this.props.match.params.id || this.props.ownProps.myId
         this.props.profileToggleLoader(true)
-        axios.get(`https://social-network.samuraijs.com/api/1.0/profile${'/' + userId}`)
+        axios.get(`https://social-network.samuraijs.com/api/1.0/profile/${userId}`)
              .then(response => {
                      this.props.setActiveProfile(response.data)
                      setTimeout(() => {
                          this.props.profileToggleLoader(false)
-
                      }, 500)
                  }
              )
@@ -41,11 +41,18 @@ class ProfileContainer extends Component<TProfileContainerProps> {
 type TMapStateToProps = {
     activeProfile: TActiveProfile
     isFetching: boolean
+    ownProps: TOwnProps
 }
-export const mapStateToProps = (state: TRootState): TMapStateToProps => {
+type TOwnProps = {
+    myId?: string | number
+}
+export const mapStateToProps = (state: TRootState, ownProps: TOwnProps): TMapStateToProps => {
     return {
         activeProfile: state.profilePage.activeProfile,
-        isFetching: state.profilePage.isFetching
+        isFetching: state.profilePage.isFetching,
+        ownProps: {
+            myId: ownProps.myId
+        }
     }
 }
 
