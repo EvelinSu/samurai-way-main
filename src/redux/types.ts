@@ -7,8 +7,7 @@ import {
     setTotalUsersCount,
     usersToggleLoader
 } from "./usersReducer";
-
-
+import {setAuthUserDataAC} from "./authReducer";
 
 export type TMessage = {
     id: string,
@@ -24,7 +23,6 @@ export type TDialog = {
     userId: string
 }
 
-
 export type TActions =
     ReturnType<typeof addPostAC>
     | ReturnType<typeof changeNewPostTextAC>
@@ -37,6 +35,7 @@ export type TActions =
     | ReturnType<typeof usersToggleLoader>
     | ReturnType<typeof setActiveProfile>
     | ReturnType<typeof profileToggleLoader>
+    | ReturnType<typeof setAuthUserDataAC>
 
 export const PATH = {
     profile: '/profile',
@@ -44,5 +43,6 @@ export const PATH = {
     users: '/users',
     music: '/music',
     news: '/news',
-    settings: '/settings'
+    settings: '/settings',
+    login: '/login'
 }

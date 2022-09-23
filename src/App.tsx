@@ -7,6 +7,7 @@ import PageNotFound from "./pages/PageNotFound";
 import {PATH} from "./redux/types";
 import UsersContainer from "./pages/Users/UsersContainer";
 import ProfileContainer from "./pages/Profile/ProfileContainer";
+import Modal from "./components/modal/Modal";
 
 const App: React.FC = (props) => {
     const profile = <ProfileContainer />

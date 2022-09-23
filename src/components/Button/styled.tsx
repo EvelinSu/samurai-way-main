@@ -4,6 +4,7 @@ import {theme} from "../../styles/constants";
 type TSButtonProps = {
     disabled?: boolean
     backgroundColor?: string
+    size?: 'lg' | 'sm'
 }
 
 export const SButton = styled.button<TSButtonProps>(({disabled, ...props}) => ({
@@ -18,5 +19,10 @@ export const SButton = styled.button<TSButtonProps>(({disabled, ...props}) => ({
     ...disabled && {
         opacity: 0.4,
         pointerEvents: "none",
+    },
+    ...props.size === 'lg' && {
+        padding: "10px 20px",
+        borderRadius: 25,
+        fontSize: 18,
     }
 }))

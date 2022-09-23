@@ -1,8 +1,17 @@
 import styled from "styled-components";
 import {theme} from "../../styles/constants";
 
+export const SInputWrapper = styled.div((props) => ({
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 15,
+
+}))
+
 export const SInput = styled.input((props) => ({
     padding: "8px 15px",
     borderRadius: theme.blockSettings.borderRadius,
-    backgroundColor: theme.colors.input.default
+    backgroundColor: theme.colors.input.default,
+    width: "100%",
 }))

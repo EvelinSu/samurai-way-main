@@ -27,18 +27,21 @@ export const navLinks: TNavLinks = [
         label: "Profile",
         icon: <UserIcon />,
         link: PATH.profile,
+        disabled: false
     },
     {
         id: 1,
         label: "Messages",
         icon: <MessageIcon />,
         link: PATH.messages,
+        disabled: false
     },
     {
         id: 2,
         label: "Users",
         icon: <UsersIcon />,
         link: PATH.users,
+        disabled: false
     },
     {
         id: 3,
@@ -63,10 +66,5 @@ export const navLinks: TNavLinks = [
         link: PATH.settings,
         disabled: true
     },
-    {
-        id: 6,
-        label: "LogOut",
-        icon: <LogoutIcon />,
-        disabled: true
-    }
+
 ]

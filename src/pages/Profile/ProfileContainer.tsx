@@ -54,6 +54,6 @@ type TMapDispatchToProps = {
     profileToggleLoader: (isFetching: boolean) => void
 }
 
-let WithUrlDataComponent = withRouter<any, any>(ProfileContainer)
+let WithUrlDataComponent = withRouter(ProfileContainer)
 
 export default connect(mapStateToProps, {setActiveProfile, profileToggleLoader})(WithUrlDataComponent)
