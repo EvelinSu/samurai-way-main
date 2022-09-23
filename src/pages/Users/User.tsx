@@ -8,10 +8,11 @@ import {theme} from "../../styles/constants";
 import {TUser} from "../../redux/usersReducer";
 import {NavLink} from "react-router-dom";
 
+
 type TUserProps = {
     user: TUser
     id: string
-    onClickHandler: (id: string) => void
+    onClickHandler: (id: string, user: TUser) => void
 }
 
 const User: React.FC<TUserProps> = ({user, id, onClickHandler}) => {
@@ -48,7 +49,7 @@ const User: React.FC<TUserProps> = ({user, id, onClickHandler}) => {
                         <Button
                             backgroundColor={!user.followed ? theme.colors.button.active : theme.colors.button.cancel}
                             label={user.followed ? 'unfollow' : 'follow'}
-                            onClick={() => onClickHandler(id)}
+                            onClick={() => onClickHandler(id, user)}
                         />
                     </Box>
                 </Box>

@@ -20,7 +20,7 @@ const DefaultModal: React.FC<TDefaultModalProps> = (props) => {
             </Box>
             <Box flexDirection={"row"} justifyContent={"center"}>
                 <Button size={"lg"} label={'Yes'} onClick={onClickHandler} />
-                <Button size={"lg"} label={'Cancel'} onClick={() => props.close} backgroundColor={theme.colors.button.cancel}/>
+                <Button size={"lg"} label={'Cancel'} onClick={onClickHandler} backgroundColor={theme.colors.button.cancel}/>
             </Box>
         </>
 
