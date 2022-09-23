@@ -20,9 +20,11 @@ class UsersContainer extends Component<TUsersRequestContainerProps> {
         axios.get(
             `https://social-network.samuraijs.com/api/1.0/users?page=${this.props.currentPage}&count=${this.props.pageSize}`).then(
             response => {
-                this.props.usersToggleLoader(false)
                 this.props.setUsers(response.data.items)
                 this.props.setTotalUsersCount(response.data.totalCount)
+                setTimeout(() => {
+                    this.props.usersToggleLoader(false)
+                }, 500)
             }
         )
     }
@@ -34,7 +36,9 @@ class UsersContainer extends Component<TUsersRequestContainerProps> {
             `https://social-network.samuraijs.com/api/1.0/users?page=${activePage}&count=${this.props.pageSize}`).then(
             response => {
                 this.props.setUsers(response.data.items)
-                this.props.usersToggleLoader(false)
+                setTimeout(() => {
+                    this.props.usersToggleLoader(false)
+                }, 500)
 
             }
         )

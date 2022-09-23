@@ -17,10 +17,13 @@ class ProfileContainer extends Component<TProfileContainerProps> {
     componentDidMount() {
         let userId = this.props.match.params.id || '2'
         this.props.profileToggleLoader(true)
-        axios.get(`https://social-network.samuraijs.com/api/1.0/profile/${userId}`)
+        axios.get(`https://social-network.samuraijs.com/api/1.0/profile${'/' + userId}`)
              .then(response => {
                      this.props.setActiveProfile(response.data)
-                     this.props.profileToggleLoader(false)
+                     setTimeout(() => {
+                         this.props.profileToggleLoader(false)
+
+                     }, 500)
                  }
              )
     }

@@ -8,11 +8,13 @@ type TIconLinkProps = {
 }
 
 const IconLink: React.FC<TIconLinkProps> = (props) => {
+    const link = props.link?.includes('http') ? props.link : 'https://' + props.link
+
     return (
         <SIconLink
             title={props.label}
-            href={props.link}
-            target="_ blank"
+            target="_blank"
+            href={link}
             isDisabled={!props.link}
         >
             {props.icon}
