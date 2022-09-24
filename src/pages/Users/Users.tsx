@@ -7,11 +7,11 @@ import Input from "../../components/Form/Input";
 import Pagination from "../../components/Pagination/Pagination";
 import LoaderIcon from "../../assets/loaders/loader";
 import {TMapStateToProps} from "./UsersContainer";
-import axios from "axios";
-import {followToggle, TUser} from "../../redux/usersReducer";
+import {TUser} from "../../redux/usersReducer";
+import {followAPI} from "../../api/api";
 
 type TUsersProps = {
-    followToggle: (userId: string) => void
+    followToggle: (userId: string | number) => void
     onPaginationClick: (activePage: number) => void
 }
 
@@ -19,28 +19,16 @@ const Users: React.FC<TMapStateToProps & TUsersProps> = ({users, followToggle, .
 
     let pagesCount = Math.ceil(props.totalUsersCount / props.pageSize)
 
-    const onClickHandler = (id: string, user: TUser) => {
+    const onClickHandler = (id: string | number, user: TUser) => {
         if (!user.followed) {
-            axios.post(
-                `https://social-network.samuraijs.com/api/1.0/follow/${id}`, {}, {
-                    withCredentials: true,
-                    headers: {
-                        "API-KEY": 'b03fff18-2846-4af3-a0b6-bb5a296b8aae',
-                    },
-                }).then((response) => {
+            followAPI.postFollow(id).then((response) => {
                 if (response.data.resultCode === 0) {
                     followToggle(id)
                 }
             })
         }
         else {
-            axios.delete(
-                `https://social-network.samuraijs.com/api/1.0/follow/${id}`, {
-                    withCredentials: true,
-                    headers: {
-                        "API-KEY": 'b03fff18-2846-4af3-a0b6-bb5a296b8aae',
-                    },
-                }).then((response) => {
+            followAPI.unFollow(id).then((response) => {
                 if (response.data.resultCode === 0) {
                     followToggle(id)
                 }

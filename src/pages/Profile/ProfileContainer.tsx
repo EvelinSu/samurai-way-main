@@ -1,11 +1,11 @@
 import React, {Component} from 'react';
-import axios from "axios";
 import {TRootState} from "../../redux/reduxStore";
 import {connect} from "react-redux";
 import Profile from "./Profile";
 import {profileToggleLoader, setActiveProfile, TActiveProfile} from "../../redux/profileReducer";
 import LoaderIcon from "../../assets/loaders/loader";
 import {RouteComponentProps, withRouter} from "react-router-dom";
+import {authAPI, usersAPI} from "../../api/api";
 
 type TProfileContainerProps = RouteComponentProps<TPathParams> & TMapStateToProps & TMapDispatchToProps
 
@@ -16,16 +16,19 @@ type TPathParams = {
 class ProfileContainer extends Component<TProfileContainerProps> {
 
     componentDidMount() {
-        let userId = this.props.match.params.id || this.props.ownProps.myId
         this.props.profileToggleLoader(true)
-        axios.get(`https://social-network.samuraijs.com/api/1.0/profile/${userId}`)
-             .then(response => {
-                     this.props.setActiveProfile(response.data)
-                     setTimeout(() => {
-                         this.props.profileToggleLoader(false)
-                     }, 500)
-                 }
-             )
+        authAPI.getMyData().then(me => {
+            return me.id
+        }).then((myId) => {
+            usersAPI.getUser(this.props.match.params.id || myId).then(user => {
+                    this.props.setActiveProfile(user)
+                    setTimeout(() => {
+                        this.props.profileToggleLoader(false)
+                    }, 500)
+                }
+            )
+        })
+
     }
 
     render() {

@@ -10,41 +10,32 @@ import {
     usersToggleLoader
 } from "../../redux/usersReducer";
 import Users from "./Users";
-import axios from "axios";
+import {usersAPI} from "../../api/api";
 
 type TUsersRequestContainerProps = TMapStateToProps & TMapDispatchToProps
 
 class UsersContainer extends Component<TUsersRequestContainerProps> {
     componentDidMount() {
         this.props.usersToggleLoader(true)
-        axios.get(
-            `https://social-network.samuraijs.com/api/1.0/users?page=${this.props.currentPage}&count=${this.props.pageSize}`, {
-                withCredentials: true
-            }).then(
-            response => {
-                this.props.setUsers(response.data.items)
-                this.props.setTotalUsersCount(response.data.totalCount)
-                setTimeout(() => {
-                    this.props.usersToggleLoader(false)
-                }, 500)
-            }
-        )
+        usersAPI.getUsers(this.props.currentPage, this.props.pageSize).then(response => {
+            this.props.setUsers(response.items)
+            this.props.setTotalUsersCount(response.totalCount)
+            setTimeout(() => {
+                this.props.usersToggleLoader(false)
+            }, 500)
+        })
     }
 
     onPaginationClick = (activePage: number) => {
         this.props.usersToggleLoader(true)
         this.props.setCurrentPage(activePage)
-        axios.get(
-            `https://social-network.samuraijs.com/api/1.0/users?page=${activePage}&count=${this.props.pageSize}`, {
-                withCredentials: true
-            }).then(
-            response => {
-                this.props.setUsers(response.data.items)
-                setTimeout(() => {
-                    this.props.usersToggleLoader(false)
-                }, 500)
-            }
-        )
+        usersAPI.getUsers(activePage, this.props.pageSize).then(response => {
+            this.props.setUsers(response.items)
+            setTimeout(() => {
+                this.props.usersToggleLoader(false)
+            }, 500)
+        })
+
     }
 
     render() {
@@ -81,7 +72,7 @@ export const mapStateToProps = (state: TRootState): TMapStateToProps => {
 }
 
 type TMapDispatchToProps = {
-    followToggle: (userId: string) => void
+    followToggle: (userId: string | number) => void
     setUsers: (users: Array<TUser>) => void
     setCurrentPage: (page: number) => void
     setTotalUsersCount: (usersCount: number) => void

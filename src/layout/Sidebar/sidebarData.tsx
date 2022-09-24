@@ -4,14 +4,10 @@ import MessageIcon from "../../assets/icons/MessageIcon";
 import PaperIcon from "../../assets/icons/PaperIcon";
 import MusicIcon from "../../assets/icons/MusicIcon";
 import SettingsIcon from "../../assets/icons/SettingsIcon";
-import LogoutIcon from "../../assets/icons/LogoutIcon";
 import React from "react";
 import {Property} from "csstype";
 import {PATH} from "../../redux/types";
 import UsersIcon from "../../assets/icons/UsersIcon";
-import {useSelector} from "react-redux";
-import {TRootState} from "../../redux/reduxStore";
-import axios from "axios";
 
 type TNavLink = {
     id: number,

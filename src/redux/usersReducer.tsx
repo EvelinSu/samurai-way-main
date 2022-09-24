@@ -100,7 +100,7 @@ const usersReducer = (state: TUsersPage = initialState, action: TActions): TUser
     return state
 }
 
-export const followToggle = (userId: string) => ({
+export const followToggle = (userId: string | number) => ({
     type: "FOLLOW-USER-TOGGLE",
     userId,
 } as const)

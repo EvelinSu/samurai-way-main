@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React from 'react';
 import {SSiteContainer, SSiteWrapper} from "./layout/styled";
 import Dialogs from "./pages/Dialogs/Dialogs";
 import {HashRouter, Redirect, Route, Switch} from "react-router-dom";
@@ -7,19 +7,10 @@ import {PATH} from "./redux/types";
 import UsersContainer from "./pages/Users/UsersContainer";
 import ProfileContainer from "./pages/Profile/ProfileContainer";
 import SidebarContainer from "./layout/Sidebar/SidebarContainer";
-import axios from "axios";
 
 const App: React.FC = (props) => {
-    const [myId, setMyId] = useState()
-    useEffect(() => {
-        axios.get("https://social-network.samuraijs.com/api/1.0/auth/me", {
-            withCredentials: true
-        }).then(response => {
-            setMyId(response.data.data.id)
-        })
-    }, [])
 
-    const profile = <ProfileContainer myId={myId}/>
+    const profile = <ProfileContainer/>
     const users = <UsersContainer />
     const dialogs = <Dialogs />
 
