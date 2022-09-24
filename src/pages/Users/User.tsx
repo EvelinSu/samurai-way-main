@@ -13,9 +13,10 @@ type TUserProps = {
     user: TUser
     id: string
     onClickHandler: (id: string, user: TUser) => void
+    followingInProgress: boolean
 }
 
-const User: React.FC<TUserProps> = ({user, id, onClickHandler}) => {
+const User: React.FC<TUserProps> = ({user, id, onClickHandler, ...props}) => {
 
     const [isHovered, setIsHovered] = useState<string>('')
 
@@ -47,6 +48,7 @@ const User: React.FC<TUserProps> = ({user, id, onClickHandler}) => {
                     </SUserStatus>
                     <Box margin={"auto 0 0 0 "} justifyContent={"center"}>
                         <Button
+                            isLoading={props.followingInProgress}
                             backgroundColor={!user.followed ? theme.colors.button.active : theme.colors.button.cancel}
                             label={user.followed ? 'unfollow' : 'follow'}
                             onClick={() => onClickHandler(id, user)}

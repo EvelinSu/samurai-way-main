@@ -7,7 +7,7 @@ import {
     setUsers,
     setTotalUsersCount,
     TUser,
-    usersToggleLoader
+    usersToggleLoader, setFollowingProgress,
 } from "../../redux/usersReducer";
 import Users from "./Users";
 import {usersAPI} from "../../api/api";
@@ -40,15 +40,7 @@ class UsersContainer extends Component<TUsersRequestContainerProps> {
 
     render() {
         return (
-            <Users
-                isFetching={this.props.isFetching}
-                pageSize={this.props.pageSize}
-                users={this.props.users}
-                currentPage={this.props.currentPage}
-                followToggle={this.props.followToggle}
-                totalUsersCount={this.props.totalUsersCount}
-                onPaginationClick={this.onPaginationClick}
-            />
+            <Users onPaginationClick={this.onPaginationClick} {...this.props} />
 
         )
     }
@@ -59,6 +51,7 @@ export type TMapStateToProps = {
     pageSize: number
     totalUsersCount: number
     currentPage: number
+    followingInProgress: Array<string | number>
     isFetching: boolean
 }
 export const mapStateToProps = (state: TRootState): TMapStateToProps => {
@@ -67,6 +60,7 @@ export const mapStateToProps = (state: TRootState): TMapStateToProps => {
         pageSize: state.usersPage.pageSize,
         totalUsersCount: state.usersPage.totalUsersCount,
         currentPage: state.usersPage.currentPage,
+        followingInProgress: state.usersPage.followingInProgress,
         isFetching: state.usersPage.isFetching
     }
 }
@@ -77,8 +71,9 @@ type TMapDispatchToProps = {
     setCurrentPage: (page: number) => void
     setTotalUsersCount: (usersCount: number) => void
     usersToggleLoader: (isFetching: boolean) => void
+    setFollowingProgress: (id: string | number, isInProgress: boolean) => void
 }
 
 export default connect(mapStateToProps, {
-    followToggle, setUsers, setCurrentPage, usersToggleLoader, setTotalUsersCount
+    followToggle, setUsers, setCurrentPage, usersToggleLoader, setTotalUsersCount, setFollowingProgress
 })(UsersContainer)

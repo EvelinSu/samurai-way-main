@@ -5,7 +5,8 @@ import {
     setCurrentPage,
     setUsers,
     setTotalUsersCount,
-    usersToggleLoader
+    usersToggleLoader,
+    setFollowingProgress
 } from "./usersReducer";
 import {setAuthUserDataAC} from "./authReducer";
 
@@ -36,6 +37,7 @@ export type TActions =
     | ReturnType<typeof setActiveProfile>
     | ReturnType<typeof profileToggleLoader>
     | ReturnType<typeof setAuthUserDataAC>
+    | ReturnType<typeof setFollowingProgress>
 
 export const PATH = {
     profile: '/profile',

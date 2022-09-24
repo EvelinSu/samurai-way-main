@@ -13,6 +13,9 @@ import {followAPI} from "../../api/api";
 type TUsersProps = {
     followToggle: (userId: string | number) => void
     onPaginationClick: (activePage: number) => void
+    setFollowingProgress: (id: string | number, isInProgress: boolean) => void
+    followingInProgress: Array<string | number>
+    isFetching: boolean
 }
 
 const Users: React.FC<TMapStateToProps & TUsersProps> = ({users, followToggle, ...props}) => {
@@ -20,10 +23,12 @@ const Users: React.FC<TMapStateToProps & TUsersProps> = ({users, followToggle, .
     let pagesCount = Math.ceil(props.totalUsersCount / props.pageSize)
 
     const onClickHandler = (id: string | number, user: TUser) => {
+        props.setFollowingProgress(id, true)
         if (!user.followed) {
             followAPI.postFollow(id).then((response) => {
                 if (response.data.resultCode === 0) {
                     followToggle(id)
+                    props.setFollowingProgress(id, false)
                 }
             })
         }
@@ -31,6 +36,7 @@ const Users: React.FC<TMapStateToProps & TUsersProps> = ({users, followToggle, .
             followAPI.unFollow(id).then((response) => {
                 if (response.data.resultCode === 0) {
                     followToggle(id)
+                    props.setFollowingProgress(id, false)
                 }
             })
         }
@@ -50,6 +56,7 @@ const Users: React.FC<TMapStateToProps & TUsersProps> = ({users, followToggle, .
                                 key={user.id}
                                 user={user}
                                 id={String(user.id)}
+                                followingInProgress={props.followingInProgress.includes(String(user.id))}
                                 onClickHandler={onClickHandler}
                             />
                         ))}

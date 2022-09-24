@@ -15,6 +15,7 @@ export type TUsersPage = {
     totalUsersCount: number
     currentPage: number
     isFetching: boolean
+    followingInProgress: Array<string | number>
 }
 
 const users = [
@@ -75,7 +76,8 @@ const initialState: TUsersPage = {
     pageSize: 12,
     totalUsersCount: 12,
     currentPage: 1,
-    isFetching: true
+    isFetching: true,
+    followingInProgress: []
 }
 
 const usersReducer = (state: TUsersPage = initialState, action: TActions): TUsersPage => {
@@ -96,6 +98,9 @@ const usersReducer = (state: TUsersPage = initialState, action: TActions): TUser
             return {...state, totalUsersCount: action.usersCount}
         case "TOGGLE-LOADER":
             return {...state, isFetching: action.isFetching}
+        case "FOLLOWING-LOADER":
+            if (action.isInProgress) return {...state, followingInProgress: [...state.followingInProgress, action.id]}
+            else return {...state, followingInProgress: state.followingInProgress.filter(id => id !== action.id)}
     }
     return state
 }
@@ -121,6 +126,11 @@ export const setTotalUsersCount = (usersCount: number) => ({
 export const usersToggleLoader = (isFetching: boolean) => ({
     type: "TOGGLE-LOADER",
     isFetching
+} as const)
+export const setFollowingProgress = (id: string | number, isInProgress: boolean) => ({
+    type: "FOLLOWING-LOADER",
+    isInProgress,
+    id
 } as const)
 
 export default usersReducer

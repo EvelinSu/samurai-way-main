@@ -1,5 +1,5 @@
 import React, {FC} from 'react';
-import {SButton} from "./styled";
+import {SButton, SLoadingButton} from "./styled";
 
 type TButtonProps = {
     label: string,
@@ -7,6 +7,7 @@ type TButtonProps = {
     isDisabled?: boolean
     backgroundColor?: string
     size?: 'lg' | 'sm'
+    isLoading?: boolean
 }
 
 const Button: FC<TButtonProps> = ({isDisabled, onClick, ...props}) => {
@@ -14,13 +15,18 @@ const Button: FC<TButtonProps> = ({isDisabled, onClick, ...props}) => {
         onClick();
     };
     return (
-       <SButton
-           disabled={isDisabled}
-           onClick={() => onClickHandler()}
-           {...props}
-       >
-           {props.label}
-       </SButton>
+        !props.isLoading
+            ? (<SButton
+                disabled={isDisabled}
+                onClick={() => onClickHandler()}
+                {...props}
+            >
+                {props.label}
+            </SButton>)
+            : (<SLoadingButton>
+                {props.label}
+            </SLoadingButton>)
+
     );
 };
 
