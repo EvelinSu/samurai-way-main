@@ -14,7 +14,6 @@ const App: React.FC = (props) => {
     const users = <UsersContainer />
     const dialogs = <Dialogs />
 
-
     return (
         <HashRouter>
             <SSiteWrapper>
@@ -24,7 +23,7 @@ const App: React.FC = (props) => {
                         <Route path={`${PATH.profile}/:id?`} render={() => profile} exact />
                         <Redirect from="/" to={PATH.profile} exact />
                         <Route path={`${PATH.messages}/:id?`} render={() => dialogs} exact />
-                        <Route path={`${PATH.users}`} render={() => users} exact />
+                        <Route path={`${PATH.users}/:page?`} render={() => users} exact />
                         <Route path={"*"} component={PageNotFound} exact />
                     </Switch>
                 </SSiteContainer>

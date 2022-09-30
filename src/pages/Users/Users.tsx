@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {SSiteContent} from "../../layout/styled";
 import {Grid} from "../../components/Grid/Grid";
 import User from "./User";
@@ -9,6 +9,7 @@ import LoaderIcon from "../../assets/loaders/loader";
 import {TMapStateToProps} from "./UsersContainer";
 import {TUser} from "../../redux/usersReducer";
 import {followAPI} from "../../api/api";
+import {useParams} from "react-router-dom";
 
 type TUsersProps = {
     followToggle: (userId: string | number) => void
@@ -21,6 +22,13 @@ type TUsersProps = {
 const Users: React.FC<TMapStateToProps & TUsersProps> = ({users, followToggle, ...props}) => {
 
     let pagesCount = Math.ceil(props.totalUsersCount / props.pageSize)
+
+    // для перерисовки страницы при изменении адресной строки, например, через кнопку "назад" в браузере
+    const {page} = useParams<{page: string}>()
+    useEffect(() => {
+        props.onPaginationClick(+page)
+    }, [page])
+    //
 
     const onClickHandler = (id: string | number, user: TUser) => {
         props.setFollowingProgress(id, true)
@@ -64,7 +72,6 @@ const Users: React.FC<TMapStateToProps & TUsersProps> = ({users, followToggle, .
             }
             <Pagination
                 onClick={props.onPaginationClick}
-                activePage={props.currentPage}
                 pagesCount={pagesCount || 1}
             />
         </SSiteContent>

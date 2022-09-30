@@ -1,4 +1,6 @@
 import {TActions} from "./types";
+import {usersAPI} from "../api/api";
+import {Dispatch} from "redux";
 
 export type TUser = {
     id: number | string,
@@ -13,12 +15,11 @@ export type TUsersPage = {
     users: Array<TUser>
     pageSize: number,
     totalUsersCount: number
-    currentPage: number
     isFetching: boolean
     followingInProgress: Array<string | number>
 }
 
-const users = [
+export const presentationUsers = [
     {
         id: 1,
         name: "Kisa",
@@ -75,7 +76,6 @@ const initialState: TUsersPage = {
     users: [],
     pageSize: 12,
     totalUsersCount: 12,
-    currentPage: 1,
     isFetching: true,
     followingInProgress: []
 }
@@ -92,15 +92,16 @@ const usersReducer = (state: TUsersPage = initialState, action: TActions): TUser
         case ("SET-USERS"):
             // return {...state, users: [...state.users]}
             return {...state, users: [...action.users]}
-        case "SET-CURRENT-PAGE":
-            return {...state, currentPage: action.currentPage}
         case "SET-TOTAL-USERS-COUNT":
             return {...state, totalUsersCount: action.usersCount}
         case "TOGGLE-LOADER":
             return {...state, isFetching: action.isFetching}
         case "FOLLOWING-LOADER":
-            if (action.isInProgress) return {...state, followingInProgress: [...state.followingInProgress, action.id]}
-            else return {...state, followingInProgress: state.followingInProgress.filter(id => id !== action.id)}
+            if (action.isInProgress) {
+                return {...state, followingInProgress: [...state.followingInProgress, action.id]}
+            } else {
+                return {...state, followingInProgress: state.followingInProgress.filter(id => id !== action.id)}
+            }
     }
     return state
 }
@@ -132,5 +133,22 @@ export const setFollowingProgress = (id: string | number, isInProgress: boolean)
     isInProgress,
     id
 } as const)
+
+export const getUsersTC = (currentPage: number, pageSize: number) => (dispatch: Dispatch) => {
+    dispatch(usersToggleLoader(true))
+    usersAPI.getUsers(currentPage, pageSize).then(response => {
+        dispatch(setUsers(response.items))
+        dispatch(setTotalUsersCount(response.totalCount))
+        setTimeout(() => {
+            dispatch(usersToggleLoader(false))
+        }, 500)
+    }).catch(() => { // показать презентационных пользователей если с сервера не придет ответ
+        dispatch(setUsers(presentationUsers))
+        dispatch(setTotalUsersCount(presentationUsers.length))
+        setTimeout(() => {
+            dispatch(usersToggleLoader(false))
+        }, 500)
+    })
+}
 
 export default usersReducer

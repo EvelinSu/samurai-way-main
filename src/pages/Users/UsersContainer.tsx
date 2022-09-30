@@ -7,30 +7,32 @@ import {
     setUsers,
     setTotalUsersCount,
     TUser,
-    usersToggleLoader, setFollowingProgress,
+    usersToggleLoader, setFollowingProgress, getUsersTC,
 } from "../../redux/usersReducer";
 import Users from "./Users";
 import {usersAPI} from "../../api/api";
+import {RouteComponentProps, withRouter} from "react-router-dom";
 
-type TUsersRequestContainerProps = TMapStateToProps & TMapDispatchToProps
+type TUsersRequestContainerProps = RouteComponentProps<TPathParams> & TMapStateToProps & TMapDispatchToProps
+
+type TPathParams = {
+    page: string
+}
 
 class UsersContainer extends Component<TUsersRequestContainerProps> {
     componentDidMount() {
+        getUsersTC(1, this.props.pageSize)
+    }
+
+    onPaginationClick = () => {
+        getUsersTC(+this.props.match.params.page, this.props.pageSize)
         this.props.usersToggleLoader(true)
-        usersAPI.getUsers(this.props.currentPage, this.props.pageSize).then(response => {
+        usersAPI.getUsers(+this.props.match.params.page, this.props.pageSize).then(response => {
             this.props.setUsers(response.items)
-            this.props.setTotalUsersCount(response.totalCount)
             setTimeout(() => {
                 this.props.usersToggleLoader(false)
             }, 500)
-        })
-    }
-
-    onPaginationClick = (activePage: number) => {
-        this.props.usersToggleLoader(true)
-        this.props.setCurrentPage(activePage)
-        usersAPI.getUsers(activePage, this.props.pageSize).then(response => {
-            this.props.setUsers(response.items)
+        }).finally(() => {
             setTimeout(() => {
                 this.props.usersToggleLoader(false)
             }, 500)
@@ -50,7 +52,6 @@ export type TMapStateToProps = {
     users: Array<TUser>
     pageSize: number
     totalUsersCount: number
-    currentPage: number
     followingInProgress: Array<string | number>
     isFetching: boolean
 }
@@ -59,7 +60,6 @@ export const mapStateToProps = (state: TRootState): TMapStateToProps => {
         users: state.usersPage.users,
         pageSize: state.usersPage.pageSize,
         totalUsersCount: state.usersPage.totalUsersCount,
-        currentPage: state.usersPage.currentPage,
         followingInProgress: state.usersPage.followingInProgress,
         isFetching: state.usersPage.isFetching
     }
@@ -68,12 +68,12 @@ export const mapStateToProps = (state: TRootState): TMapStateToProps => {
 type TMapDispatchToProps = {
     followToggle: (userId: string | number) => void
     setUsers: (users: Array<TUser>) => void
-    setCurrentPage: (page: number) => void
     setTotalUsersCount: (usersCount: number) => void
     usersToggleLoader: (isFetching: boolean) => void
     setFollowingProgress: (id: string | number, isInProgress: boolean) => void
 }
+let WithUrlDataComponent = withRouter(UsersContainer)
 
 export default connect(mapStateToProps, {
     followToggle, setUsers, setCurrentPage, usersToggleLoader, setTotalUsersCount, setFollowingProgress
-})(UsersContainer)
+})(WithUrlDataComponent)
