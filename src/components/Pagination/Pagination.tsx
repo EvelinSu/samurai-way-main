@@ -2,17 +2,20 @@ import React, {useEffect, useState} from 'react';
 import {SPagination, SPaginationItem} from "./styled";
 import ArrowIcon from "../../assets/icons/ArrowIcon";
 import { SText } from '../Text/SText';
+import {useHistory, useLocation, useParams} from "react-router-dom";
+import {PATH} from "../../redux/types";
 
 type TPaginationProps = {
     pagesCount: number
     onClick: (activePage: number) => void
-    activePage?: number
 }
 
 const Pagination: React.FC<TPaginationProps> = (props) => {
 
-    const [activePage, setActivePage] = useState(props.activePage || 1)
     const [visiblePages, setVisiblePages] = useState([1, 10])
+
+    const navigate = useHistory()
+    const {page} = useParams<{page: string}>()
 
     //pagination logic
 
@@ -20,6 +23,7 @@ const Pagination: React.FC<TPaginationProps> = (props) => {
     for (let i = visiblePages[0]; i <= props.pagesCount && i < visiblePages[1]; i++) {
         if (i < visiblePages[1]) pages.push(i)
     }
+
 
     //
 
@@ -30,10 +34,9 @@ const Pagination: React.FC<TPaginationProps> = (props) => {
                 [visiblePages[0] + 9, visiblePages[1] + 9])
         }
     }
-
-    const onClickHandler = (el: number) => {
+    const onClickHandler = async(el: number) => {
+        await navigate.push(`${PATH.users}/${el}`)
         props.onClick(el)
-        setActivePage(el)
     }
 
     return (
@@ -46,7 +49,7 @@ const Pagination: React.FC<TPaginationProps> = (props) => {
                 return (
                     <SPaginationItem
                         key={el}
-                        isActive={activePage === el}
+                        isActive={+page ? +page === el : el === 1 }
                         onClick={() => onClickHandler(el)}
                     >
                         {el}

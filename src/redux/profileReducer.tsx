@@ -35,24 +35,24 @@ export type TProfilePage = {
 const initialState: TProfilePage = ({
     isFetching: true,
     activeProfile: {
-        aboutMe: '',
+        aboutMe: 'Mew mew mew mew',
         contacts: {
             facebook: '',
             website: '',
             vk: "",
             twitter: "",
-            instagram: "",
-            youtube: "",
-            github: "",
+            youtube: "https://www.youtube.com/watch?v=dQw4w9WgXcQ&t=0s&ab_channel=RickAstley",
+            github: "https://www.youtube.com/watch?v=_S7WEVLbQ-Y&ab_channel=FicLord",
+            instagram: "https://i.imgur.com/2eVNhUN.png",
             mainLink: ""
         },
         lookingForAJob: false,
-        lookingForAJobDescription: '',
-        fullName: "",
+        lookingForAJobDescription: 'The salty swabbie begrudgingly tastes the breeze.',
+        fullName: "Meow",
         userId: 1000000,
         photos: {
-            small: "",
-            large: ""
+            small: "https://i.imgur.com/WfSK9QM.png",
+            large: "https://i.imgur.com/WfSK9QM.png"
         }
     },
     newPostText: '',
