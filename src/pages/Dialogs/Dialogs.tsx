@@ -11,6 +11,8 @@ import {SSiteContent} from "../../layout/styled";
 import {DialogContentContainer} from "./DialogContent/DialogContentContainer";
 import {DialogsItemsListContainer} from "./DialogsItemsList/DialogsItemsListContainer";
 import PagePanel from "../PagePanel";
+import Input from "../../components/Form/Input";
+import UserIcon from "../../assets/icons/UserIcon";
 
 type TDialogsProps = {}
 const Dialogs: FC<TDialogsProps> = (props) => {
@@ -23,6 +25,7 @@ const Dialogs: FC<TDialogsProps> = (props) => {
     return (
         <SSiteContent>
             <PagePanel title="Messages">
+                <Input icon={<UserIcon/>} placeholder={"Search..."}/>
             </PagePanel>
             <SDialogs>
                 <SDialogContainer justifyContent={id ? 'initial' : 'center'}>

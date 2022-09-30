@@ -27,6 +27,10 @@ class ProfileContainer extends Component<TProfileContainerProps> {
                     }, 500)
                 }
             )
+        }).finally(() => {
+            setTimeout(() => {
+                this.props.profileToggleLoader(false)
+            }, 500)
         })
 
     }
