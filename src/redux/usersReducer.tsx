@@ -134,7 +134,6 @@ export const setFollowingProgress = (id: number, isInProgress: boolean) => ({
     id
 } as const)
 
-
 // получить определенное число юзеров на конкретной странице
 export const getUsersThunk = (currentPage: number, pageSize: number) => (dispatch: Dispatch) => {
     dispatch(usersToggleLoader(true))
@@ -154,7 +153,7 @@ export const getUsersThunk = (currentPage: number, pageSize: number) => (dispatc
 }
 //
 
-export const followToggleThunk = (user: TUser) =>  (dispatch: Dispatch) => {
+export const followToggleThunk = (user: TUser) => (dispatch: Dispatch) => {
     dispatch(setFollowingProgress(user.id, true))
     if (!user.followed) {
         followAPI.postFollow(user.id).then((response) => {
@@ -163,8 +162,7 @@ export const followToggleThunk = (user: TUser) =>  (dispatch: Dispatch) => {
                 dispatch(setFollowingProgress(user.id, false))
             }
         })
-    }
-    else {
+    } else {
         followAPI.unFollow(user.id).then((response) => {
             if (response.data.resultCode === 0) {
                 dispatch(followToggle(user.id))
@@ -173,7 +171,5 @@ export const followToggleThunk = (user: TUser) =>  (dispatch: Dispatch) => {
         })
     }
 }
-
-
 
 export default usersReducer
