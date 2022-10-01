@@ -2,6 +2,8 @@ import {v1} from "uuid";
 import {getStringDate} from "../common/utils";
 import {TActions} from "./types";
 import {TPost} from "../pages/Profile/Posts/types";
+import {Dispatch} from "redux";
+import {authAPI, usersAPI} from "../api/api";
 
 export type TActiveProfile = {
     aboutMe: string,
@@ -120,5 +122,21 @@ export const profileToggleLoader = (isFetching: boolean) => ({
     type: "TOGGLE-LOADER",
     isFetching
 } as const)
+
+
+export const getProfile = (id: string) => (dispatch: Dispatch) => {
+    dispatch(profileToggleLoader(true))
+    authAPI.getMyData().then(me => {
+        return me.id
+    }).then((myId) => {
+        usersAPI.getUser(id || myId).then(user => {
+                dispatch(setActiveProfile(user))
+                setTimeout(() => {
+                    dispatch(profileToggleLoader(false))
+                }, 500)
+            }
+        )
+    })
+}
 
 export default profileReducer

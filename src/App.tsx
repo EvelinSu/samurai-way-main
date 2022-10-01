@@ -4,14 +4,14 @@ import Dialogs from "./pages/Dialogs/Dialogs";
 import {HashRouter, Redirect, Route, Switch} from "react-router-dom";
 import PageNotFound from "./pages/PageNotFound";
 import {PATH} from "./redux/types";
-import UsersContainer from "./pages/Users/UsersContainer";
-import ProfileContainer from "./pages/Profile/ProfileContainer";
 import SidebarContainer from "./layout/Sidebar/SidebarContainer";
+import Users from "./pages/Users/Users";
+import Profile from "./pages/Profile/Profile";
 
 const App: React.FC = (props) => {
 
-    const profile = <ProfileContainer/>
-    const users = <UsersContainer />
+    const profile = <Profile/>
+    const users = <Users />
     const dialogs = <Dialogs />
 
     return (
