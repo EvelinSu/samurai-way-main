@@ -1,9 +1,9 @@
 import {TActions} from "./types";
-import {usersAPI} from "../api/api";
+import {followAPI, usersAPI} from "../api/api";
 import {Dispatch} from "redux";
 
 export type TUser = {
-    id: number | string,
+    id: number,
     photos: { [Key: string]: string },
     status: string,
     name: string,
@@ -16,7 +16,7 @@ export type TUsersPage = {
     pageSize: number,
     totalUsersCount: number
     isFetching: boolean
-    followingInProgress: Array<string | number>
+    followingInProgress: Array<number>
 }
 
 export const presentationUsers = [
@@ -84,7 +84,7 @@ const usersReducer = (state: TUsersPage = initialState, action: TActions): TUser
     switch (action.type) {
         case ('FOLLOW-USER-TOGGLE'):
             return {
-                ...state, users: [...state.users.map(el => String(el.id) === action.userId
+                ...state, users: [...state.users.map(el => el.id === action.userId
                     ? {...el, followed: !el.followed}
                     : {...el}
                 )]
@@ -106,7 +106,7 @@ const usersReducer = (state: TUsersPage = initialState, action: TActions): TUser
     return state
 }
 
-export const followToggle = (userId: string | number) => ({
+export const followToggle = (userId: number) => ({
     type: "FOLLOW-USER-TOGGLE",
     userId,
 } as const)
@@ -128,17 +128,19 @@ export const usersToggleLoader = (isFetching: boolean) => ({
     type: "TOGGLE-LOADER",
     isFetching
 } as const)
-export const setFollowingProgress = (id: string | number, isInProgress: boolean) => ({
+export const setFollowingProgress = (id: number, isInProgress: boolean) => ({
     type: "FOLLOWING-LOADER",
     isInProgress,
     id
 } as const)
 
-export const getUsersTC = (currentPage: number, pageSize: number) => (dispatch: Dispatch) => {
+
+// получить определенное число юзеров на конкретной странице
+export const getUsersThunk = (currentPage: number, pageSize: number) => (dispatch: Dispatch) => {
     dispatch(usersToggleLoader(true))
     usersAPI.getUsers(currentPage, pageSize).then(response => {
-        dispatch(setUsers(response.items))
         dispatch(setTotalUsersCount(response.totalCount))
+        dispatch(setUsers(response.items))
         setTimeout(() => {
             dispatch(usersToggleLoader(false))
         }, 500)
@@ -150,5 +152,28 @@ export const getUsersTC = (currentPage: number, pageSize: number) => (dispatch: 
         }, 500)
     })
 }
+//
+
+export const followToggleThunk = (user: TUser) =>  (dispatch: Dispatch) => {
+    dispatch(setFollowingProgress(user.id, true))
+    if (!user.followed) {
+        followAPI.postFollow(user.id).then((response) => {
+            if (response.data.resultCode === 0) {
+                dispatch(followToggle(user.id))
+                dispatch(setFollowingProgress(user.id, false))
+            }
+        })
+    }
+    else {
+        followAPI.unFollow(user.id).then((response) => {
+            if (response.data.resultCode === 0) {
+                dispatch(followToggle(user.id))
+                dispatch(setFollowingProgress(user.id, false))
+            }
+        })
+    }
+}
+
+
 
 export default usersReducer

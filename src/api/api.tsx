@@ -29,10 +29,10 @@ export const authAPI = {
 }
 
 export const followAPI = {
-    postFollow(id: string | number) {
+    postFollow(id: number) {
         return instance.post(`follow/${id}`, {})
     },
-    unFollow(id: string | number) {
+    unFollow(id: number) {
         return instance.delete(`follow/${id}`)
     }
 }

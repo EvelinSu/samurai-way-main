@@ -1,14 +1,14 @@
 import {TActions} from "./types";
 
 export type TAuth = {
-    id: string,
+    id: number,
     email: string,
     login: string,
     isAuth: boolean
 }
 
 const initialState: TAuth = {
-    id: '',
+    id: 0,
     email: '',
     login: '',
     isAuth: false

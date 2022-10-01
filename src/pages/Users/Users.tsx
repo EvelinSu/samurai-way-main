@@ -8,18 +8,14 @@ import Pagination from "../../components/Pagination/Pagination";
 import LoaderIcon from "../../assets/loaders/loader";
 import {TMapStateToProps} from "./UsersContainer";
 import {TUser} from "../../redux/usersReducer";
-import {followAPI} from "../../api/api";
 import {useParams} from "react-router-dom";
 
-type TUsersProps = {
-    followToggle: (userId: string | number) => void
+type TUsersProps = TMapStateToProps & {
     onPaginationClick: (activePage: number) => void
-    setFollowingProgress: (id: string | number, isInProgress: boolean) => void
-    followingInProgress: Array<string | number>
-    isFetching: boolean
+    followToggleThunk: (user: TUser) => void
 }
 
-const Users: React.FC<TMapStateToProps & TUsersProps> = ({users, followToggle, ...props}) => {
+const Users: React.FC<TUsersProps> = (props) => {
 
     let pagesCount = Math.ceil(props.totalUsersCount / props.pageSize)
 
@@ -30,26 +26,6 @@ const Users: React.FC<TMapStateToProps & TUsersProps> = ({users, followToggle, .
     }, [page])
     //
 
-    const onClickHandler = (id: string | number, user: TUser) => {
-        props.setFollowingProgress(id, true)
-        if (!user.followed) {
-            followAPI.postFollow(id).then((response) => {
-                if (response.data.resultCode === 0) {
-                    followToggle(id)
-                    props.setFollowingProgress(id, false)
-                }
-            })
-        }
-        else {
-            followAPI.unFollow(id).then((response) => {
-                if (response.data.resultCode === 0) {
-                    followToggle(id)
-                    props.setFollowingProgress(id, false)
-                }
-            })
-        }
-    }
-
     return (
         <SSiteContent>
             <PagePanel title="Users">
@@ -59,13 +35,13 @@ const Users: React.FC<TMapStateToProps & TUsersProps> = ({users, followToggle, .
                 props.isFetching
                     ? <LoaderIcon />
                     : <Grid columns={"repeat(auto-fill, minmax(150px, 1fr))"}>
-                        {users.map((user) => (
+                        {props.users.map((user) => (
                             <User
                                 key={user.id}
                                 user={user}
                                 id={String(user.id)}
-                                followingInProgress={props.followingInProgress.includes(String(user.id))}
-                                onClickHandler={onClickHandler}
+                                followingInProgress={props.followingInProgress.includes(user.id)}
+                                onClickHandler={() => {props.followToggleThunk(user)}}
                             />
                         ))}
                     </Grid>

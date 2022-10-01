@@ -8,7 +8,7 @@ import Modal from "../../components/modal/Modal";
 import LoginIcon from "../../assets/icons/LoginIcon";
 
 type TSidebarProps = {
-    myId: string | number,
+    myId: number,
     isAuth: boolean
 }
 

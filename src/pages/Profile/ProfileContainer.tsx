@@ -51,7 +51,7 @@ type TMapStateToProps = {
     ownProps: TOwnProps
 }
 type TOwnProps = {
-    myId?: string | number
+    myId?: number
 }
 export const mapStateToProps = (state: TRootState, ownProps: TOwnProps): TMapStateToProps => {
     return {

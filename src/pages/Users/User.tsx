@@ -7,18 +7,19 @@ import Button from "../../components/Button/Button";
 import {theme} from "../../styles/constants";
 import {TUser} from "../../redux/usersReducer";
 import {NavLink} from "react-router-dom";
-
+import {Dispatch} from "redux";
 
 type TUserProps = {
     user: TUser
     id: string
-    onClickHandler: (id: string, user: TUser) => void
+    onClickHandler: () =>  void
     followingInProgress: boolean
 }
 
 const User: React.FC<TUserProps> = ({user, id, onClickHandler, ...props}) => {
 
     const [isHovered, setIsHovered] = useState<string>('')
+
 
     return (
         <SUserBox
@@ -51,7 +52,7 @@ const User: React.FC<TUserProps> = ({user, id, onClickHandler, ...props}) => {
                             isLoading={props.followingInProgress}
                             backgroundColor={!user.followed ? theme.colors.button.active : theme.colors.button.cancel}
                             label={user.followed ? 'unfollow' : 'follow'}
-                            onClick={() => onClickHandler(id, user)}
+                            onClick={onClickHandler}
                         />
                     </Box>
                 </Box>
