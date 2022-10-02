@@ -1,4 +1,6 @@
 import {TActions} from "./types";
+import {Dispatch} from "redux";
+import {authAPI} from "../api/api";
 
 export type TAuth = {
     id: number,
@@ -28,4 +30,17 @@ export const setAuthUserDataAC = (data: TAuth) => ({
     data
 } as const)
 
+export const getAuthThunk = () => (dispatch: Dispatch) => {
+    authAPI.getMyData().then(me => {
+            if (me.resultCode === 0) {
+                dispatch(setAuthUserDataAC(me))
+            }
+        }
+    )
+}
+
+
+
 export default authReducer
+
+

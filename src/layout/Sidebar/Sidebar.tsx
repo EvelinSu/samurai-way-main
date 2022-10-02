@@ -6,13 +6,22 @@ import LogoutIcon from "../../assets/icons/LogoutIcon";
 import Modal from "../../components/modal/Modal";
 
 import LoginIcon from "../../assets/icons/LoginIcon";
+import {useSelector} from "react-redux";
+import {TRootState} from "../../redux/reduxStore";
+import {getAuthThunk, TAuth} from "../../redux/authReducer";
 
 type TSidebarProps = {
-    myId: number,
-    isAuth: boolean
+
 }
 
-const Sidebar: FC<TSidebarProps> = ({isAuth, myId}) => {
+const Sidebar: FC<TSidebarProps> = (props) => {
+
+    const isAuth = useSelector<TRootState, TAuth>(state => state.auth)
+
+    useEffect(() => {
+       getAuthThunk()
+    }, [])
+
     const history = useHistory();
     const location = useLocation();
 
