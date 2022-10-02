@@ -13,7 +13,7 @@ export const usersAPI = {
         return instance.get(`users?page=${currentPage}&count=${pageSize}`)
                        .then(response => response.data)
     },
-    getUser(id: number | string) {
+    getUser(id: number) {
         return instance.get(`profile/${id}`)
                        .then(response => response.data)
     },
@@ -23,7 +23,7 @@ export const authAPI = {
     getMyData() {
         return (
             instance.get("auth/me")
-                    .then(response => response.data.data)
+                    .then(response => response.data)
         )
     }
 }

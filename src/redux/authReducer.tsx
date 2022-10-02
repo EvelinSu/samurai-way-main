@@ -33,13 +33,11 @@ export const setAuthUserDataAC = (data: TAuth) => ({
 export const getAuthThunk = () => (dispatch: Dispatch) => {
     authAPI.getMyData().then(me => {
             if (me.resultCode === 0) {
-                dispatch(setAuthUserDataAC(me))
+                dispatch(setAuthUserDataAC(me.data))
             }
         }
     )
 }
-
-
 
 export default authReducer
 

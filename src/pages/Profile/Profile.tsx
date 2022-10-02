@@ -14,7 +14,6 @@ import {useDispatch, useSelector} from "react-redux";
 import {useParams} from "react-router-dom";
 import {TRootState} from "../../redux/reduxStore";
 import LoaderIcon from "../../assets/loaders/loader";
-import {cleanup} from "@testing-library/react";
 import Posts from "./Posts/Posts";
 
 type TProfileProps = {}
@@ -22,12 +21,11 @@ type TProfileProps = {}
 const Profile: FC<TProfileProps> = () => {
     const dispatch = useDispatch()
     const {id} = useParams<{ id: string }>()
+
     useEffect(() => {
         dispatch(getProfile(id))
-        return () => {
-            cleanup()
-        }
-    }, [])
+    }, [id])
+
     const state = useSelector<TRootState, TProfilePage>(state => state.profilePage)
 
     const mappedContacts = Object.entries(state.activeProfile.contacts).map((contact) => {
@@ -78,6 +76,7 @@ const Profile: FC<TProfileProps> = () => {
                     </Box>
                 </Box>
                 <Posts avatar={state.activeProfile.photos.small || userPhoto} />
+
             </SSiteContent>)
 
     );

@@ -6,6 +6,7 @@ type TSButtonProps = {
     backgroundColor?: string
     size?: 'lg' | 'sm'
     isLoading?: boolean
+    hasIcon?: boolean
 }
 
 const buttonLoad = keyframes`
@@ -23,8 +24,11 @@ const buttonLoad = keyframes`
 `
 
 export const SButton = styled.button<TSButtonProps>(({disabled, ...props}) => ({
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
     padding: "7px 15px",
-    borderRadius: 10,
+    borderRadius: 20,
     backgroundColor: props.backgroundColor || theme.colors.button.success,
     color: "#fff",
     cursor: "pointer",
@@ -41,6 +45,15 @@ export const SButton = styled.button<TSButtonProps>(({disabled, ...props}) => ({
         borderRadius: 25,
         fontSize: 18,
     },
+    ...props.hasIcon && {
+        gap: 10,
+        svg:{
+            backgroundColor: "rgba(255, 255, 255, 0.1)",
+            borderRadius: "50%",
+            width: 20,
+            height: 20,
+        }
+    }
 }))
 
 export const SLoadingButton = styled(SButton)`
@@ -50,3 +63,4 @@ export const SLoadingButton = styled(SButton)`
   opacity: 1;
   transition: 0.2s;
 `
+

@@ -8,6 +8,8 @@ type TButtonProps = {
     backgroundColor?: string
     size?: 'lg' | 'sm'
     isLoading?: boolean
+    icon?: React.ReactElement
+    needAuth?: boolean
 }
 
 const Button: FC<TButtonProps> = ({isDisabled, onClick, ...props}) => {
@@ -17,10 +19,12 @@ const Button: FC<TButtonProps> = ({isDisabled, onClick, ...props}) => {
     return (
         !props.isLoading
             ? (<SButton
+                hasIcon={!!props.icon}
                 disabled={isDisabled}
                 onClick={() => onClickHandler()}
                 {...props}
             >
+                {props.icon}
                 {props.label}
             </SButton>)
             : (<SLoadingButton>

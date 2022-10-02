@@ -17,14 +17,12 @@ type TUsersProps = {
 
 const Users: React.FC<TUsersProps> = (props) => {
     const {page} = useParams<{page: string}>()
-    const state = useSelector<TRootState, TUsersPage>(state => state.usersPage)
-    const dispatch = useDispatch()
-
     useEffect(() => {
         dispatch(getUsersThunk(+page || 1, state.pageSize))
     }, [page])
 
-    console.log(state.users)
+    const state = useSelector<TRootState, TUsersPage>(state => state.usersPage)
+    const dispatch = useDispatch()
 
     const onPaginationClick = () => {
     }

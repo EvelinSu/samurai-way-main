@@ -127,7 +127,7 @@ export const profileToggleLoader = (isFetching: boolean) => ({
 export const getProfile = (id: string) => (dispatch: Dispatch) => {
     dispatch(profileToggleLoader(true))
     authAPI.getMyData().then(me => {
-        return me.id
+        return me.data.id
     }).then((myId) => {
         usersAPI.getUser(id || myId).then(user => {
                 dispatch(setActiveProfile(user))
