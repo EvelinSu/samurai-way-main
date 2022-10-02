@@ -1,26 +1,23 @@
 import React, {FC, useEffect, useState} from 'react';
-import {SSidebar, SSidebarItem, SSidebarItemIcon} from "./styled";
+import {SSidebar, SSidebarAvatar, SSidebarItem, SSidebarItemIcon} from "./styled";
 import {useHistory, useLocation} from "react-router-dom";
 import {navLinks} from "./sidebarData";
 import LogoutIcon from "../../assets/icons/LogoutIcon";
 import Modal from "../../components/modal/Modal";
-
 import LoginIcon from "../../assets/icons/LoginIcon";
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {TRootState} from "../../redux/reduxStore";
 import {getAuthThunk, TAuth} from "../../redux/authReducer";
+import { SAvatar } from '../../components/Avatar/SAvatar';
+import defaultPhoto from  '../../assets/img/default-photo.png'
+import {PATH} from "../../redux/types";
 
 type TSidebarProps = {
 
 }
 
 const Sidebar: FC<TSidebarProps> = (props) => {
-
-    const isAuth = useSelector<TRootState, TAuth>(state => state.auth)
-
-    useEffect(() => {
-       getAuthThunk()
-    }, [])
+    const state = useSelector<TRootState, TAuth>(state => state.auth)
 
     const history = useHistory();
     const location = useLocation();
@@ -29,9 +26,16 @@ const Sidebar: FC<TSidebarProps> = (props) => {
 
     return (
         <SSidebar>
-            {navLinks.map(({disabled, link, icon, label, id, margin}) => (
+            <SSidebarAvatar
+                disabled={!state.isAuth}
+                isActive={location.pathname === (PATH.profile + '/' + state.id)}
+                onClick={() => history.push(PATH.profile + '/' + state.id)}
+            >
+                <SAvatar size={40} src={defaultPhoto}/>
+            </SSidebarAvatar>
+            {navLinks.map(({disabled, needAuth, link, icon, label, id, margin}) => (
                 <SSidebarItem
-                    disabled={disabled}
+                    disabled={disabled || (needAuth  && !state.isAuth)}
                     label={label}
                     key={id}
                     margin={margin}
@@ -44,18 +48,17 @@ const Sidebar: FC<TSidebarProps> = (props) => {
                 </SSidebarItem>
             ))}
             <SSidebarItem
-                label={isAuth ? 'LogOut' : 'LogIn'}
+                label={state.isAuth ? 'LogOut' : 'LogIn'}
                 onClick={() => setIsOpened(true)}
                 disabled={false}
             >
                 <SSidebarItemIcon>
-                    {isAuth ? <LogoutIcon /> : <LoginIcon/>}
-
+                    {state.isAuth ? <LogoutIcon /> : <LoginIcon/>}
                 </SSidebarItemIcon>
             </SSidebarItem>
-            {isAuth
+            {state.isAuth
                 ? <Modal type={"default"} isOpened={isOpened} setIsOpened={setIsOpened} />
-                : <Modal type={"auth"} isOpened={isOpened} setIsOpened={setIsOpened} />
+                : setTimeout(() => <Modal type={"auth"} isOpened={isOpened || !state.isAuth} setIsOpened={setIsOpened} />, 500)
             }
         </SSidebar>
     );

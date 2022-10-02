@@ -17,6 +17,33 @@ export const SSidebar = styled.div<TSSidebarProps>((props) => ({
     margin: "30px 0 30px 30px",
 }))
 
+
+type TSSidebarAvatar = {
+    isActive?: boolean
+    disabled?: boolean
+}
+export const SSidebarAvatar = styled.div<TSSidebarAvatar>((props) => ({
+    display: "flex",
+    justifyContent: "center",
+    cursor: "pointer",
+    fontSize: 12,
+    borderRadius: "50%",
+    overflow: "hidden",
+    transition: "0.1s",
+    "&:hover": {
+        transform: "scale(0.9)",
+    },
+    ...props.isActive && {
+        pointerEvents: "none",
+        opacity: 0.5,
+    },
+    ...props.disabled && {
+        pointerEvents: "none",
+        opacity: 0.3,
+    }
+
+}))
+
 type TSSidebarItemProps = {
     margin?: Property.Margin,
     label?: string,

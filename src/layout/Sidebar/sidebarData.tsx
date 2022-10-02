@@ -1,5 +1,4 @@
 
-import UserIcon from "../../assets/icons/UserIcon";
 import MessageIcon from "../../assets/icons/MessageIcon";
 import PaperIcon from "../../assets/icons/PaperIcon";
 import MusicIcon from "../../assets/icons/MusicIcon";
@@ -15,6 +14,7 @@ type TNavLink = {
     icon: JSX.Element,
     link?: string,
     margin?: Property.Margin,
+    needAuth?: boolean
     disabled?: boolean
 }
 
@@ -22,17 +22,11 @@ type TNavLinks = Array<TNavLink>
 
 export const navLinks: TNavLinks = [
     {
-        id: 0,
-        label: "Profile",
-        icon: <UserIcon />,
-        link: PATH.profile,
-        disabled: false
-    },
-    {
         id: 1,
         label: "Messages",
         icon: <MessageIcon />,
         link: PATH.messages,
+        needAuth: true,
         disabled: false
     },
     {
@@ -63,6 +57,7 @@ export const navLinks: TNavLinks = [
         icon: <SettingsIcon />,
         margin: "auto 0 0 0",
         link: PATH.settings,
+        needAuth: true,
         disabled: true
     },
 
