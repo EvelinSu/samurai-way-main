@@ -74,8 +74,8 @@ export const presentationUsers = [
 
 const initialState: TUsersPage = {
     users: [],
-    pageSize: 12,
-    totalUsersCount: 12,
+    pageSize: 15,
+    totalUsersCount: 15,
     isFetching: true,
     followingInProgress: []
 }
@@ -110,12 +110,10 @@ export const followToggle = (userId: number) => ({
     type: "FOLLOW-USER-TOGGLE",
     userId,
 } as const)
-
 export const setUsers = (users: Array<TUser>) => ({
     type: "SET-USERS",
     users
 } as const)
-
 export const setCurrentPage = (currentPage: number) => ({
     type: "SET-CURRENT-PAGE",
     currentPage
@@ -140,12 +138,6 @@ export const getUsersThunk = (currentPage: number, pageSize: number) => (dispatc
     usersAPI.getUsers(currentPage, pageSize).then(response => {
         dispatch(setTotalUsersCount(response.totalCount))
         dispatch(setUsers(response.items))
-        setTimeout(() => {
-            dispatch(usersToggleLoader(false))
-        }, 500)
-    }).catch(() => { // показать презентационных пользователей если с сервера не придет ответ
-        dispatch(setUsers(presentationUsers))
-        dispatch(setTotalUsersCount(presentationUsers.length))
         setTimeout(() => {
             dispatch(usersToggleLoader(false))
         }, 500)

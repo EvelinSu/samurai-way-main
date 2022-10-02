@@ -20,7 +20,7 @@ export type TActiveProfile = {
     lookingForAJob: boolean,
     lookingForAJobDescription: string,
     fullName: string,
-    userId: number | string,
+    userId: number,
     photos: {
         small: string,
         large: string

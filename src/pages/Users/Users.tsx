@@ -10,31 +10,23 @@ import {followToggleThunk, getUsersThunk, TUsersPage} from "../../redux/usersRed
 import {useParams} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import {TRootState} from "../../redux/reduxStore";
-import {cleanup} from "@testing-library/react";
 
 type TUsersProps = {
 
 }
 
 const Users: React.FC<TUsersProps> = (props) => {
-    useEffect(() => {
-        dispatch(getUsersThunk(1, state.pageSize))
-        return () => {
-            cleanup()
-        }
-    }, [])
+    const {page} = useParams<{page: string}>()
     const state = useSelector<TRootState, TUsersPage>(state => state.usersPage)
     const dispatch = useDispatch()
 
-    // для перерисовки страницы при изменении адресной строки, например, через кнопку "назад" в браузере
-    const {page} = useParams<{page: string}>()
     useEffect(() => {
-        dispatch(getUsersThunk(+page, state.pageSize))
+        dispatch(getUsersThunk(+page || 1, state.pageSize))
     }, [page])
-    //
+
+    console.log(state.users)
 
     const onPaginationClick = () => {
-        dispatch(getUsersThunk(+page, state.pageSize))
     }
 
     let pagesCount = Math.ceil(state.totalUsersCount / state.pageSize)
