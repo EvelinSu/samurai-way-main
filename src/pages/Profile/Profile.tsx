@@ -5,9 +5,8 @@ import {SText} from "../../components/Text/SText";
 import {STitle} from "../../components/Text/STitle";
 import {theme} from "../../styles/constants";
 import {SSiteContent} from "../../layout/styled";
-import {PostsContainer} from "./Posts/PostsContainer";
 import Button from "../../components/Button/Button";
-import {getProfile, TActiveProfile, TProfilePage} from "../../redux/profileReducer";
+import {getProfile, TProfilePage} from "../../redux/profileReducer";
 import userPhoto from "../../assets/img/default-photo.png";
 import IconLink from "../../components/IconLink/IconLink";
 import {iconsDictionary} from "../../assets/icons/contacts/_iconsDictionary";
@@ -16,6 +15,7 @@ import {useParams} from "react-router-dom";
 import {TRootState} from "../../redux/reduxStore";
 import LoaderIcon from "../../assets/loaders/loader";
 import {cleanup} from "@testing-library/react";
+import Posts from "./Posts/Posts";
 
 type TProfileProps = {}
 
@@ -77,7 +77,7 @@ const Profile: FC<TProfileProps> = () => {
                         <Button label={'friends'} onClick={() => alert(".... yes")} />
                     </Box>
                 </Box>
-                <PostsContainer avatar={state.activeProfile.photos.small || userPhoto} />
+                <Posts avatar={state.activeProfile.photos.small || userPhoto} />
             </SSiteContent>)
 
     );
