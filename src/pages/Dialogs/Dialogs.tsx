@@ -8,17 +8,24 @@ import {
 } from "./styled";
 import {PATH} from "../../redux/types";
 import {SSiteContent} from "../../layout/styled";
-import {DialogContentContainer} from "./DialogContent/DialogContentContainer";
-import {DialogsItemsListContainer} from "./DialogsItemsList/DialogsItemsListContainer";
 import PagePanel from "../PagePanel";
 import Input from "../../components/Form/Input";
 import UserIcon from "../../assets/icons/UserIcon";
+import {useSelector} from "react-redux";
+import {TRootState} from "../../redux/reduxStore";
+import {TDialogsPage} from "../../redux/dialogsReducer";
+import DialogsItemsList from "./DialogsItemsList/DialogsItemsList";
+import {presentationUsers} from "../../redux/usersReducer";
+import DialogContent from "./DialogContent/DialogContent";
 
 type TDialogsProps = {}
 const Dialogs: FC<TDialogsProps> = (props) => {
 
     const {id} = useParams<{ id: string }>();
     const history = useHistory();
+
+    const state = useSelector<TRootState, TDialogsPage>(state => state.dialogsPage)
+    const users= presentationUsers
 
     const onClickHandler = (key: string) => history.push(`${PATH.messages}/${key}`)
 
@@ -30,12 +37,24 @@ const Dialogs: FC<TDialogsProps> = (props) => {
             <SDialogs>
                 <SDialogContainer justifyContent={id ? 'initial' : 'center'}>
                     {id
-                        ? <DialogContentContainer id={id} />
+                        ? <DialogContent
+                            id={id}
+                            user={users.find(el => el.id === +id)}
+                            messages={state.dialogsMessages}
+                            dialogs={state.dialogs}
+
+                        />
                         : <SNoneDialog>Select a chat </SNoneDialog>
                     }
                 </SDialogContainer>
                 <SDialogsSidebar>
-                    <DialogsItemsListContainer id={id} onClickHandler={onClickHandler} />
+                    <DialogsItemsList
+                        id={id}
+                        onClickHandler={onClickHandler}
+                        dialogs={state.dialogs}
+                        messages={state.dialogsMessages}
+                        users={users}
+                    />
                 </SDialogsSidebar>
             </SDialogs>
         </SSiteContent>

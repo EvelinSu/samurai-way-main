@@ -1,14 +1,18 @@
 import React from 'react';
 import {STextarea} from "../../../components/Textarea/STextarea";
 import Button from "../../../components/Button/Button";
+import {useDispatch, useSelector} from "react-redux";
+import {TRootState} from "../../../redux/reduxStore";
+import {changeNewMessageTextAC, sendMessageAC} from "../../../redux/dialogsReducer";
 
 type TDialogSendMessage = {
-    newMessageText: string
-    setNewMessageText: (text: string) => void
-    sendMessage: (text: string) => void
+    id: string
 }
 
-const DialogSendMessage: React.FC<TDialogSendMessage> = ({newMessageText, setNewMessageText, sendMessage}) => {
+const DialogSendMessage: React.FC<TDialogSendMessage> = (props) => {
+
+    const newMessageText = useSelector<TRootState, string>(state => state.dialogsPage.dialogs[props.id].newMessageText)
+    const dispatch = useDispatch()
 
     const onKeyPress = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
         if (e.key === 'Enter' && e.shiftKey) return
@@ -20,12 +24,12 @@ const DialogSendMessage: React.FC<TDialogSendMessage> = ({newMessageText, setNew
 
     const onClickHandler = () => {
         if (newMessageText.trim() !== '') {
-            sendMessage(newMessageText.trim())
-            setNewMessageText('')
+            dispatch(sendMessageAC(newMessageText.trim(), props.id))
+            dispatch(changeNewMessageTextAC('', props.id))
         }
     }
     const onChangeSetNewMessageText = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-        setNewMessageText(e.currentTarget.value)
+        dispatch(changeNewMessageTextAC(e.currentTarget.value, props.id))
     }
 
     return (

@@ -14,6 +14,8 @@ type TDialogsItemsList = {
 }
 
 const DialogsItemsList:FC<TDialogsItemsList> = ({dialogs, messages, onClickHandler, users, id}) => {
+
+
     return (
         <SDialogsItemsList>
             {users.map((user) => {

@@ -8,8 +8,8 @@ import {SScrollContainer} from "../../../components/ScrollContainer/ScrollContai
 import Message from "../../../components/Message/Message";
 import {TMessage} from "../../../redux/types";
 import {TDialogs} from "../../../redux/dialogsReducer";
-import {DialogSendMessageContainer} from "./DialogSendMessageContainer";
 import {TUser} from "../../../redux/usersReducer";
+import DialogSendMessage from "./DialogSendMessage";
 
 type TDialogContentProps = {
     dialogs: TDialogs
@@ -61,7 +61,7 @@ const DialogContent: FC<TDialogContentProps> = ({
                 </SScrollContainer>
             </SDialogWindowBody>
             <SDialogWindowFooter>
-                <DialogSendMessageContainer id={id} />
+                <DialogSendMessage id={id} />
             </SDialogWindowFooter>
         </Fragment>
     );
