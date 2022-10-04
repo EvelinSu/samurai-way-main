@@ -1,15 +1,28 @@
 import {v1} from "uuid";
 import {getStringDate} from "../common/utils";
-import {TActions, TDialog, TMessage} from "./types";
+import {TActions} from "./types";
 
 let defaultDate = '1 hour ago'
 
 type Dictionary<T> = {
     [Key: string]: T;
 }
+type TDialog = {
+    newMessageText: string
+    messagesId: Array<string>,
+    userId: string
+}
 
 export type TDialogs = Dictionary<TDialog>
 
+
+export type TMessage = {
+    id: string,
+    text: string,
+    time: string,
+    me?: boolean,
+    userId?: string
+}
 export type TDialogsPage = {
     dialogs: TDialogs
     dialogsMessages: Array<TMessage>

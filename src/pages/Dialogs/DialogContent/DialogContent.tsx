@@ -6,8 +6,7 @@ import {STitle} from "../../../components/Text/STitle";
 import {SText} from "../../../components/Text/SText";
 import {SScrollContainer} from "../../../components/ScrollContainer/ScrollContainer";
 import Message from "../../../components/Message/Message";
-import {TMessage} from "../../../redux/types";
-import {TDialogs} from "../../../redux/dialogsReducer";
+import {TDialogs, TMessage} from "../../../redux/dialogsReducer";
 import {TUser} from "../../../redux/usersReducer";
 import DialogSendMessage from "./DialogSendMessage";
 

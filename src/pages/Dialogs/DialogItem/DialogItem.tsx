@@ -2,10 +2,10 @@ import {SAvatar} from "../../../components/Avatar/SAvatar";
 import {Box} from "../../../components/Box/Box";
 import {SText} from "../../../components/Text/SText";
 import React, {FC} from "react";
-import {TMessage} from "../../../redux/types";
 import {SDialogItem, SDialogItemHeader} from "./styled";
 import UserIcon from "../../../assets/icons/UserIcon";
 import defaultPhoto from '../../../assets/img/default-photo.png'
+import {TMessage} from "../../../redux/dialogsReducer";
 
 type TDialogItemProps = {
     name?: string,
