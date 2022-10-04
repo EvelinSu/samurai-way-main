@@ -66,7 +66,7 @@ const Profile: FC<TProfileProps> = () => {
                         <SText opacity={!profile.aboutMe ? 0.3 : 1}>
                             {profile.aboutMe || '- the user is silent -'}
                         </SText>
-                        <Box>
+                        <Box gap={13}>
                             {mappedContacts.length > 0
                                 ? mappedContacts.map((el) => (
                                     <IconLink

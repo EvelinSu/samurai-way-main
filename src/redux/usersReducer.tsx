@@ -41,6 +41,16 @@ export const presentationUsers = [
         followed: false
     },
     {
+        id: 12,
+        name: "Anon",
+        photos: {
+            small: '',
+            large: ''
+        },
+        status: '',
+        followed: false
+    },
+    {
         id: 3,
         name: "Bred",
         photos: {
@@ -59,6 +69,16 @@ export const presentationUsers = [
         },
         status: 'Ah, scrawny anchor. you wont rob the bikini atoll.',
         followed: true
+    },
+    {
+        id: 13,
+        name: "NewUser",
+        photos: {
+            small: '',
+            large: ''
+        },
+        status: '',
+        followed: false
     },
     {
         id: 5,

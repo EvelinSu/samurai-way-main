@@ -26,7 +26,7 @@ export const navLinks: TNavLinks = [
         label: "Messages",
         icon: <MessageIcon />,
         link: PATH.messages,
-        needAuth: true,
+        // needAuth: true,
         disabled: false
     },
     {

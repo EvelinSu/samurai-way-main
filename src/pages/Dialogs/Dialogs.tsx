@@ -32,7 +32,7 @@ const Dialogs: FC<TDialogsProps> = (props) => {
     return (
         <SSiteContent>
             <PagePanel title="Messages">
-                <Input icon={<UserIcon/>} placeholder={"Search..."}/>
+                <Input icon={<UserIcon/>} placeholder={"in progress..."}/>
             </PagePanel>
             <SDialogs>
                 <SDialogContainer justifyContent={id ? 'initial' : 'center'}>
