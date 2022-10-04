@@ -86,3 +86,5 @@ export const SUserStatusText = styled.div<TSUserStatusTextProps>(props => ({
     minHeight: "2.4rem",
     opacity: props.opacity,
 }))
+
+

@@ -1,64 +1,50 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useMemo, useState} from 'react';
 import {SSiteContent} from "../../layout/styled";
-import {Grid} from "../../components/Grid/Grid";
-import User from "./User";
 import PagePanel from "../PagePanel";
 import Input from "../../components/Form/Input";
 import Pagination from "../../components/Pagination/Pagination";
-import LoaderIcon from "../../assets/loaders/loader";
-import {followToggleThunk, getUsersThunk, TUser, TUsersPage} from "../../redux/usersReducer";
+import {getUsersThunk, searchUsersThunk, TUsersPage} from "../../redux/usersReducer";
 import {useParams} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import {TRootState} from "../../redux/reduxStore";
-import {authModalToggleAC} from "../../redux/authReducer";
+import UsersList from "./UsersList";
+import UsersNotFound from "./UsersNotFound";
+import SearchIcon from "../../assets/icons/SearchIcon";
 
-type TUsersProps = {
-
-}
+type TUsersProps = {}
 
 const Users: React.FC<TUsersProps> = (props) => {
     const dispatch = useDispatch()
-    const {page} = useParams<{page: string}>()
+    const state = useSelector<TRootState, TUsersPage>(state => state.usersPage)
+    const {page} = useParams<{ page: string }>()
+
+    const [searchText, setSearchText] = useState('')
 
     useEffect(() => {
-        dispatch(getUsersThunk(+page || 1, state.pageSize))
-    }, [page])
+        !searchText
+            ? dispatch(getUsersThunk(+page || 1, state.pageSize))
+            : dispatch(searchUsersThunk(searchText, +page, state.pageSize))
+    }, [page, searchText, dispatch, state.pageSize])
 
-    const state = useSelector<TRootState, TUsersPage>(state => state.usersPage)
-    const isAuth = useSelector<TRootState, boolean>(state => state.auth.isAuth)
-
-    const onClickHandler = (user: TUser) => {
-        isAuth
-            ? dispatch(followToggleThunk(user))
-            : dispatch(authModalToggleAC(true))
-    }
-    const onPaginationClick = () => {
+    const onSearchHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setSearchText(e.currentTarget.value)
     }
 
-    let pagesCount = Math.ceil(state.totalUsersCount / state.pageSize)
+    let pagesCount = useMemo(() => {
+        return Math.ceil(state.totalUsersCount / state.pageSize)
+    }, [state.totalUsersCount, state.pageSize])
 
     return (
         <SSiteContent>
             <PagePanel title="Users">
-                <Input placeholder={'Заготовка для поиска'} />
+                <Input value={searchText} icon={<SearchIcon/>} onChange={onSearchHandler} placeholder={'Search by name'}
+                />
             </PagePanel>
-            {
-                state.isFetching
-                    ? <LoaderIcon />
-                    : <Grid columns={"repeat(auto-fill, minmax(150px, 1fr))"}>
-                        {state.users.map((user) => (
-                            <User
-                                key={user.id}
-                                user={user}
-                                id={String(user.id)}
-                                followingInProgress={state.followingInProgress.includes(user.id)}
-                                onClickHandler={() => onClickHandler(user)}
-                            />
-                        ))}
-                    </Grid>
+            {state.users.length
+                ? <UsersList state={state}/>
+                : <UsersNotFound />
             }
             <Pagination
-                onClick={onPaginationClick}
                 pagesCount={pagesCount || 1}
             />
         </SSiteContent>

@@ -17,6 +17,10 @@ export const usersAPI = {
         return instance.get(`profile/${id}`)
                        .then(response => response.data)
     },
+    searchUsers(name: string, currentPage: number, pageSize: number) {
+        return instance.get(`users?page=${currentPage}&count=${pageSize}&term=${name}`)
+                       .then(response => response.data)
+    }
 }
 
 export const authAPI = {

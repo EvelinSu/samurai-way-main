@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {SPagination, SPaginationItem} from "./styled";
 import ArrowIcon from "../../assets/icons/ArrowIcon";
 import {SText} from '../Text/SText';
@@ -7,7 +7,6 @@ import {PATH} from "../../redux/types";
 
 type TPaginationProps = {
     pagesCount: number
-    onClick: (activePage: number) => void
 }
 
 const Pagination: React.FC<TPaginationProps> = (props) => {
@@ -21,6 +20,9 @@ const Pagination: React.FC<TPaginationProps> = (props) => {
     for (let i = visiblePages[0]; i <= props.pagesCount && i < visiblePages[1]; i++) {
         if (i < visiblePages[1]) pages.push(i)
     }
+    useEffect(() => {
+        if(+page > props.pagesCount)  navigate.push(String(props.pagesCount))
+    }, [props.pagesCount])
 
     //
 
@@ -34,7 +36,6 @@ const Pagination: React.FC<TPaginationProps> = (props) => {
     }
     const onClickHandler = async (el: number) => {
         await navigate.push(`${PATH.users}/${el}`)
-        props.onClick(el)
     }
 
     return (

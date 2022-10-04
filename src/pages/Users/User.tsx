@@ -5,19 +5,27 @@ import userPhoto from "../../assets/img/default-photo.png";
 import {Box} from "../../components/Box/Box";
 import Button from "../../components/Button/Button";
 import {theme} from "../../styles/constants";
-import {TUser} from "../../redux/usersReducer";
+import {followToggleThunk, TUser} from "../../redux/usersReducer";
 import {NavLink} from "react-router-dom";
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {TRootState} from "../../redux/reduxStore";
+import {authModalToggleAC} from "../../redux/authReducer";
 
 type TUserProps = {
     user: TUser
     id: string
-    onClickHandler: () =>  void
-    followingInProgress: boolean
 }
 
-const User: React.FC<TUserProps> = ({user, id, onClickHandler, ...props}) => {
+const User: React.FC<TUserProps> = ({user, id, ...props}) => {
+    const dispatch = useDispatch()
+    const isAuth = useSelector<TRootState, boolean>(state => state.auth.isAuth)
+    const followingInProgress = useSelector<TRootState, number[]>(state => state.usersPage.followingInProgress)
+
+    const onClickHandler = (user: TUser) => {
+        isAuth
+            ? dispatch(followToggleThunk(user))
+            : dispatch(authModalToggleAC(true))
+    }
 
     const [isHovered, setIsHovered] = useState<string>('')
 
@@ -50,10 +58,10 @@ const User: React.FC<TUserProps> = ({user, id, onClickHandler, ...props}) => {
                     </SUserStatus>
                     <Box margin={"auto 0 0 0 "} justifyContent={"center"}>
                         <Button
-                            isLoading={props.followingInProgress}
+                            isLoading={followingInProgress.includes(user.id)}
                             backgroundColor={!user.followed ? theme.colors.button.active : theme.colors.button.cancel}
                             label={user.followed ? 'unfollow' : 'follow'}
-                            onClick={onClickHandler}
+                            onClick={() => onClickHandler(user)}
                         />
                     </Box>
                 </Box>

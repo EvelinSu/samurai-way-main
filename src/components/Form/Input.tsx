@@ -8,9 +8,13 @@ type TInputProps = {
     value?: string
     type?: string
     icon?: any
+    onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void
 }
 
 const Input: React.FC<TInputProps> = (props) => {
+    const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        props.onChange && props.onChange(e)
+    }
 
     return (
         <SInputWrapper>
@@ -18,6 +22,7 @@ const Input: React.FC<TInputProps> = (props) => {
                 {props.icon}
             </Box>
             <SInput
+                onChange={onChange}
                 placeholder={props.placeholder || 'Введите текст...'}
                 value={props.value}
                 type={props.type}

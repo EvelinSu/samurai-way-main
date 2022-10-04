@@ -14,4 +14,11 @@ export const SInput = styled.input((props) => ({
     borderRadius: theme.blockSettings.borderRadius,
     backgroundColor: theme.colors.input.default,
     width: "100%",
+    "&:hover": {
+        opacity: 0.8
+    },
+    "&:focus": {
+        outline: `1px solid ${theme.colors.primaryLightest}`,
+        opacity: 1,
+    },
 }))

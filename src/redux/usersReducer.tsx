@@ -90,7 +90,6 @@ const usersReducer = (state: TUsersPage = initialState, action: TActions): TUser
                 )]
             }
         case ("SET-USERS"):
-            // return {...state, users: [...state.users]}
             return {...state, users: [...action.users]}
         case "SET-TOTAL-USERS-COUNT":
             return {...state, totalUsersCount: action.usersCount}
@@ -144,6 +143,18 @@ export const getUsersThunk = (currentPage: number, pageSize: number) => (dispatc
     })
 }
 //
+
+export const searchUsersThunk = (name: string, currentPage: number, pageSize: number) => (dispatch: Dispatch) => {
+    dispatch(usersToggleLoader(true))
+    usersAPI.searchUsers(name, currentPage, pageSize).then(response => {
+        dispatch(setTotalUsersCount(response.totalCount))
+        dispatch(setUsers(response.items))
+        setTimeout(() => {
+            dispatch(usersToggleLoader(false))
+        }, 500)
+    })
+
+}
 
 export const followToggleThunk = (user: TUser) => (dispatch: Dispatch) => {
     dispatch(setFollowingProgress(user.id, true))
