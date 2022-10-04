@@ -7,7 +7,7 @@ import Modal from "../../components/modal/Modal";
 import LoginIcon from "../../assets/icons/LoginIcon";
 import {useDispatch, useSelector} from "react-redux";
 import {TRootState} from "../../redux/reduxStore";
-import {authModalToggleAC, getAuthThunk, TAuth} from "../../redux/authReducer";
+import {authModalToggleAC, TAuth} from "../../redux/authReducer";
 import { SAvatar } from '../../components/Avatar/SAvatar';
 import defaultPhoto from  '../../assets/img/default-photo.png'
 import {PATH} from "../../redux/types";
@@ -28,7 +28,7 @@ const Sidebar: FC<TSidebarProps> = (props) => {
     return (
         <SSidebar>
             <SSidebarAvatar
-                disabled={!state.isAuth}
+                // disabled={!state.isAuth}
                 isActive={location.pathname === (PATH.profile + '/' + state.id)}
                 onClick={() => history.push(PATH.profile + '/' + state.id)}
             >

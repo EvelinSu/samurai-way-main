@@ -6,7 +6,7 @@ import {STitle} from "../../components/Text/STitle";
 import {theme} from "../../styles/constants";
 import {SSiteContent} from "../../layout/styled";
 import Button from "../../components/Button/Button";
-import {getProfile, TActiveProfile, TProfilePage} from "../../redux/profileReducer";
+import {getProfile, profileToggleLoader, TActiveProfile, TProfilePage} from "../../redux/profileReducer";
 import userPhoto from "../../assets/img/default-photo.png";
 import IconLink from "../../components/IconLink/IconLink";
 import {iconsDictionary} from "../../assets/icons/contacts/_iconsDictionary";
@@ -23,7 +23,13 @@ const Profile: FC<TProfileProps> = () => {
     const {id} = useParams<{ id: string }>()
 
     useEffect(() => {
-        dispatch(getProfile(id))
+        +id !== 0 && dispatch(getProfile(id))
+// для презентационного кота
+        dispatch(profileToggleLoader(true))
+        setTimeout(() => {
+            dispatch(profileToggleLoader(false))
+        }, 500)
+
     }, [id])
 
     const profile = useSelector<TRootState, TActiveProfile>(state => state.profilePage.activeProfile)

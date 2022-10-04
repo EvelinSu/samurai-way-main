@@ -37,7 +37,7 @@ const App: React.FC = (props) => {
                         : <Switch>
                             <Redirect from={'/'} to={PATH.users + '/1'} exact />
                             <Route path={`${PATH.profile}/:id`} render={() => <Profile />} exact />
-                            <Redirect path={`${PATH.messages}/:id?`} to={PATH.users} exact />
+                            {/*<Redirect path={`${PATH.messages}/:id?`} to={PATH.users} exact />*/}
                             <Route path={`${PATH.users}/:page?`} render={() => <Users />} exact />
                             <Route path={"*"} component={PageNotFound} exact />
                         </Switch>

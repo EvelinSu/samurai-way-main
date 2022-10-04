@@ -48,10 +48,10 @@ const initialState: TProfilePage = ({
             instagram: "https://i.imgur.com/2eVNhUN.png",
             mainLink: ""
         },
-        lookingForAJob: false,
-        lookingForAJobDescription: 'The salty swabbie begrudgingly tastes the breeze.',
+        lookingForAJob: true,
+        lookingForAJobDescription: 'I\'m a presentation cat',
         fullName: "Meow",
-        userId: 1000000,
+        userId: 0,
         photos: {
             small: "https://i.imgur.com/WfSK9QM.png",
             large: "https://i.imgur.com/WfSK9QM.png"
@@ -75,7 +75,7 @@ const initialState: TProfilePage = ({
         },
         {
             id: v1(),
-            text: "The gibbet breaks with desolation, taste the brig before it laughs. Reefs hobble from malarias like undead lasses. Arrr! Pieces o' strength are forever sunny. Cannibals travel on passion at prison! The lagoon stutters beauty like a warm sea. Ales whine with pestilence! The woodchuck tastes with love, fire the galley until it laughs.",
+            text: "The gibbet breaks with desolation, taste the brig before it laughs. Reefs hobble from malarias like undead lasses. Arrr! Pieces o' strength are forever sunny. Cannibals travel on passion at prison! The lagoon stutters beauty like a warm sea.",
             likes: 124125,
             isLiked: true,
             date: 'August 4'
@@ -103,7 +103,8 @@ const profileReducer = (state: TProfilePage = initialState, action: TActions): T
                 newPostText: action.newPostText
             }
         case "SET-ACTIVE-PROFILE":
-            return {...state, activeProfile: action.activeProfile}
+            let activeProfile = action.activeProfile
+            return {...state, activeProfile: activeProfile || state.activeProfile}
         case "TOGGLE-LOADER":
             return {...state, isFetching: action.isFetching}
         default:
@@ -129,7 +130,6 @@ export const profileToggleLoader = (isFetching: boolean) => ({
     type: "TOGGLE-LOADER",
     isFetching
 } as const)
-
 
 export const getProfile = (id: string) => (dispatch: Dispatch) => {
     dispatch(profileToggleLoader(true))
