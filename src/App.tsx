@@ -10,6 +10,7 @@ import Sidebar from "./layout/Sidebar/Sidebar";
 import {useDispatch, useSelector} from "react-redux";
 import {TRootState} from "./redux/reduxStore";
 import {getAuthThunk} from "./redux/authReducer";
+import GlobalLoader from "./components/GlobalLoader/GlobalLoader";
 
 const App: React.FC = (props) => {
     const dispatch = useDispatch()
@@ -18,23 +19,28 @@ const App: React.FC = (props) => {
     }, [])
     const isAuth = useSelector<TRootState, boolean>(state => state.auth.isAuth)
 
-    const profile = <Profile/>
-    const users = <Users />
-    const dialogs = <Dialogs />
-
-
     return (
         <HashRouter>
             <SSiteWrapper>
+                <GlobalLoader />
                 <Sidebar />
                 <SSiteContainer>
-                    <Switch>
-                        <Route path={`${PATH.profile}/:id?`} render={() => profile} exact />
-                        <Redirect from="/" to={ isAuth ? PATH.profile : PATH.users} exact />
-                        <Route path={`${PATH.messages}/:id?`} render={() => dialogs} exact />
-                        <Route path={`${PATH.users}/:page?`} render={() => users} exact />
-                        <Route path={"*"} component={PageNotFound} exact />
-                    </Switch>
+                    {isAuth
+                        ? <Switch>
+                            <Route path={`${PATH.profile}/:id?`} render={() => <Profile />} exact />
+                            <Redirect from="/" to={PATH.profile} exact />
+                            <Route path={`${PATH.messages}/:id?`} render={() => <Dialogs />} exact />
+                            <Route path={`${PATH.users}/:page?`} render={() => <Users />} exact />
+                            <Route path={"*"} component={PageNotFound} exact />
+                        </Switch>
+                        : <Switch>
+                            <Redirect from={PATH.profile + '/0'} to={PATH.users} exact />
+                            <Route path={`${PATH.profile}/:id`} render={() => <Profile />} exact />
+                            <Redirect path={`${PATH.messages}/:id?`} to={PATH.users} exact />
+                            <Route path={`${PATH.users}/:page?`} render={() => <Users />} exact />
+                            <Route path={"*"} component={PageNotFound} exact />
+                        </Switch>
+                    }
                 </SSiteContainer>
             </SSiteWrapper>
         </HashRouter>
