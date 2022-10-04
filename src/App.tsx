@@ -26,24 +26,15 @@ const App: React.FC = (props) => {
                 <GlobalLoader />
                 <Sidebar />
                 <SSiteContainer>
-                    {auth.isAuth
-                        ? <Switch>
-                            <Route path={`${PATH.profile}/:id?`} render={() => <Profile />} exact />
-                            <Redirect from="/" to={PATH.profile + '/' + auth.id} exact />
-                            <Route path={`${PATH.messages}/:id?`} render={() => <Dialogs />} exact />
-                            <Route path={`${PATH.users}/:page?`} render={() => <Users />} exact />
-                            <Route path={"*"} component={PageNotFound} exact />
-                        </Switch>
-                        : <Switch>
-                            <Redirect from={'/'} to={PATH.users + '/1'} exact />
-                            <Route path={`${PATH.profile}/:id`} render={() => <Profile />} exact />
-                            {/*<Redirect path={`${PATH.messages}/:id?`} to={PATH.users} exact />*/}
-                            <Route path={`${PATH.users}/:page?`} render={() => <Users />} exact />
-                            <Route path={"*"} component={PageNotFound} exact />
-                        </Switch>
-                    }
+                    <Switch>
+                        <Route path={`${PATH.profile}/:id?`} render={() => <Profile />} exact />
+                        <Redirect from="/" to={PATH.profile + '/' + (auth.id || 0) } exact />
+                        <Route path={`${PATH.messages}/:id?`} render={() => <Dialogs />} exact />
+                        <Route path={`${PATH.users}/:page?`} render={() => <Users />} exact />
+                        <Route path={"*"} component={PageNotFound} exact />
+                    </Switch>
                 </SSiteContainer>
-                <Modal type={"auth"} isOpened={auth.authModalToggle}/>
+                <Modal type={"auth"} isOpened={auth.authModalToggle} />
             </SSiteWrapper>
         </HashRouter>
     );

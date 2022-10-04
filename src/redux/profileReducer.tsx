@@ -34,29 +34,31 @@ export type TProfilePage = {
     posts: Array<TPost>
 }
 
-const initialState: TProfilePage = ({
-    isFetching: true,
-    activeProfile: {
-        aboutMe: 'Mew mew mew mew',
-        contacts: {
-            facebook: '',
-            website: '',
-            vk: "",
-            twitter: "",
-            youtube: "https://www.youtube.com/watch?v=dQw4w9WgXcQ&t=0s&ab_channel=RickAstley",
-            github: "https://www.youtube.com/watch?v=_S7WEVLbQ-Y&ab_channel=FicLord",
-            instagram: "https://i.imgur.com/2eVNhUN.png",
-            mainLink: ""
-        },
-        lookingForAJob: true,
-        lookingForAJobDescription: 'I\'m a presentation cat',
-        fullName: "Meow",
-        userId: 0,
-        photos: {
-            small: "https://i.imgur.com/WfSK9QM.png",
-            large: "https://i.imgur.com/WfSK9QM.png"
-        }
+export const presentationProfile = {
+    aboutMe: 'Mew mew mew mew',
+    contacts: {
+        facebook: '',
+        website: '',
+        vk: "",
+        twitter: "",
+        youtube: "https://www.youtube.com/watch?v=dQw4w9WgXcQ&t=0s&ab_channel=RickAstley",
+        github: "https://www.youtube.com/watch?v=_S7WEVLbQ-Y&ab_channel=FicLord",
+        instagram: "https://i.imgur.com/2eVNhUN.png",
+        mainLink: ""
     },
+    lookingForAJob: true,
+    lookingForAJobDescription: 'I\'m a presentation cat',
+    fullName: "Meow",
+    userId: 0,
+    photos: {
+        small: "https://i.imgur.com/WfSK9QM.png",
+        large: "https://i.imgur.com/WfSK9QM.png"
+    }
+}
+
+export const initialState: TProfilePage = ({
+    isFetching: true,
+    activeProfile: presentationProfile,
     newPostText: '',
     posts: [
         {
