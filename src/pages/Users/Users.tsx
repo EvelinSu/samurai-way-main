@@ -6,24 +6,32 @@ import PagePanel from "../PagePanel";
 import Input from "../../components/Form/Input";
 import Pagination from "../../components/Pagination/Pagination";
 import LoaderIcon from "../../assets/loaders/loader";
-import {followToggleThunk, getUsersThunk, TUsersPage} from "../../redux/usersReducer";
+import {followToggleThunk, getUsersThunk, TUser, TUsersPage} from "../../redux/usersReducer";
 import {useParams} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import {TRootState} from "../../redux/reduxStore";
+import {authModalToggleAC} from "../../redux/authReducer";
 
 type TUsersProps = {
 
 }
 
 const Users: React.FC<TUsersProps> = (props) => {
+    const dispatch = useDispatch()
     const {page} = useParams<{page: string}>()
+
     useEffect(() => {
         dispatch(getUsersThunk(+page || 1, state.pageSize))
     }, [page])
 
     const state = useSelector<TRootState, TUsersPage>(state => state.usersPage)
-    const dispatch = useDispatch()
+    const isAuth = useSelector<TRootState, boolean>(state => state.auth.isAuth)
 
+    const onClickHandler = (user: TUser) => {
+        isAuth
+            ? dispatch(followToggleThunk(user))
+            : dispatch(authModalToggleAC(true))
+    }
     const onPaginationClick = () => {
     }
 
@@ -44,7 +52,7 @@ const Users: React.FC<TUsersProps> = (props) => {
                                 user={user}
                                 id={String(user.id)}
                                 followingInProgress={state.followingInProgress.includes(user.id)}
-                                onClickHandler={() => {dispatch(followToggleThunk(user))}}
+                                onClickHandler={() => onClickHandler(user)}
                             />
                         ))}
                     </Grid>

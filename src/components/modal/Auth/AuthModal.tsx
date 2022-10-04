@@ -14,7 +14,7 @@ const AuthModal = () => {
             <Input icon={<UserIcon />} placeholder={'Email'} type={'email'} />
             <Input icon={<UserIcon />} placeholder={'Password'} type={'password'} />
             <Box justifyContent={"center"}>
-                <Button size={'lg'} label={'Login'} onClick={() => alert('..hehe')}/>
+                <Button size={'lg'} label={'Login'} onClick={() => alert('..NOT READY YET, SORRY')}/>
             </Box>
         </>
     );

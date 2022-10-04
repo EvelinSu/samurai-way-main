@@ -8,7 +8,7 @@ import {
     usersToggleLoader,
     setFollowingProgress
 } from "./usersReducer";
-import {setAuthUserDataAC} from "./authReducer";
+import {authModalToggleAC, setAuthUserDataAC} from "./authReducer";
 import {globalLoaderToggleAC} from "./loaderReducer";
 
 export type TActions =
@@ -29,6 +29,7 @@ export type TActions =
     | ReturnType<typeof setFollowingProgress>
     // auth
     | ReturnType<typeof setAuthUserDataAC>
+    | ReturnType<typeof authModalToggleAC>
     // loader
     | ReturnType<typeof globalLoaderToggleAC>
 

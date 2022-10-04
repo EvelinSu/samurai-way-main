@@ -14,6 +14,7 @@ export const SAvatar = styled.img<TSAvatar>(({border, ...props}) => ({
     width: props.size || 60,
     height: props.size || 60,
     boxShadow: "0 0 10px 1px rgba(0, 0, 0, 0.2)",
+    backgroundColor: "rgba(255, 255, 255, 0.8)",
     transition: "0.5s",
     ...border && {
         margin: 2,

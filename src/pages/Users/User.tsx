@@ -7,7 +7,8 @@ import Button from "../../components/Button/Button";
 import {theme} from "../../styles/constants";
 import {TUser} from "../../redux/usersReducer";
 import {NavLink} from "react-router-dom";
-import {Dispatch} from "redux";
+import {useSelector} from "react-redux";
+import {TRootState} from "../../redux/reduxStore";
 
 type TUserProps = {
     user: TUser

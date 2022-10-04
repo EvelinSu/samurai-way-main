@@ -62,9 +62,9 @@ const initialState: TProfilePage = ({
         {
             id: v1(),
             text: "Rinse three oz of blueberries in one container of gravy. ",
-            likes: 4,
+            likes: 1,
             isLiked: false,
-            date: '1 hour ago',
+            date: 'recently',
         },
         {
             id: v1(),
@@ -72,6 +72,13 @@ const initialState: TProfilePage = ({
             likes: 2,
             isLiked: true,
             date: '1 hour ago'
+        },
+        {
+            id: v1(),
+            text: "The gibbet breaks with desolation, taste the brig before it laughs. Reefs hobble from malarias like undead lasses. Arrr! Pieces o' strength are forever sunny. Cannibals travel on passion at prison! The lagoon stutters beauty like a warm sea. Ales whine with pestilence! The woodchuck tastes with love, fire the galley until it laughs.",
+            likes: 124125,
+            isLiked: true,
+            date: 'August 4'
         }
     ],
 })

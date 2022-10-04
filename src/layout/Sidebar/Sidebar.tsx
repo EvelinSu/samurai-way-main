@@ -7,7 +7,7 @@ import Modal from "../../components/modal/Modal";
 import LoginIcon from "../../assets/icons/LoginIcon";
 import {useDispatch, useSelector} from "react-redux";
 import {TRootState} from "../../redux/reduxStore";
-import {getAuthThunk, TAuth} from "../../redux/authReducer";
+import {authModalToggleAC, getAuthThunk, TAuth} from "../../redux/authReducer";
 import { SAvatar } from '../../components/Avatar/SAvatar';
 import defaultPhoto from  '../../assets/img/default-photo.png'
 import {PATH} from "../../redux/types";
@@ -17,6 +17,7 @@ type TSidebarProps = {
 }
 
 const Sidebar: FC<TSidebarProps> = (props) => {
+    const dispatch = useDispatch()
     const state = useSelector<TRootState, TAuth>(state => state.auth)
 
     const history = useHistory();
@@ -49,17 +50,14 @@ const Sidebar: FC<TSidebarProps> = (props) => {
             ))}
             <SSidebarItem
                 label={state.isAuth ? 'LogOut' : 'LogIn'}
-                onClick={() => setIsOpened(true)}
+                onClick={() => dispatch(authModalToggleAC(true))}
                 disabled={false}
             >
                 <SSidebarItemIcon>
                     {state.isAuth ? <LogoutIcon /> : <LoginIcon/>}
                 </SSidebarItemIcon>
             </SSidebarItem>
-            {state.isAuth
-                ? <Modal type={"default"} isOpened={isOpened} setIsOpened={setIsOpened} />
-                : setTimeout(() => <Modal type={"auth"} isOpened={isOpened || !state.isAuth} setIsOpened={setIsOpened} />, 500)
-            }
+            {state.isAuth && isOpened && setTimeout(() => <Modal type={"auth"} isOpened={isOpened || !state.isAuth} setIsOpened={setIsOpened} />, 500)}
         </SSidebar>
     );
 };

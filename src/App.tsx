@@ -9,15 +9,16 @@ import Profile from "./pages/Profile/Profile";
 import Sidebar from "./layout/Sidebar/Sidebar";
 import {useDispatch, useSelector} from "react-redux";
 import {TRootState} from "./redux/reduxStore";
-import {getAuthThunk} from "./redux/authReducer";
+import {getAuthThunk, TAuth} from "./redux/authReducer";
 import GlobalLoader from "./components/GlobalLoader/GlobalLoader";
+import Modal from "./components/modal/Modal";
 
 const App: React.FC = (props) => {
     const dispatch = useDispatch()
     useEffect(() => {
         dispatch(getAuthThunk())
     }, [])
-    const isAuth = useSelector<TRootState, boolean>(state => state.auth.isAuth)
+    const auth = useSelector<TRootState, TAuth>(state => state.auth)
 
     return (
         <HashRouter>
@@ -25,16 +26,16 @@ const App: React.FC = (props) => {
                 <GlobalLoader />
                 <Sidebar />
                 <SSiteContainer>
-                    {isAuth
+                    {auth.isAuth
                         ? <Switch>
                             <Route path={`${PATH.profile}/:id?`} render={() => <Profile />} exact />
-                            <Redirect from="/" to={PATH.profile} exact />
+                            <Redirect from="/" to={PATH.profile + '/' + auth.id} exact />
                             <Route path={`${PATH.messages}/:id?`} render={() => <Dialogs />} exact />
                             <Route path={`${PATH.users}/:page?`} render={() => <Users />} exact />
                             <Route path={"*"} component={PageNotFound} exact />
                         </Switch>
                         : <Switch>
-                            <Redirect from={PATH.profile + '/0'} to={PATH.users} exact />
+                            <Redirect from={'/'} to={PATH.users + '/1'} exact />
                             <Route path={`${PATH.profile}/:id`} render={() => <Profile />} exact />
                             <Redirect path={`${PATH.messages}/:id?`} to={PATH.users} exact />
                             <Route path={`${PATH.users}/:page?`} render={() => <Users />} exact />
@@ -42,6 +43,7 @@ const App: React.FC = (props) => {
                         </Switch>
                     }
                 </SSiteContainer>
+                <Modal type={"auth"} isOpened={auth.authModalToggle}/>
             </SSiteWrapper>
         </HashRouter>
     );
