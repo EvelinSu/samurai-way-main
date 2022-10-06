@@ -11,33 +11,37 @@ import {
     profileToggleLoader,
     setActiveProfile,
     TActiveProfile,
-    TProfilePage
 } from "../../redux/profileReducer";
 import userPhoto from "../../assets/img/default-photo.png";
 import IconLink from "../../components/IconLink/IconLink";
 import {iconsDictionary} from "../../assets/icons/contacts/_iconsDictionary";
-import {useDispatch, useSelector} from "react-redux";
+import {useSelector} from "react-redux";
 import {useParams} from "react-router-dom";
 import {TRootState} from "../../redux/reduxStore";
 import LoaderIcon from "../../assets/loaders/loader";
 import Posts from "./Posts/Posts";
+import {useAppDispatch} from "../../hooks/useAppDispatch";
 
-type TProfileProps = {}
+type TProfileProps = {
+    myId?: string
+}
 
-const Profile: FC<TProfileProps> = () => {
-    const dispatch = useDispatch()
+const Profile: FC<TProfileProps> = (props) => {
+    const dispatch = useAppDispatch()
     const {id} = useParams<{ id: string }>()
+    const currentId =  id || props.myId
 
     useEffect(() => {
-        +id !== 0 && dispatch(getProfile(id))
-        // для презентационного кота
+        currentId && dispatch(getProfile(currentId))
+
+        // если юзера не залогинен, то показываем презентационного кота
         dispatch(profileToggleLoader(true))
         dispatch(setActiveProfile(presentationProfile))
         setTimeout(() => {
             dispatch(profileToggleLoader(false))
         }, 500)
 
-    }, [id])
+    }, [currentId])
 
     const profile = useSelector<TRootState, TActiveProfile>(state => state.profilePage.activeProfile)
     const isFetching = useSelector<TRootState, boolean>(state => state.profilePage.isFetching)

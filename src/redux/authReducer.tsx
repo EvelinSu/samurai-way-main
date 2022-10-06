@@ -1,7 +1,7 @@
 import {TActions} from "./types";
-import {Dispatch} from "redux";
 import {authAPI} from "../api/api";
 import {globalLoaderToggleAC} from "./loaderReducer";
+import {TAppDispatch} from "./reduxStore";
 
 export type TAuth = {
     id: number,
@@ -40,17 +40,18 @@ export const authModalToggleAC = (isOpen: boolean) => ({
     isOpen
 } as const)
 
-export const getAuthThunk = () => (dispatch: Dispatch) => {
+export const getAuthThunk = () => async (dispatch: TAppDispatch) => {
     dispatch(globalLoaderToggleAC(true))
-    authAPI.getMyData().then(me => {
-            if (me.resultCode === 0) {
-                dispatch(setAuthUserDataAC(me.data))
-            }
-            setTimeout(() => {
-                dispatch(globalLoaderToggleAC(false))
-            }, 1000)
-        }
-    )
+    const me = await authAPI.getMyData();
+    setTimeout(() => {
+        dispatch(globalLoaderToggleAC(false))
+    }, 1000)
+
+    if (!me.resultCode) {
+        dispatch(setAuthUserDataAC(me.data))
+        return me.data.id as number
+    } else return 0
+
 }
 
 export default authReducer

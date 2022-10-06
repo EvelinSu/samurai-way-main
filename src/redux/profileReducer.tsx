@@ -4,6 +4,7 @@ import {TActions} from "./types";
 import {TPost} from "../pages/Profile/Posts/types";
 import {Dispatch} from "redux";
 import {authAPI, usersAPI} from "../api/api";
+import {TAppDispatch} from "./reduxStore";
 
 export type TActiveProfile = {
     aboutMe: string,
@@ -133,19 +134,22 @@ export const profileToggleLoader = (isFetching: boolean) => ({
     isFetching
 } as const)
 
-export const getProfile = (id: string) => (dispatch: Dispatch) => {
+export const getProfile = (id: string) => (dispatch: TAppDispatch) => {
     dispatch(profileToggleLoader(true))
     authAPI.getMyData().then(me => {
         return me.data.id
-    }).then((myId) => {
-        usersAPI.getUser(id || myId).then(user => {
-                dispatch(setActiveProfile(user))
-                setTimeout(() => {
-                    dispatch(profileToggleLoader(false))
-                }, 500)
-            }
-        )
     })
+           .then((myId) => {
+               usersAPI.getUser(id || myId).then(user => {
+                       dispatch(setActiveProfile(user))
+                   }
+               )
+           })
+           .finally(() => {
+               setTimeout(() => {
+                   dispatch(profileToggleLoader(false))
+               }, 500)
+           })
 }
 
 export default profileReducer

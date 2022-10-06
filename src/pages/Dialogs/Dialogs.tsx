@@ -17,12 +17,15 @@ import {TDialogsPage} from "../../redux/dialogsReducer";
 import DialogsItemsList from "./DialogsItemsList/DialogsItemsList";
 import {presentationUsers} from "../../redux/usersReducer";
 import DialogContent from "./DialogContent/DialogContent";
+import {TAuth} from "../../redux/authReducer";
 
 type TDialogsProps = {}
 const Dialogs: FC<TDialogsProps> = (props) => {
 
     const {id} = useParams<{ id: string }>();
     const history = useHistory();
+
+    const auth = useSelector<TRootState, TAuth>(state => state.auth)
 
     const state = useSelector<TRootState, TDialogsPage>(state => state.dialogsPage)
     const users= presentationUsers
@@ -31,7 +34,7 @@ const Dialogs: FC<TDialogsProps> = (props) => {
 
     return (
         <SSiteContent>
-            <PagePanel title="Messages">
+            <PagePanel title={auth.isAuth ? "Messages" : "Presentation messages"}>
                 <Input icon={<UserIcon/>} placeholder={"in progress..."}/>
             </PagePanel>
             <SDialogs>
