@@ -20,7 +20,6 @@ const Modal: React.FC<TModalProps> = (props) => {
         dispatch(authModalToggleAC(false))
     }
     const isOpen = useSelector<TRootState, boolean | undefined>(state => state.auth.authModalToggle)
-
     return props.isOpened || isOpen ? (
         <MegaShadow onMouseDown={onClickHandler}>
             <SModalWrapper onMouseDown={(e) => e.stopPropagation()}>
