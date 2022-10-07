@@ -157,9 +157,7 @@ export const getUsersThunk = (currentPage: number, pageSize: number) => (dispatc
     usersAPI.getUsers(currentPage, pageSize).then(response => {
         dispatch(setTotalUsersCount(response.totalCount))
         dispatch(setUsers(response.items))
-        setTimeout(() => {
-            dispatch(usersToggleLoader(false))
-        }, 500)
+        dispatch(usersToggleLoader(false))
     })
 }
 //
@@ -169,9 +167,7 @@ export const searchUsersThunk = (name: string, currentPage: number, pageSize: nu
     usersAPI.searchUsers(name, currentPage, pageSize).then(response => {
         dispatch(setTotalUsersCount(response.totalCount))
         dispatch(setUsers(response.items))
-        setTimeout(() => {
-            dispatch(usersToggleLoader(false))
-        }, 500)
+        dispatch(usersToggleLoader(false))
     })
 
 }
@@ -179,19 +175,23 @@ export const searchUsersThunk = (name: string, currentPage: number, pageSize: nu
 export const followToggleThunk = (user: TUser) => (dispatch: Dispatch) => {
     dispatch(setFollowingProgress(user.id, true))
     if (!user.followed) {
-        followAPI.postFollow(user.id).then((response) => {
-            if (response.data.resultCode === 0) {
-                dispatch(followToggle(user.id))
-                dispatch(setFollowingProgress(user.id, false))
-            }
-        })
+        followAPI
+            .postFollow(user.id)
+            .then((response) => {
+                if (response.data.resultCode === 0) {
+                    dispatch(followToggle(user.id))
+                    dispatch(setFollowingProgress(user.id, false))
+                }
+            })
     } else {
-        followAPI.unFollow(user.id).then((response) => {
-            if (response.data.resultCode === 0) {
-                dispatch(followToggle(user.id))
-                dispatch(setFollowingProgress(user.id, false))
-            }
-        })
+        followAPI
+            .unFollow(user.id)
+            .then((response) => {
+                if (response.data.resultCode === 0) {
+                    dispatch(followToggle(user.id))
+                    dispatch(setFollowingProgress(user.id, false))
+                }
+            })
     }
 }
 

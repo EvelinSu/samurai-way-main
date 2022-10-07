@@ -2,7 +2,6 @@ import {v1} from "uuid";
 import {getStringDate} from "../common/utils";
 import {TActions} from "./types";
 import {TPost} from "../pages/Profile/Posts/types";
-import {Dispatch} from "redux";
 import {authAPI, usersAPI} from "../api/api";
 import {TAppDispatch} from "./reduxStore";
 
@@ -106,10 +105,15 @@ const profileReducer = (state: TProfilePage = initialState, action: TActions): T
                 newPostText: action.newPostText
             }
         case "SET-ACTIVE-PROFILE":
-            let activeProfile = action.activeProfile
-            return {...state, activeProfile: activeProfile || state.activeProfile}
+            return {
+                ...state,
+                activeProfile: action.activeProfile
+            }
         case "TOGGLE-LOADER":
-            return {...state, isFetching: action.isFetching}
+            return {
+                ...state,
+                isFetching: action.isFetching
+            }
         default:
             return state
     }
@@ -129,27 +133,20 @@ export const setActiveProfile = (activeProfile: TActiveProfile) => ({
     type: "SET-ACTIVE-PROFILE",
     activeProfile
 } as const)
+
 export const profileToggleLoader = (isFetching: boolean) => ({
     type: "TOGGLE-LOADER",
     isFetching
 } as const)
 
-export const getProfile = (id: string) => (dispatch: TAppDispatch) => {
+export const getProfile = (userId: string) => async (dispatch: TAppDispatch) => {
     dispatch(profileToggleLoader(true))
-    authAPI.getMyData().then(me => {
-        return me.data.id
-    })
-           .then((myId) => {
-               usersAPI.getUser(id || myId).then(user => {
-                       dispatch(setActiveProfile(user))
-                   }
-               )
-           })
-           .finally(() => {
-               setTimeout(() => {
-                   dispatch(profileToggleLoader(false))
-               }, 500)
-           })
+    authAPI
+        .getMyData()
+        .then(me => me.data.id)
+        .then(myId => usersAPI.getUser(userId || myId))
+        .then(user => dispatch(setActiveProfile(user)))
+        .finally(() => dispatch(profileToggleLoader(false)))
 }
 
 export default profileReducer

@@ -42,16 +42,17 @@ export const authModalToggleAC = (isOpen: boolean) => ({
 
 export const getAuthThunk = () => async (dispatch: TAppDispatch) => {
     dispatch(globalLoaderToggleAC(true))
-    const me = await authAPI.getMyData();
-    setTimeout(() => {
-        dispatch(globalLoaderToggleAC(false))
-    }, 1000)
-
-    if (!me.resultCode) {
-        dispatch(setAuthUserDataAC(me.data))
-        return me.data.id as number
-    } else return 0
-
+    authAPI
+        .getMyData()
+        .then((me) => {
+            if (me.resultCode === 0) {
+                dispatch(setAuthUserDataAC(me.data))
+                return me.data.id as number
+            } else {
+                return 0
+            }
+        })
+        .finally(() => dispatch(globalLoaderToggleAC(false)))
 }
 
 export default authReducer
