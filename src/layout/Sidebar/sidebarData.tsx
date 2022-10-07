@@ -33,7 +33,7 @@ export const navLinks: TNavLinks = [
         id: 2,
         label: "Users",
         icon: <UsersIcon />,
-        link: PATH.users,
+        link: `${PATH.users}/1`,
         disabled: false
     },
     {

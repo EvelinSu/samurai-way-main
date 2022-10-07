@@ -25,6 +25,11 @@ const Sidebar: FC<TSidebarProps> = (props) => {
 
     const [isOpened, setIsOpened] = useState<boolean>(false)
 
+    const onClickHandler = () => {
+        if(!state.isAuth) return dispatch(authModalToggleAC(true))
+        else setIsOpened(true)
+    }
+
     return (
         <SSidebar>
             <SSidebarAvatar
@@ -50,14 +55,14 @@ const Sidebar: FC<TSidebarProps> = (props) => {
             ))}
             <SSidebarItem
                 label={state.isAuth ? 'LogOut' : 'LogIn'}
-                onClick={() => dispatch(authModalToggleAC(true))}
+                onClick={onClickHandler}
                 disabled={false}
             >
                 <SSidebarItemIcon>
                     {state.isAuth ? <LogoutIcon /> : <LoginIcon/>}
                 </SSidebarItemIcon>
             </SSidebarItem>
-            {state.isAuth && isOpened && setTimeout(() => <Modal type={"auth"} isOpened={isOpened || !state.isAuth} setIsOpened={setIsOpened} />, 500)}
+            {isOpened && <Modal type={"default"} isOpened={isOpened} setIsOpened={setIsOpened} />}
         </SSidebar>
     );
 };
