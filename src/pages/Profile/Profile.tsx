@@ -1,4 +1,4 @@
-import React, {FC, useEffect} from 'react';
+import React, {FC, useEffect, useState} from 'react';
 import {Box} from "../../components/Box/Box";
 import {SAvatar} from "../../components/Avatar/SAvatar";
 import {SText} from "../../components/Text/SText";
@@ -22,26 +22,29 @@ import LoaderIcon from "../../assets/loaders/loader";
 import Posts from "./Posts/Posts";
 import {useAppDispatch} from "../../hooks/useAppDispatch";
 
-type TProfileProps = {
-    myId?: string
-}
+type TProfileProps = {}
 
 const Profile: FC<TProfileProps> = (props) => {
     const dispatch = useAppDispatch()
     const {id} = useParams<{ id: string }>()
-    const currentId =  id || props.myId
+
+    const userId = Number(id);
+
+    const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
-        currentId && dispatch(getProfile(currentId))
+        if (userId && userId !== 0) {
+            dispatch(getProfile(id)).finally(() => setIsLoading(false));
+        } else {
+            dispatch(profileToggleLoader(true))
+            dispatch(setActiveProfile(presentationProfile))
+            setTimeout(() => {
+                dispatch(profileToggleLoader(false))
+                setIsLoading(false)
+            }, 300)
+        }
 
-        // если юзера не залогинен, то показываем презентационного кота
-        dispatch(profileToggleLoader(true))
-        dispatch(setActiveProfile(presentationProfile))
-        setTimeout(() => {
-            dispatch(profileToggleLoader(false))
-        }, 500)
-
-    }, [currentId])
+    }, [id])
 
     const profile = useSelector<TRootState, TActiveProfile>(state => state.profilePage.activeProfile)
     const isFetching = useSelector<TRootState, boolean>(state => state.profilePage.isFetching)
@@ -58,7 +61,7 @@ const Profile: FC<TProfileProps> = (props) => {
     }).filter(el => el)
 
     return (
-        isFetching
+        isFetching || isLoading
             ? <LoaderIcon />
             : (<SSiteContent stylized>
                 <Box alignItems={"center"}>
