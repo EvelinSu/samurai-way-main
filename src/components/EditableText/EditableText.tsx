@@ -1,8 +1,7 @@
-import React, {FocusEvent, useState} from 'react';
+import React, {ChangeEvent, FocusEvent, useState} from 'react';
 import {SEditableText} from "./styled";
 import {useSelector} from "react-redux";
 import {TRootState} from "../../redux/reduxStore";
-import {TActiveProfile} from "../../redux/profileReducer";
 import {SText} from "../Text/SText";
 
 type TEditableText = {
@@ -10,37 +9,54 @@ type TEditableText = {
     placeholder: string
     myId: number
     setText: (newText: string) => void
+    maxLength: number
+    title?: string
 }
 
-const EditableText: React.FC<TEditableText> = ({setText, text, placeholder, myId}) => {
+const EditableText: React.FC<TEditableText> = ({setText, text, myId, maxLength, ...props}) => {
     const [isEditable, setIsEditable] = useState<boolean>(false)
-    const state = useSelector<TRootState, TActiveProfile>(state => state.profilePage.activeProfile)
+    const [error, setError] = useState('')
+
+    const currentId = useSelector<TRootState, number>(state => state.profilePage.activeProfile.userId)
 
     const onBlurHandler = (e: FocusEvent<HTMLSpanElement>) => {
-        setText(e.currentTarget.innerText)
+        let value = e.currentTarget.innerText
+        if (value.length >= maxLength) {
+            return setError(`the message length should not be more than ${maxLength}`)
+        }
+        if (error.length) setError('')
+        if (value === text) return;
+        setText(value.trim())
         setIsEditable(false)
     }
 
+    const onChangeHandler = (e: ChangeEvent<HTMLSpanElement>) => {
+        let value = e.currentTarget.innerText
+        if (value.length >= maxLength) return setError(`the message length should not be more than ${maxLength}`)
+        if (error.length) setError('')
+    }
+
     return (
-        myId === state.userId
+        myId === currentId
             ? (
                 <SEditableText
-                    tabIndex={1}
                     opacity={(!text && !isEditable) ? 0.3 : 1}
-                    onDoubleClick={() =>  setIsEditable(true)}
+                    onClick={() => setIsEditable(true)}
                     onBlur={onBlurHandler}
+                    onInput={onChangeHandler}
                     contentEditable={isEditable}
                     suppressContentEditableWarning={isEditable}
+                    isError={!!error}
+                    title={props.title && props.title}
                 >
-                    {text || (!isEditable && placeholder)}
+                    {text || (!isEditable && props.placeholder)}
                 </SEditableText>
             )
             : (
-                <SText
-                    opacity={!text ? 0.3 : 1}
-                >
-                    {text || placeholder}
-                </SText>)
+                <SText opacity={!text ? 0.3 : 1}>
+                    {text || props.placeholder}
+                </SText>
+            )
 
     );
 };

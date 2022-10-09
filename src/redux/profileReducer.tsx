@@ -2,11 +2,10 @@ import {v1} from "uuid";
 import {getStringDate} from "../common/utils";
 import {TActions} from "./types";
 import {TPost} from "../pages/Profile/Posts/types";
-import {authAPI, usersAPI} from "../api/api";
+import {authAPI, profileAPI} from "../api/api";
 import {TAppDispatch} from "./reduxStore";
 
 export type TActiveProfile = {
-    aboutMe: string,
     contacts: {
         facebook: string,
         website: string,
@@ -31,11 +30,11 @@ export type TProfilePage = {
     isFetching: boolean,
     activeProfile: TActiveProfile,
     newPostText: string,
+    status: string,
     posts: Array<TPost>
 }
 
 export const presentationProfile = {
-    aboutMe: 'Mew mew mew mew',
     contacts: {
         facebook: '',
         website: '',
@@ -60,6 +59,7 @@ export const initialState: TProfilePage = ({
     isFetching: true,
     activeProfile: presentationProfile,
     newPostText: '',
+    status: 'Mew mew mew mew',
     posts: [
         {
             id: v1(),
@@ -104,6 +104,11 @@ const profileReducer = (state: TProfilePage = initialState, action: TActions): T
                 ...state,
                 newPostText: action.newPostText
             }
+        case "CHANGE-MY-STATUS":
+            return {
+                ...state,
+                status: action.newStatus
+            }
         case "SET-ACTIVE-PROFILE":
             return {
                 ...state,
@@ -138,15 +143,29 @@ export const profileToggleLoader = (isFetching: boolean) => ({
     type: "TOGGLE-LOADER",
     isFetching
 } as const)
+export const changeMyStatus = (newStatus: string) => ({
+    type: "CHANGE-MY-STATUS",
+    newStatus
+} as const)
 
-export const getProfile = (userId: string) => async (dispatch: TAppDispatch) => {
-    dispatch(profileToggleLoader(true))
+export const getProfile = (userId: number) => async (dispatch: TAppDispatch) => {
     authAPI
         .getMyData()
         .then(me => me.data.id)
-        .then(myId => usersAPI.getUser(userId || myId))
+        .then(myId => {
+            profileAPI.getProfileStatus(userId || myId)
+                      .then((response) => dispatch(changeMyStatus(response)))
+            return profileAPI.getProfile(userId || myId)
+        })
         .then(user => dispatch(setActiveProfile(user)))
         .finally(() => dispatch(profileToggleLoader(false)))
+}
+
+export const putStatus = (newStatus: string) => (dispatch: TAppDispatch) => {
+    profileAPI
+        .putProfileStatus(newStatus)
+        .then(() => dispatch(changeMyStatus(newStatus)))
+        .then(() => alert('..hello...I.. just wanted to say that the status has been changed!....'))
 }
 
 export default profileReducer

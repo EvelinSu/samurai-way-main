@@ -23,21 +23,19 @@ import Posts from "./Posts/Posts";
 import {useAppDispatch} from "../../hooks/useAppDispatch";
 import EditableText from "../../components/EditableText/EditableText";
 
-type TProfileProps = {}
-
-const Profile: FC<TProfileProps> = (props) => {
+const Profile = () => {
     const dispatch = useAppDispatch()
     const {id} = useParams<{ id: string }>()
     const userId = Number(id);
     const [isLoading, setIsLoading] = useState(true);
     const profile = useSelector<TRootState, TActiveProfile>(state => state.profilePage.activeProfile)
     const isFetching = useSelector<TRootState, boolean>(state => state.profilePage.isFetching)
+    const status = useSelector<TRootState, string>(state => state.profilePage.status)
     const myId = useSelector<TRootState, number>(state => state.auth.id)
-
     useEffect(() => {
         setIsLoading(true)
         if (userId && userId !== 0) {
-            dispatch(getProfile(id)).finally(() => setIsLoading(false));
+            dispatch(getProfile(userId)).finally(() => setIsLoading(false));
         } else {
             setIsLoading(true)
             dispatch(setActiveProfile(presentationProfile))
@@ -72,9 +70,11 @@ const Profile: FC<TProfileProps> = (props) => {
                         </STitle>
                         <EditableText
                             myId={myId}
-                            text={profile.aboutMe}
+                            text={status}
                             setText={setStatus}
                             placeholder={"- the user is silent -"}
+                            maxLength={300}
+                            title={'Click to change status'}
                         />
                         <Box gap={13}>
                             {mappedContacts.length > 0

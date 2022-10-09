@@ -1,5 +1,5 @@
 import {changeNewMessageTextAC, sendMessageAC} from "./dialogsReducer";
-import {addPostAC, changeNewPostTextAC, profileToggleLoader, setActiveProfile} from "./profileReducer";
+import {addPostAC, changeMyStatus, changeNewPostTextAC, profileToggleLoader, setActiveProfile} from "./profileReducer";
 import {
     followToggle,
     setCurrentPage,
@@ -17,6 +17,7 @@ export type TActions =
     | ReturnType<typeof changeNewPostTextAC>
     | ReturnType<typeof setActiveProfile>
     | ReturnType<typeof profileToggleLoader>
+    | ReturnType<typeof changeMyStatus>
     // dialogsPage
     | ReturnType<typeof sendMessageAC>
     | ReturnType<typeof changeNewMessageTextAC>
