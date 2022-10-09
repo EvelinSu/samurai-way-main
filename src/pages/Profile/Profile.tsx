@@ -7,7 +7,7 @@ import {theme} from "../../styles/constants";
 import {SSiteContent} from "../../layout/styled";
 import Button from "../../components/Button/Button";
 import {
-    getProfile, presentationProfile,
+    getProfile, presentationProfile, profileToggleLoader,
     putStatus,
     setActiveProfile,
     TActiveProfile,
@@ -42,6 +42,7 @@ const Profile = () => {
             setTimeout(() => {
                 setIsLoading(false)
                 setIsLoading(false)
+                dispatch(profileToggleLoader(false))
             }, 300)
         }
     }, [id])
@@ -62,10 +63,10 @@ const Profile = () => {
         isLoading || isFetching
             ? <LoaderIcon />
             : (<SSiteContent stylized>
-                <Box alignItems={"center"}>
+                <Box alignItems={"center"} gap={20}>
                     <SAvatar border size={180} src={profile.photos.large || userPhoto} />
                     <Box flexDirection={"column"} overflow={"hidden"}>
-                        <STitle color={theme.colors.primaryLightest}>
+                        <STitle margin={"0 0 0 10px"} color={theme.colors.primaryLightest}>
                             {profile.fullName}
                         </STitle>
                         <EditableText
@@ -76,7 +77,7 @@ const Profile = () => {
                             maxLength={300}
                             title={'Click to change status'}
                         />
-                        <Box gap={13}>
+                        <Box margin={"0 0 0 10px"} gap={13}>
                             {mappedContacts.length > 0
                                 ? mappedContacts.map((el) => (
                                     <IconLink

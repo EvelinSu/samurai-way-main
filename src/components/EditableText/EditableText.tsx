@@ -54,7 +54,7 @@ const EditableText: React.FC<TEditableText> = ({setText, text, myId, maxLength, 
                 </SEditableText>
             )
             : (
-                <SText opacity={!text ? 0.3 : 1}>
+                <SText margin={"4px 10px"}  opacity={!text ? 0.3 : 1}>
                     {text || props.placeholder}
                 </SText>
             )
