@@ -1,19 +1,19 @@
-import React, {ReactNode} from 'react';
+import React, {DetailedHTMLProps, InputHTMLAttributes} from 'react';
 import {SInput, SInputWrapper} from "./styled";
 import {Box} from "../Box/Box";
 
-
-type TInputProps = {
-    placeholder?: string
-    value?: string
-    type?: string
+type DefaultInputPropsType = DetailedHTMLProps<InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>
+type TInputProps = DefaultInputPropsType & {
     icon?: any
-    onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void
 }
 
 const Input: React.FC<TInputProps> = (props) => {
     const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         props.onChange && props.onChange(e)
+    }
+
+    const onBlur = (e: React.FocusEvent<HTMLInputElement>) => {
+        props.onBlur && props.onBlur(e)
     }
 
     return (
@@ -22,6 +22,7 @@ const Input: React.FC<TInputProps> = (props) => {
                 {props.icon}
             </Box>
             <SInput
+                onBlur={onBlur}
                 onChange={onChange}
                 placeholder={props.placeholder || 'Введите текст...'}
                 value={props.value}

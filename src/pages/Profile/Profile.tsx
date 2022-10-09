@@ -8,7 +8,7 @@ import {SSiteContent} from "../../layout/styled";
 import Button from "../../components/Button/Button";
 import {
     getProfile, presentationProfile,
-    profileToggleLoader,
+    putStatus,
     setActiveProfile,
     TActiveProfile,
 } from "../../redux/profileReducer";
@@ -21,34 +21,34 @@ import {TRootState} from "../../redux/reduxStore";
 import LoaderIcon from "../../assets/loaders/loader";
 import Posts from "./Posts/Posts";
 import {useAppDispatch} from "../../hooks/useAppDispatch";
+import EditableText from "../../components/EditableText/EditableText";
 
 type TProfileProps = {}
 
 const Profile: FC<TProfileProps> = (props) => {
     const dispatch = useAppDispatch()
     const {id} = useParams<{ id: string }>()
-
     const userId = Number(id);
-
     const [isLoading, setIsLoading] = useState(true);
-
-    useEffect(() => {
-        if (userId && userId !== 0) {
-            dispatch(getProfile(id)).finally(() => setIsLoading(false));
-        } else {
-            dispatch(profileToggleLoader(true))
-            dispatch(setActiveProfile(presentationProfile))
-            setTimeout(() => {
-                dispatch(profileToggleLoader(false))
-                setIsLoading(false)
-            }, 300)
-        }
-
-    }, [id])
-
     const profile = useSelector<TRootState, TActiveProfile>(state => state.profilePage.activeProfile)
     const isFetching = useSelector<TRootState, boolean>(state => state.profilePage.isFetching)
     const myId = useSelector<TRootState, number>(state => state.auth.id)
+
+    useEffect(() => {
+        setIsLoading(true)
+        if (userId && userId !== 0) {
+            dispatch(getProfile(id)).finally(() => setIsLoading(false));
+        } else {
+            setIsLoading(true)
+            dispatch(setActiveProfile(presentationProfile))
+            setTimeout(() => {
+                setIsLoading(false)
+                setIsLoading(false)
+            }, 300)
+        }
+    }, [id])
+
+    const setStatus = (newStatus: string) => dispatch(putStatus(newStatus))
 
     const mappedContacts = Object.entries(profile.contacts).map((contact) => {
         if (contact[1]) {
@@ -61,7 +61,7 @@ const Profile: FC<TProfileProps> = (props) => {
     }).filter(el => el)
 
     return (
-        isFetching || isLoading
+        isLoading || isFetching
             ? <LoaderIcon />
             : (<SSiteContent stylized>
                 <Box alignItems={"center"}>
@@ -70,9 +70,12 @@ const Profile: FC<TProfileProps> = (props) => {
                         <STitle color={theme.colors.primaryLightest}>
                             {profile.fullName}
                         </STitle>
-                        <SText opacity={!profile.aboutMe ? 0.3 : 1}>
-                            {profile.aboutMe || '- the user is silent -'}
-                        </SText>
+                        <EditableText
+                            myId={myId}
+                            text={profile.aboutMe}
+                            setText={setStatus}
+                            placeholder={"- the user is silent -"}
+                        />
                         <Box gap={13}>
                             {mappedContacts.length > 0
                                 ? mappedContacts.map((el) => (
