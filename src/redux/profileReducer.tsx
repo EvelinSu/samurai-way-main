@@ -59,7 +59,7 @@ export const initialState: TProfilePage = ({
     isFetching: true,
     activeProfile: presentationProfile,
     newPostText: '',
-    status: 'Mew mew mew mew',
+    status: 'Mew',
     posts: [
         {
             id: v1(),

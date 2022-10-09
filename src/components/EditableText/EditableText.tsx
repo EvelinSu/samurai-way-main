@@ -47,6 +47,7 @@ const EditableText: React.FC<TEditableText> = ({setText, text, myId, maxLength, 
                     contentEditable={isEditable}
                     suppressContentEditableWarning={isEditable}
                     isError={!!error}
+                    error={error}
                     title={props.title && props.title}
                 >
                     {text || (!isEditable && props.placeholder)}

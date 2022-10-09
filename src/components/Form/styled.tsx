@@ -1,6 +1,13 @@
 import styled from "styled-components";
 import {theme} from "../../styles/constants";
 
+
+export const SForm = styled.form((props) => ({
+    display: "flex",
+    flexDirection: "column",
+    gap: 25,
+}))
+
 export const SInputWrapper = styled.div((props) => ({
     display: "flex",
     flexDirection: "row",

@@ -64,7 +64,7 @@ const Profile = () => {
             : (<SSiteContent stylized>
                 <Box alignItems={"center"}>
                     <SAvatar border size={180} src={profile.photos.large || userPhoto} />
-                    <Box flexDirection={"column"}>
+                    <Box flexDirection={"column"} overflow={"hidden"}>
                         <STitle color={theme.colors.primaryLightest}>
                             {profile.fullName}
                         </STitle>
