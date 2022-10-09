@@ -19,12 +19,23 @@ const Posts: FC<TPostsProps> = (props) => {
     const state = useSelector<TRootState, TProfilePage>(state => state.profilePage)
     return (
         <>
-            <Box gap={20} flexDirection={"column"}>
-                <Box alignItems={"center"} gap={10}>
-                    <STitle color={theme.colors.primaryLightest}>
+            <Box
+                gap={20}
+                flexDirection={"column"}
+            >
+                <Box
+                    alignItems={"center"}
+                    gap={10}
+                >
+                    <STitle
+                        color={theme.colors.primaryLightest}
+                    >
                         {state.activeProfile.fullName} posts
                     </STitle>
-                    <SText opacity={0.4} title={'Всего постов'}>
+                    <SText
+                        opacity={0.4}
+                        title={'Всего постов'}
+                    >
                         ({state.posts.length})
                     </SText>
                 </Box>
@@ -33,7 +44,10 @@ const Posts: FC<TPostsProps> = (props) => {
                 )}
             </Box>
             {state.posts.length > 0
-                ? <Box gap={25} flexDirection={"column"}>
+                ? <Box
+                    gap={25}
+                    flexDirection={"column"}
+                >
                     {state.posts.map((post) => (
                         <Post
                             avatar={props.avatar}

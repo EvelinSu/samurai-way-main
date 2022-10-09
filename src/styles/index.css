@@ -56,6 +56,10 @@ code {
     color: inherit;
 }
 
+span{
+    word-break: break-word;
+}
+
 a {
     text-decoration: none;
     max-width: 100%;

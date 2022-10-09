@@ -12,6 +12,9 @@ export const theme = {
 
         text: "#eaeaea",
 
+        status: {
+          error: "#dc6666",
+        },
         message: {
             default: "#293657",
             mine: "#4a66a1"
