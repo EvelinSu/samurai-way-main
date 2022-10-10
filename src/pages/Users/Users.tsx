@@ -11,6 +11,9 @@ import UsersNotFound from "./UsersNotFound";
 import {Field, FieldProps, Form, Formik, FormikValues} from "formik";
 import Input from "../../components/Form/Input";
 import SearchIcon from "../../assets/icons/SearchIcon";
+import {Box} from '../../components/Box/Box';
+import Button from "../../components/Button/Button";
+import {PATH} from "../../redux/types";
 
 const searchValidate = (values: FormikValues) => {
     const errors = {};
@@ -27,22 +30,24 @@ const Users: React.FC<TUsersProps> = (props) => {
     const {name} = useParams<{ name: string }>()
     const history = useHistory()
 
-    const [searchText, setSearchText] = useState(filterName)
+
+    const [searchText, setSearchText] = useState<string>(filterName)
 
     //при первой прогрузке проверить есть ли в адресной строке значение
     useEffect(() => {name && setSearchText(name)}, [])
     //
 
     useEffect(() => {
-        if (searchText) {
-            history.push(searchText)
-            dispatch(searchUsersThunk(searchText, +page, state.pageSize))
-        } else {
-            dispatch(getUsersThunk(+page || 1, state.pageSize))
-        }
-    }, [page, searchText, state.pageSize])
+        searchText
+            ? dispatch(searchUsersThunk(searchText, +page, state.pageSize))
+            : dispatch(getUsersThunk(+page || 1, state.pageSize))
+    }, [page, state.pageSize])
 
-    const onSearchHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const onSearchHandler = () => {
+        searchText ? history.push(searchText) : history.push(PATH.users + '/1')
+        dispatch(searchUsersThunk(searchText, +page, state.pageSize))
+    }
+    const onChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
         setSearchText(e.currentTarget.value)
     }
 
@@ -56,25 +61,27 @@ const Users: React.FC<TUsersProps> = (props) => {
                 <Formik
                     initialValues={{search: ''}}
                     validate={searchValidate}
-                    onSubmit={(values, {setSubmitting}) => {
+                    onSubmit={(values) => {
                         setTimeout(() => {
-                            alert(JSON.stringify(values));
-                            setSubmitting(false);
+                            onSearchHandler()
                         }, 400);
                     }}
                 >
                     {() => (
                         <Form>
-                            <Field name="search">
-                                {({field}: FieldProps) =>
-                                    <Input
-                                        icon={<SearchIcon />}
-                                        {...field}
-                                        value={searchText}
-                                        onChange={onSearchHandler}
-                                    />
-                                }
-                            </Field>
+                            <Box gap={20}>
+                                <Field name="search" >
+                                    {({field}: FieldProps) =>
+                                        <Input
+                                            {...field}
+                                            placeholder={'Search by name'}
+                                            value={searchText}
+                                            onChange={onChangeHandler}
+                                        />
+                                    }
+                                </Field>
+                                <Button type={"submit"} label={'Search'} />
+                            </Box>
                         </Form>
                     )}
                 </Formik>
