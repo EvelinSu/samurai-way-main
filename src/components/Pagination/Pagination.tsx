@@ -7,6 +7,7 @@ import {PATH} from "../../redux/types";
 
 type TPaginationProps = {
     pagesCount: number
+    filterName?: string
 }
 
 const Pagination: React.FC<TPaginationProps> = (props) => {
@@ -35,7 +36,8 @@ const Pagination: React.FC<TPaginationProps> = (props) => {
         }
     }
     const onClickHandler = async (el: number) => {
-        await navigate.push(`${PATH.users}/${el}`)
+        let filterName = '/' + props.filterName
+        await navigate.push(`${PATH.users}/${el}${filterName}`)
     }
 
     return (
@@ -44,7 +46,7 @@ const Pagination: React.FC<TPaginationProps> = (props) => {
                 onClick={() => onArrowClick('backward')}
                 isDisabled={visiblePages[0] === 1}
             />
-            {pages.map((el, i) => {
+            {pages.map((el) => {
                 return (
                     <SPaginationItem
                         key={el}

@@ -2,7 +2,7 @@ import React, {useEffect, useMemo, useState} from 'react';
 import {SSiteContent} from "../../layout/styled";
 import PagePanel from "../PagePanel";
 import Pagination from "../../components/Pagination/Pagination";
-import {getUsersThunk, searchUsersThunk, TUsersPage} from "../../redux/usersReducer";
+import {getUsersThunk, searchUsersThunk, setUsersFilter, TUsersPage} from "../../redux/usersReducer";
 import {useHistory, useParams} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import {TRootState} from "../../redux/reduxStore";
@@ -10,7 +10,6 @@ import UsersList from "./UsersList";
 import UsersNotFound from "./UsersNotFound";
 import {Field, FieldProps, Form, Formik, FormikValues} from "formik";
 import Input from "../../components/Form/Input";
-import SearchIcon from "../../assets/icons/SearchIcon";
 import {Box} from '../../components/Box/Box';
 import Button from "../../components/Button/Button";
 import {PATH} from "../../redux/types";
@@ -30,13 +29,11 @@ const Users: React.FC<TUsersProps> = (props) => {
     const {name} = useParams<{ name: string }>()
     const history = useHistory()
 
-
-    const [searchText, setSearchText] = useState<string>(filterName)
+    const [searchText, setSearchText] = useState<string>(name)
 
     //при первой прогрузке проверить есть ли в адресной строке значение
-    useEffect(() => {name && setSearchText(name)}, [])
+    useEffect(() => {name && dispatch(setUsersFilter(name))}, [])
     //
-
     useEffect(() => {
         searchText
             ? dispatch(searchUsersThunk(searchText, +page, state.pageSize))
@@ -44,9 +41,12 @@ const Users: React.FC<TUsersProps> = (props) => {
     }, [page, state.pageSize])
 
     const onSearchHandler = () => {
-        searchText ? history.push(searchText) : history.push(PATH.users + '/1')
-        dispatch(searchUsersThunk(searchText, +page, state.pageSize))
+        if ((searchText !== name) && (searchText || name)) {
+            searchText ? history.push(PATH.users + '/1/' + searchText) : history.push(PATH.users + '/1')
+            dispatch(searchUsersThunk(searchText, +page, state.pageSize))
+        }
     }
+
     const onChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
         setSearchText(e.currentTarget.value)
     }
@@ -70,7 +70,7 @@ const Users: React.FC<TUsersProps> = (props) => {
                     {() => (
                         <Form>
                             <Box gap={20}>
-                                <Field name="search" >
+                                <Field name="search">
                                     {({field}: FieldProps) =>
                                         <Input
                                             {...field}
@@ -80,7 +80,10 @@ const Users: React.FC<TUsersProps> = (props) => {
                                         />
                                     }
                                 </Field>
-                                <Button type={"submit"} label={'Search'} />
+                                <Button isDisabled={(searchText === name) || (!searchText && !name)}
+                                        type={"submit"}
+                                        label={'Search'}
+                                />
                             </Box>
                         </Form>
                     )}
@@ -92,6 +95,7 @@ const Users: React.FC<TUsersProps> = (props) => {
             }
             <Pagination
                 pagesCount={pagesCount || 1}
+                filterName={filterName}
             />
         </SSiteContent>
     );

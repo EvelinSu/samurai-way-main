@@ -134,12 +134,18 @@ const usersReducer = (state: TUsersPage = initialState, action: TActions): TUser
             if (action.isInProgress) {
                 return {
                     ...state,
-                    followingInProgress: [...state.followingInProgress, action.id]}
+                    followingInProgress: [...state.followingInProgress, action.id]
+                }
             } else {
                 return {
                     ...state,
                     followingInProgress: state.followingInProgress.filter(id => id !== action.id)
                 }
+            }
+        case "SET-USERS-FILTER":
+            return {
+                ...state,
+                filter: {...state.filter, name: action.name}
             }
     }
     return state
