@@ -6,7 +6,7 @@ import {
     setUsers,
     setTotalUsersCount,
     usersToggleLoader,
-    setFollowingProgress
+    setFollowingProgress, setUsersFilter
 } from "./usersReducer";
 import {authModalToggleAC, setAuthUserDataAC} from "./authReducer";
 import {globalLoaderToggleAC} from "./loaderReducer";
@@ -27,6 +27,7 @@ export type TActions =
     | ReturnType<typeof setCurrentPage>
     | ReturnType<typeof setTotalUsersCount>
     | ReturnType<typeof usersToggleLoader>
+    | ReturnType<typeof setUsersFilter>
     | ReturnType<typeof setFollowingProgress>
     // auth
     | ReturnType<typeof setAuthUserDataAC>

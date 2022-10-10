@@ -2,18 +2,21 @@ import React, {DetailedHTMLProps, InputHTMLAttributes} from 'react';
 import {SInput, SInputWrapper} from "./styled";
 import {Box} from "../Box/Box";
 
-type DefaultInputPropsType = DetailedHTMLProps<InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>
-type TInputProps = DefaultInputPropsType & {
+export type DefaultInputPropsType =  DetailedHTMLProps<InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>
+export type TInputProps = DefaultInputPropsType & {
     icon?: any
 }
 
-const Input: React.FC<TInputProps> = (props) => {
+const Input: React.FC<TInputProps> = ({...props}) => {
+
     const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         props.onChange && props.onChange(e)
     }
-
     const onBlur = (e: React.FocusEvent<HTMLInputElement>) => {
         props.onBlur && props.onBlur(e)
+    }
+    const onKeyUp = (e: React.KeyboardEvent<HTMLInputElement> ) => {
+        props.onKeyUp && props.onKeyUp(e)
     }
 
     return (
@@ -22,14 +25,17 @@ const Input: React.FC<TInputProps> = (props) => {
                 {props.icon}
             </Box>
             <SInput
-                onBlur={onBlur}
-                onChange={onChange}
                 placeholder={props.placeholder || 'Введите текст...'}
-                value={props.value}
                 type={props.type}
+                onChange={onChange}
+                onKeyUp={onKeyUp}
+                name={props.name}
+                value={props.value}
+                onBlur={onBlur}
+                onError={() => alert('awfpj')}
+
             />
         </SInputWrapper>
-
     );
 };
 

@@ -1,9 +1,8 @@
 import React, {FC} from 'react';
-import {SButton, SLoadingButton} from "./styled";
+import {DefaultHTMLButtonType, SButton, SLoadingButton} from "./styled";
 
-type TButtonProps = {
+type TButtonProps = DefaultHTMLButtonType & {
     label: string,
-    onClick: () => void
     isDisabled?: boolean
     backgroundColor?: string
     size?: 'lg' | 'sm'
@@ -12,17 +11,19 @@ type TButtonProps = {
     needAuth?: boolean
 }
 
-const Button: FC<TButtonProps> = ({isDisabled, onClick, ...props}) => {
-    const onClickHandler = () => {
-        onClick();
+const Button: FC<TButtonProps> = ({isDisabled, ...props}) => {
+    const onClickHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
+        props.onClick && props.onClick(e);
     };
     return (
         !props.isLoading
             ? (<SButton
+                type={props.type}
                 hasIcon={!!props.icon}
                 disabled={isDisabled}
-                onClick={() => onClickHandler()}
-                {...props}
+                onClick={(e) => onClickHandler(e)}
+                backgroundColor={props.backgroundColor}
+                size={props.size}
             >
                 {props.icon}
                 {props.label}

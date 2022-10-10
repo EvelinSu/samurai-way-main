@@ -9,8 +9,6 @@ import {
 import {PATH} from "../../redux/types";
 import {SSiteContent} from "../../layout/styled";
 import PagePanel from "../PagePanel";
-import Input from "../../components/Form/Input";
-import UserIcon from "../../assets/icons/UserIcon";
 import {useSelector} from "react-redux";
 import {TRootState} from "../../redux/reduxStore";
 import {TDialogsPage} from "../../redux/dialogsReducer";
@@ -35,7 +33,7 @@ const Dialogs: FC<TDialogsProps> = (props) => {
     return (
         <SSiteContent>
             <PagePanel title={auth.isAuth ? "Messages" : "Presentation messages"}>
-                <Input icon={<UserIcon/>} placeholder={"in progress..."}/>
+                {/*<Input icon={<UserIcon/>} placeholder={"in progress..."}/>*/}
             </PagePanel>
             <SDialogs>
                 <SDialogContainer justifyContent={id ? 'initial' : 'center'}>

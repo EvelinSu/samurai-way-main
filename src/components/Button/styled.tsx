@@ -1,13 +1,6 @@
-import styled, {css, keyframes} from "styled-components";
+import styled, {keyframes} from "styled-components";
 import {theme} from "../../styles/constants";
-
-type TSButtonProps = {
-    disabled?: boolean
-    backgroundColor?: string
-    size?: 'lg' | 'sm'
-    isLoading?: boolean
-    hasIcon?: boolean
-}
+import React, {DetailedHTMLProps} from "react";
 
 const buttonLoad = keyframes`
   0% {
@@ -22,11 +15,19 @@ const buttonLoad = keyframes`
 
   }
 `
+export type DefaultHTMLButtonType = DetailedHTMLProps<React.ButtonHTMLAttributes<HTMLButtonElement>, HTMLButtonElement>
 
-export const SButton = styled.button<TSButtonProps>(({disabled, ...props}) => ({
+type TSButton = DefaultHTMLButtonType & {
+    backgroundColor?: string,
+    size?: 'lg' | 'sm',
+    hasIcon?: boolean,
+}
+
+export const SButton = styled.button<TSButton>(({disabled, ...props}) => ({
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
+    whiteSpace: "nowrap",
     padding: "7px 15px",
     borderRadius: 20,
     backgroundColor: props.backgroundColor || theme.colors.button.success,

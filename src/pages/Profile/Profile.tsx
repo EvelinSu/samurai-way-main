@@ -1,4 +1,4 @@
-import React, {FC, useEffect, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Box} from "../../components/Box/Box";
 import {SAvatar} from "../../components/Avatar/SAvatar";
 import {SText} from "../../components/Text/SText";
