@@ -149,6 +149,7 @@ export const changeMyStatus = (newStatus: string) => ({
 } as const)
 
 export const getProfile = (userId: number) => async (dispatch: TAppDispatch) => {
+    dispatch(profileToggleLoader(true))
     authAPI
         .getMyData()
         .then(me => me.data.id)

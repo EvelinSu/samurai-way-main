@@ -32,6 +32,7 @@ const Profile = () => {
     const isFetching = useSelector<TRootState, boolean>(state => state.profilePage.isFetching)
     const status = useSelector<TRootState, string>(state => state.profilePage.status)
     const myId = useSelector<TRootState, number>(state => state.auth.id)
+
     useEffect(() => {
         setIsLoading(true)
         if (userId && userId !== 0) {
