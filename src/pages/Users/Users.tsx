@@ -3,7 +3,7 @@ import {SSiteContent} from "../../layout/styled";
 import PagePanel from "../PagePanel";
 import Pagination from "../../components/Pagination/Pagination";
 import {getUsersThunk, searchUsersThunk, TUsersPage} from "../../redux/usersReducer";
-import {useParams} from "react-router-dom";
+import {useHistory, useParams} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import {TRootState} from "../../redux/reduxStore";
 import UsersList from "./UsersList";
@@ -22,19 +22,28 @@ type TUsersProps = {}
 const Users: React.FC<TUsersProps> = (props) => {
     const dispatch = useDispatch()
     const state = useSelector<TRootState, TUsersPage>(state => state.usersPage)
+    const filterName = useSelector<TRootState, string>(state => state.usersPage.filter.name)
     const {page} = useParams<{ page: string }>()
+    const {name} = useParams<{ name: string }>()
+    const history = useHistory()
 
-    const [searchText, setSearchText] = useState('')
+    const [searchText, setSearchText] = useState(filterName)
+
+    //при первой прогрузке проверить есть ли в адресной строке значение
+    useEffect(() => {name && setSearchText(name)}, [])
+    //
 
     useEffect(() => {
-        !searchText
-            ? dispatch(getUsersThunk(+page || 1, state.pageSize))
-            : dispatch(searchUsersThunk(searchText, +page, state.pageSize))
-    }, [page, searchText, dispatch, state.pageSize])
+        if (searchText) {
+            history.push(searchText)
+            dispatch(searchUsersThunk(searchText, +page, state.pageSize))
+        } else {
+            dispatch(getUsersThunk(+page || 1, state.pageSize))
+        }
+    }, [page, searchText, state.pageSize])
 
-    const onSearchHandler = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    const onSearchHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
         setSearchText(e.currentTarget.value)
-
     }
 
     let pagesCount = useMemo(() => {
@@ -59,9 +68,10 @@ const Users: React.FC<TUsersProps> = (props) => {
                             <Field name="search">
                                 {({field}: FieldProps) =>
                                     <Input
-                                        onKeyUp={onSearchHandler}
                                         icon={<SearchIcon />}
                                         {...field}
+                                        value={searchText}
+                                        onChange={onSearchHandler}
                                     />
                                 }
                             </Field>

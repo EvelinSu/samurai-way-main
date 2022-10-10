@@ -23,7 +23,6 @@ const App: React.FC = (props) => {
         dispatch(getAuthThunk())
     }, [])
 
-
     return (
         <HashRouter>
             {loader.globalLoading
@@ -35,7 +34,7 @@ const App: React.FC = (props) => {
                             <Route path={`${PATH.profile}/:id?`} render={() => <Profile />} exact />
                             <Redirect from="/" to={PATH.profile + '/' + auth.id} exact />
                             <Route path={`${PATH.messages}/:id?`} render={() => <Dialogs />} exact />
-                            <Route path={`${PATH.users}/:page?`} render={() => <Users />} exact />
+                            <Route path={`${PATH.users}/:page?/:name?`} render={() => <Users />} exact />
                             <Route path={"*"} component={PageNotFound} exact />
                         </Switch>
                     </SSiteContainer>

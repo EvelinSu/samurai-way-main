@@ -17,6 +17,9 @@ export type TUsersPage = {
     totalUsersCount: number
     isFetching: boolean
     followingInProgress: Array<number>
+    filter: {
+        name: string
+    }
 }
 
 export const presentationUsers = [
@@ -97,7 +100,10 @@ const initialState: TUsersPage = {
     pageSize: 15,
     totalUsersCount: 15,
     isFetching: true,
-    followingInProgress: []
+    followingInProgress: [],
+    filter: {
+        name: ''
+    }
 }
 
 const usersReducer = (state: TUsersPage = initialState, action: TActions): TUsersPage => {
@@ -110,16 +116,30 @@ const usersReducer = (state: TUsersPage = initialState, action: TActions): TUser
                 )]
             }
         case ("SET-USERS"):
-            return {...state, users: [...action.users]}
+            return {
+                ...state,
+                users: [...action.users]
+            }
         case "SET-TOTAL-USERS-COUNT":
-            return {...state, totalUsersCount: action.usersCount}
+            return {
+                ...state,
+                totalUsersCount: action.usersCount
+            }
         case "TOGGLE-LOADER":
-            return {...state, isFetching: action.isFetching}
+            return {
+                ...state,
+                isFetching: action.isFetching
+            }
         case "FOLLOWING-LOADER":
             if (action.isInProgress) {
-                return {...state, followingInProgress: [...state.followingInProgress, action.id]}
+                return {
+                    ...state,
+                    followingInProgress: [...state.followingInProgress, action.id]}
             } else {
-                return {...state, followingInProgress: state.followingInProgress.filter(id => id !== action.id)}
+                return {
+                    ...state,
+                    followingInProgress: state.followingInProgress.filter(id => id !== action.id)
+                }
             }
     }
     return state
@@ -150,6 +170,10 @@ export const setFollowingProgress = (id: number, isInProgress: boolean) => ({
     isInProgress,
     id
 } as const)
+export const setUsersFilter = (name: string) => ({
+    type: "SET-USERS-FILTER",
+    name
+} as const)
 
 // получить определенное число юзеров на конкретной странице
 export const getUsersThunk = (currentPage: number, pageSize: number) => (dispatch: Dispatch) => {
@@ -165,6 +189,7 @@ export const getUsersThunk = (currentPage: number, pageSize: number) => (dispatc
 export const searchUsersThunk = (name: string, currentPage: number, pageSize: number) => (dispatch: Dispatch) => {
     dispatch(usersToggleLoader(true))
     usersAPI.searchUsers(name, currentPage, pageSize).then(response => {
+        dispatch(setUsersFilter(name))
         dispatch(setTotalUsersCount(response.totalCount))
         dispatch(setUsers(response.items))
         dispatch(usersToggleLoader(false))
