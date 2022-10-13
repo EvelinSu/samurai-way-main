@@ -92,7 +92,7 @@ const Profile = () => {
                                     - no contacts -
                                 </SText>}
                         </Box>
-                        <SText>
+                        <SText margin={"0 0 0 10px"}>
                             {profile.lookingForAJob && profile.lookingForAJobDescription}
                         </SText>
                     </Box>
