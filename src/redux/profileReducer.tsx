@@ -46,7 +46,7 @@ export const presentationProfile = {
         mainLink: ""
     },
     lookingForAJob: true,
-    lookingForAJobDescription: 'I\'m a presentation cat',
+    lookingForAJobDescription: 'I\'m a presentation cat! If you see me, you are not authorized',
     fullName: "Meow",
     userId: 0,
     photos: {
