@@ -56,7 +56,6 @@ export const setAuthMessages = (messages: string[]) => ({
 } as const)
 
 export const getAuthThunk = () => async (dispatch: TAppDispatch) => {
-    dispatch(globalLoaderToggleAC(true))
     authAPI
         .getMyData()
         .then((me) => {
@@ -79,7 +78,9 @@ export const loginThunk = (email: string, password: string, rememberMe: boolean)
         })
         .then((res) => {
             if (res.resultCode === 0) {
+                alert("COOL, IT'S WORKS")
                 dispatch(getAuthThunk())
+                dispatch(authModalToggleAC(false))
             }
         })
 }
@@ -89,6 +90,7 @@ export const logoutThunk = () => async (dispatch: TAppDispatch) => {
         .logout()
         .then((res) => {
             if (res.resultCode === 0) {
+                alert("BYE, FRIEND!")
                 dispatch(resetAuthUserDataAC())
             }
         })

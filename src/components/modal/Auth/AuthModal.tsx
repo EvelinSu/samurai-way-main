@@ -5,12 +5,13 @@ import UserIcon from "../../../assets/icons/UserIcon";
 import Button from "../../Button/Button";
 import {SForm} from "../../Form/styled";
 import Checkbox from "../../Checkbox/Checkbox";
-import {ErrorMessage, Field, FieldProps, Formik, FormikErrors, FormikValues} from "formik";
+import {Field, FieldProps, Formik, FormikErrors, FormikValues} from "formik";
 import {Box} from '../../Box/Box';
 import {loginThunk} from "../../../redux/authReducer";
 import {useDispatch, useSelector} from "react-redux";
 import {TRootState} from "../../../redux/reduxStore";
 import {SErrorBox} from "../../Errors/styles";
+import LockIcon from "../../../assets/icons/LockIcon";
 
 const authValidate = (values: FormikValues) => {
     const errors: FormikErrors<any> = {};
@@ -20,7 +21,6 @@ const authValidate = (values: FormikValues) => {
     if (!values.password) {
         errors.password = 'Required'
     }
-    console.log(errors)
     return errors;
 }
 
@@ -56,7 +56,6 @@ const AuthModal = () => {
                                 />
                             )}
                         </Field>
-                        <ErrorMessage name="login" component="div" />
                         <Field
                             type="password"
                             name="password"
@@ -66,7 +65,7 @@ const AuthModal = () => {
                                     type="password"
                                     error={errors.password}
                                     placeholder={"Password"}
-                                    icon={<UserIcon />}
+                                    icon={<LockIcon />}
                                     required
                                     {...field}
                                 />)}
