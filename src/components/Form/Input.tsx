@@ -2,9 +2,10 @@ import React, {DetailedHTMLProps, InputHTMLAttributes} from 'react';
 import {SInput, SInputWrapper} from "./styled";
 import {Box} from "../Box/Box";
 
-export type DefaultInputPropsType =  DetailedHTMLProps<InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>
+export type DefaultInputPropsType = DetailedHTMLProps<InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>
 export type TInputProps = DefaultInputPropsType & {
     icon?: any
+    error?: string
 }
 
 const Input: React.FC<TInputProps> = ({...props}) => {
@@ -20,13 +21,14 @@ const Input: React.FC<TInputProps> = ({...props}) => {
     }
 
     return (
-        <SInputWrapper>
+        <SInputWrapper error={props.error}>
             <Box opacity={0.5}>
                 {props.icon}
             </Box>
             <SInput
                 placeholder={props.placeholder || 'Введите текст...'}
                 type={props.type}
+                isError={!!props.error}
                 onChange={onChange}
                 onKeyUp={onKeyUp}
                 name={props.name}

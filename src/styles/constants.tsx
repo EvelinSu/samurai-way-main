@@ -30,6 +30,9 @@ export const theme = {
     },
     blockSettings: {
         borderRadius: 15,
+    },
+    orders: {
+        inputErrors: 2
     }
 
 }
