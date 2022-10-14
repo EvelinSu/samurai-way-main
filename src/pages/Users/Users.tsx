@@ -7,7 +7,6 @@ import {useHistory, useParams} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import {TRootState} from "../../redux/reduxStore";
 import UsersList from "./UsersList";
-import UsersNotFound from "./UsersNotFound";
 import {Field, FieldProps, Form, Formik, FormikValues} from "formik";
 import Input from "../../components/Form/Input";
 import {Box} from '../../components/Box/Box';
@@ -89,10 +88,7 @@ const Users: React.FC<TUsersProps> = (props) => {
                     )}
                 </Formik>
             </PagePanel>
-            {state.users.length
-                ? <UsersList state={state} />
-                : <UsersNotFound />
-            }
+            <UsersList state={state} />
             <Pagination
                 pagesCount={pagesCount || 1}
                 filterName={filterName}
