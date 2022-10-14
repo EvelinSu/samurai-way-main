@@ -10,6 +10,7 @@ import {Box} from '../../Box/Box';
 import {loginThunk} from "../../../redux/authReducer";
 import {useDispatch, useSelector} from "react-redux";
 import {TRootState} from "../../../redux/reduxStore";
+import {SErrorBox} from "../../Errors/styles";
 
 const authValidate = (values: FormikValues) => {
     const errors: FormikErrors<any> = {};
@@ -19,7 +20,7 @@ const authValidate = (values: FormikValues) => {
     if (!values.password) {
         errors.password = 'Required'
     }
-
+    console.log(errors)
     return errors;
 }
 
@@ -27,7 +28,6 @@ const AuthModal = () => {
 
     const dispatch = useDispatch()
     const authMessages = useSelector<TRootState, string[]>(state => state.auth.messages)
-    console.log(authMessages)
 
     return (
         <>
@@ -44,10 +44,17 @@ const AuthModal = () => {
                 {({isSubmitting, errors}) => (
                     <SForm>
                         <Field
-                            type={"email"}
+                            type="email"
                             name="email"
                         >
-                            {({field}: FieldProps) => <Input error={errors.email} placeholder={"Email"} icon={<UserIcon />} {...field} />}
+                            {({field}: FieldProps) => (
+                                <Input
+                                    error={errors.email}
+                                    required
+                                    placeholder={"Email"}
+                                    icon={<UserIcon />} {...field}
+                                />
+                            )}
                         </Field>
                         <ErrorMessage name="login" component="div" />
                         <Field
@@ -60,15 +67,22 @@ const AuthModal = () => {
                                     error={errors.password}
                                     placeholder={"Password"}
                                     icon={<UserIcon />}
+                                    required
                                     {...field}
                                 />)}
                         </Field>
+                        {authMessages.length > 0 && (
+                            <SErrorBox>
+                                {authMessages}
+                            </SErrorBox>
+                        )}
                         <Field
                             type={'checkbox'}
                             name="rememberMe"
                         >
                             {({field}: FieldProps) => <Checkbox label={'Remember me'} {...field} />}
                         </Field>
+
                         <Box justifyContent={"center"}>
                             <Button
                                 type="submit"
@@ -77,6 +91,8 @@ const AuthModal = () => {
                                 label={'Login'}
                             />
                         </Box>
+
+
                     </SForm>
                 )}
             </Formik>

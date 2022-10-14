@@ -75,7 +75,6 @@ export const loginThunk = (email: string, password: string, rememberMe: boolean)
         .login(email, password, rememberMe)
         .then((res) => {
             dispatch(setAuthMessages(res.messages))
-            alert(res.messages)
             return res
         })
         .then((res) => {
