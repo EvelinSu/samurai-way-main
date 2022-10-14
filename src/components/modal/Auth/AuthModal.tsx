@@ -6,18 +6,19 @@ import Button from "../../Button/Button";
 import {SForm} from "../../Form/styled";
 import Checkbox from "../../Checkbox/Checkbox";
 import {ErrorMessage, Field, FieldProps, Formik, FormikErrors, FormikValues} from "formik";
-import { Box } from '../../Box/Box';
-import {useDispatch} from "react-redux";
-import {authModalToggleAC} from "../../../redux/authReducer";
+import {Box} from '../../Box/Box';
+import {loginThunk} from "../../../redux/authReducer";
+import {useDispatch, useSelector} from "react-redux";
+import {TRootState} from "../../../redux/reduxStore";
 
 const authValidate = (values: FormikValues) => {
     const errors: FormikErrors<any> = {};
-    // if (!values.login) {
-    //     errors.login = 'Required';
-    // }
-    // if (!values.password) {
-    //     errors.password = 'Required'
-    // }
+    if (!values.email) {
+        errors.email = 'Required';
+    }
+    if (!values.password) {
+        errors.password = 'Required'
+    }
 
     return errors;
 }
@@ -25,38 +26,43 @@ const authValidate = (values: FormikValues) => {
 const AuthModal = () => {
 
     const dispatch = useDispatch()
+    const authMessages = useSelector<TRootState, string[]>(state => state.auth.messages)
+    console.log(authMessages)
+
     return (
         <>
             <STitle fontSize={"20px"}>Authorization</STitle>
             <Formik
-                initialValues={{login: '', password: '', rememberMe: false}}
+                initialValues={{email: '', password: '', rememberMe: false}}
                 validate={authValidate}
                 onSubmit={(values, {setSubmitting}) => {
-                    setTimeout(() => {
-                        dispatch(authModalToggleAC(false))
-                        alert(JSON.stringify(values) + "\r\n\r\n COOL, BUT AUTHORIZATION ISN'T WORK");
-                        setSubmitting(false);
-                    }, 400);
+                    let {email, password, rememberMe} = values
+                    dispatch(loginThunk(email, password, rememberMe))
+                    setSubmitting(false);
                 }}
             >
-                {({isSubmitting}) => (
+                {({isSubmitting, errors}) => (
                     <SForm>
                         <Field
-                            type={"name"}
-                            name="login"
-                            placeholder={'Login'}
+                            type={"email"}
+                            name="email"
                         >
-                            {({field}: FieldProps) => <Input icon={<UserIcon />} {...field} />}
+                            {({field}: FieldProps) => <Input error={errors.email} placeholder={"Email"} icon={<UserIcon />} {...field} />}
                         </Field>
                         <ErrorMessage name="login" component="div" />
                         <Field
                             type="password"
                             name="password"
-                            placeholder={'Password'}
                         >
-                            {({field}: FieldProps) => <Input type="password" icon={<UserIcon />} {...field} />}
+                            {({field}: FieldProps) => (
+                                <Input
+                                    type="password"
+                                    error={errors.password}
+                                    placeholder={"Password"}
+                                    icon={<UserIcon />}
+                                    {...field}
+                                />)}
                         </Field>
-                        <ErrorMessage name="password" component="div" />
                         <Field
                             type={'checkbox'}
                             name="rememberMe"

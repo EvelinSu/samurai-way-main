@@ -11,20 +11,29 @@ type TModalProps = {
     type: 'auth' | 'default'
     isOpened?: boolean
     setIsOpened?: (isOpened: boolean) => void
+    onSuccessClick?: () => void
 }
 
 const Modal: React.FC<TModalProps> = (props) => {
     const dispatch = useDispatch()
-    const onClickHandler = () => {
+    const onShadowClick = () => {
         props.setIsOpened && props.setIsOpened(!props.isOpened)
         dispatch(authModalToggleAC(false))
     }
-    const isOpen = useSelector<TRootState, boolean | undefined>(state => state.auth.authModalToggle)
-    return props.isOpened || isOpen ? (
-        <MegaShadow onMouseDown={onClickHandler}>
+    const isAuthModalOpen = useSelector<TRootState, boolean | undefined>(state => state.auth.authModalToggle)
+
+    return props.isOpened || isAuthModalOpen ? (
+        <MegaShadow onMouseDown={onShadowClick}>
             <SModalWrapper onMouseDown={(e) => e.stopPropagation()}>
-                {props.type === 'auth' && <AuthModal />}
-                {props.type === 'default' && <DefaultModal close={()=> props.setIsOpened && props.setIsOpened(false)}/>}
+                {props.type === 'auth' && (
+                    <AuthModal />
+                )}
+                {props.type === 'default' && (
+                    <DefaultModal
+                        onCancelClick={() => props.setIsOpened && props.setIsOpened(false)}
+                        onSuccessClick={() => props.onSuccessClick && props.onSuccessClick()}
+                    />
+                )}
             </SModalWrapper>
         </MegaShadow>
     ) : <></>

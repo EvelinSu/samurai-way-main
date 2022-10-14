@@ -5,12 +5,12 @@ import {theme} from "../../../styles/constants";
 import { STitle } from '../../Text/STitle';
 
 type TDefaultModalProps = {
-    close: () => void
+    onSuccessClick: () => void
+    onCancelClick: () => void
+
 }
 const DefaultModal: React.FC<TDefaultModalProps> = (props) => {
-    const onClickHandler = () => {
-        props.close()
-    }
+
     return (
         <>
             <Box justifyContent={"center"}>
@@ -19,8 +19,8 @@ const DefaultModal: React.FC<TDefaultModalProps> = (props) => {
                 </STitle>
             </Box>
             <Box flexDirection={"row"} justifyContent={"center"}>
-                <Button size={"lg"} label={'Yes'} onClick={() => {alert('NO!'); props.close()}} />
-                <Button size={"lg"} label={'Cancel'} onClick={onClickHandler} backgroundColor={theme.colors.button.cancel}/>
+                <Button size={"lg"} label={'Yes'} onClick={props.onSuccessClick} />
+                <Button size={"lg"} label={'Cancel'} onClick={props.onCancelClick} backgroundColor={theme.colors.button.cancel}/>
             </Box>
         </>
 

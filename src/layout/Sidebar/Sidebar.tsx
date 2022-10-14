@@ -1,4 +1,4 @@
-import React, {FC, useEffect, useState} from 'react';
+import React, {FC, useState} from 'react';
 import {SSidebar, SSidebarAvatar, SSidebarItem, SSidebarItemIcon} from "./styled";
 import {useHistory, useLocation} from "react-router-dom";
 import {navLinks} from "./sidebarData";
@@ -7,7 +7,11 @@ import Modal from "../../components/modal/Modal";
 import LoginIcon from "../../assets/icons/LoginIcon";
 import {useDispatch, useSelector} from "react-redux";
 import {TRootState} from "../../redux/reduxStore";
-import {authModalToggleAC, TAuth} from "../../redux/authReducer";
+import {
+    authModalToggleAC,
+    logoutThunk,
+    TAuth
+} from "../../redux/authReducer";
 import { SAvatar } from '../../components/Avatar/SAvatar';
 import defaultPhoto from  '../../assets/img/default-photo.png'
 import {PATH} from "../../redux/types";
@@ -28,6 +32,11 @@ const Sidebar: FC<TSidebarProps> = (props) => {
     const onClickHandler = () => {
         if(!state.isAuth) return dispatch(authModalToggleAC(true))
         else setIsOpened(true)
+    }
+
+    const logoutHandler = () => {
+        dispatch(logoutThunk())
+        setIsOpened(false)
     }
 
     return (
@@ -62,7 +71,7 @@ const Sidebar: FC<TSidebarProps> = (props) => {
                     {state.isAuth ? <LogoutIcon /> : <LoginIcon/>}
                 </SSidebarItemIcon>
             </SSidebarItem>
-            {isOpened && <Modal type={"default"} isOpened={isOpened} setIsOpened={setIsOpened} />}
+            {isOpened && <Modal type={"default"} onSuccessClick={logoutHandler} isOpened={isOpened} setIsOpened={setIsOpened} />}
         </SSidebar>
     );
 };
