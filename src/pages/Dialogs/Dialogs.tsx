@@ -9,13 +9,10 @@ import {
 import {PATH} from "../../redux/types";
 import {SSiteContent} from "../../layout/styled";
 import PagePanel from "../PagePanel";
-import {useSelector} from "react-redux";
-import {TRootState} from "../../redux/reduxStore";
-import {TDialogsPage} from "../../redux/dialogsReducer";
 import DialogsItemsList from "./DialogsItemsList/DialogsItemsList";
 import {presentationUsers} from "../../redux/usersReducer";
 import DialogContent from "./DialogContent/DialogContent";
-import {TAuth} from "../../redux/authReducer";
+import {useAppSelector} from "../../hooks/useAppDispatch";
 
 type TDialogsProps = {}
 const Dialogs: FC<TDialogsProps> = (props) => {
@@ -23,9 +20,9 @@ const Dialogs: FC<TDialogsProps> = (props) => {
     const {id} = useParams<{ id: string }>();
     const history = useHistory();
 
-    const auth = useSelector<TRootState, TAuth>(state => state.auth)
+    const auth = useAppSelector(state => state.auth)
 
-    const state = useSelector<TRootState, TDialogsPage>(state => state.dialogsPage)
+    const state = useAppSelector(state => state.dialogsPage)
     const users= presentationUsers
 
     const onClickHandler = (key: string) => history.push(`${PATH.messages}/${key}`)

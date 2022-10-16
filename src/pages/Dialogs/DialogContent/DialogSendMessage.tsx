@@ -4,6 +4,7 @@ import Button from "../../../components/Button/Button";
 import {useDispatch, useSelector} from "react-redux";
 import {TRootState} from "../../../redux/reduxStore";
 import {changeNewMessageTextAC, sendMessageAC} from "../../../redux/dialogsReducer";
+import {useAppSelector} from "../../../hooks/useAppDispatch";
 
 type TDialogSendMessage = {
     id: string
@@ -11,7 +12,7 @@ type TDialogSendMessage = {
 
 const DialogSendMessage: React.FC<TDialogSendMessage> = (props) => {
 
-    const newMessageText = useSelector<TRootState, string>(state => state.dialogsPage.dialogs[props.id].newMessageText)
+    const newMessageText = useAppSelector(state => state.dialogsPage.dialogs[props.id].newMessageText)
     const dispatch = useDispatch()
 
     const onKeyPress = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {

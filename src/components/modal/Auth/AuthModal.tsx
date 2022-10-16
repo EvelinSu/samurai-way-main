@@ -8,10 +8,10 @@ import Checkbox from "../../Checkbox/Checkbox";
 import {Field, FieldProps, Formik, FormikErrors, FormikValues} from "formik";
 import {Box} from '../../Box/Box';
 import {loginThunk} from "../../../redux/authReducer";
-import {useDispatch, useSelector} from "react-redux";
-import {TRootState} from "../../../redux/reduxStore";
+import {useDispatch} from "react-redux";
 import {SErrorBox} from "../../Errors/styles";
 import LockIcon from "../../../assets/icons/LockIcon";
+import {useAppSelector} from "../../../hooks/useAppDispatch";
 
 const authValidate = (values: FormikValues) => {
     const errors: FormikErrors<any> = {};
@@ -27,7 +27,7 @@ const authValidate = (values: FormikValues) => {
 const AuthModal = () => {
 
     const dispatch = useDispatch()
-    const authMessages = useSelector<TRootState, string[]>(state => state.auth.messages)
+    const authMessages = useAppSelector(state => state.auth.messages)
 
     return (
         <>

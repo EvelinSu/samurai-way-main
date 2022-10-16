@@ -10,17 +10,14 @@ import {
     getProfile, presentationProfile, profileToggleLoader,
     putStatus,
     setActiveProfile,
-    TActiveProfile,
 } from "../../redux/profileReducer";
 import userPhoto from "../../assets/img/default-photo.png";
 import IconLink from "../../components/IconLink/IconLink";
 import {iconsDictionary} from "../../assets/icons/contacts/_iconsDictionary";
-import {useSelector} from "react-redux";
 import {useParams} from "react-router-dom";
-import {TRootState} from "../../redux/reduxStore";
 import LoaderIcon from "../../assets/loaders/loader";
 import Posts from "./Posts/Posts";
-import {useAppDispatch} from "../../hooks/useAppDispatch";
+import {useAppDispatch, useAppSelector} from "../../hooks/useAppDispatch";
 import EditableText from "../../components/EditableText/EditableText";
 
 const Profile = () => {
@@ -28,10 +25,10 @@ const Profile = () => {
     const {id} = useParams<{ id: string }>()
     const userId = Number(id);
     const [isLoading, setIsLoading] = useState(true);
-    const profile = useSelector<TRootState, TActiveProfile>(state => state.profilePage.activeProfile)
-    const isFetching = useSelector<TRootState, boolean>(state => state.profilePage.isFetching)
-    const status = useSelector<TRootState, string>(state => state.profilePage.status)
-    const myId = useSelector<TRootState, number>(state => state.auth.id)
+    const profile = useAppSelector(state => state.profilePage.activeProfile)
+    const isFetching = useAppSelector(state => state.profilePage.isFetching)
+    const status = useAppSelector(state => state.profilePage.status)
+    const myId = useAppSelector(state => state.auth.id)
 
     useEffect(() => {
         setIsLoading(true)

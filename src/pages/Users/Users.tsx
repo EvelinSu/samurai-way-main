@@ -2,16 +2,16 @@ import React, {useEffect, useMemo, useState} from 'react';
 import {SSiteContent} from "../../layout/styled";
 import PagePanel from "../PagePanel";
 import Pagination from "../../components/Pagination/Pagination";
-import {getUsersThunk, searchUsersThunk, setUsersFilter, TUsersPage} from "../../redux/usersReducer";
+import {getUsersThunk, searchUsersThunk, setUsersFilter} from "../../redux/usersReducer";
 import {useHistory, useParams} from "react-router-dom";
-import {useDispatch, useSelector} from "react-redux";
-import {TRootState} from "../../redux/reduxStore";
+import {useDispatch} from "react-redux";
 import UsersList from "./UsersList";
 import {Field, FieldProps, Form, Formik, FormikValues} from "formik";
 import Input from "../../components/Form/Input";
 import {Box} from '../../components/Box/Box';
 import Button from "../../components/Button/Button";
 import {PATH} from "../../redux/types";
+import {useAppSelector} from "../../hooks/useAppDispatch";
 
 const searchValidate = (values: FormikValues) => {
     const errors = {};
@@ -22,8 +22,8 @@ type TUsersProps = {}
 
 const Users: React.FC<TUsersProps> = (props) => {
     const dispatch = useDispatch()
-    const state = useSelector<TRootState, TUsersPage>(state => state.usersPage)
-    const filterName = useSelector<TRootState, string>(state => state.usersPage.filter.name)
+    const state = useAppSelector(state => state.usersPage)
+    const filterName = useAppSelector(state => state.usersPage.filter.name)
     const {page} = useParams<{ page: string }>()
     const {name} = useParams<{ name: string }>()
     const history = useHistory()

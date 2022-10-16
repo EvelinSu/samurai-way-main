@@ -5,16 +5,15 @@ import {navLinks} from "./sidebarData";
 import LogoutIcon from "../../assets/icons/LogoutIcon";
 import Modal from "../../components/modal/Modal";
 import LoginIcon from "../../assets/icons/LoginIcon";
-import {useDispatch, useSelector} from "react-redux";
-import {TRootState} from "../../redux/reduxStore";
+import {useDispatch} from "react-redux";
 import {
     authModalToggleAC,
     logoutThunk,
-    TAuth
 } from "../../redux/authReducer";
 import { SAvatar } from '../../components/Avatar/SAvatar';
 import defaultPhoto from  '../../assets/img/default-photo.png'
 import {PATH} from "../../redux/types";
+import {useAppSelector} from "../../hooks/useAppDispatch";
 
 type TSidebarProps = {
 
@@ -22,7 +21,7 @@ type TSidebarProps = {
 
 const Sidebar: FC<TSidebarProps> = (props) => {
     const dispatch = useDispatch()
-    const state = useSelector<TRootState, TAuth>(state => state.auth)
+    const state = useAppSelector(state => state.auth)
 
     const history = useHistory();
     const location = useLocation();

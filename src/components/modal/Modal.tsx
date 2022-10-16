@@ -3,9 +3,9 @@ import AuthModal from "./Auth/AuthModal";
 import {MegaShadow} from "../MegaShadow/MegaShadow";
 import {SModalWrapper} from "./styled";
 import DefaultModal from "./Default/DefaultModal";
-import {useDispatch, useSelector} from "react-redux";
-import {TRootState} from "../../redux/reduxStore";
+import {useDispatch} from "react-redux";
 import {authModalToggleAC} from "../../redux/authReducer";
+import {useAppSelector} from "../../hooks/useAppDispatch";
 
 type TModalProps = {
     type: 'auth' | 'default'
@@ -20,7 +20,7 @@ const Modal: React.FC<TModalProps> = (props) => {
         props.setIsOpened && props.setIsOpened(!props.isOpened)
         dispatch(authModalToggleAC(false))
     }
-    const isAuthModalOpen = useSelector<TRootState, boolean | undefined>(state => state.auth.authModalToggle)
+    const isAuthModalOpen = useAppSelector(state => state.auth.authModalToggle)
 
     return props.isOpened || isAuthModalOpen ? (
         <MegaShadow onMouseDown={onShadowClick}>

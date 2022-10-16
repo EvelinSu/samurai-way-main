@@ -1,8 +1,7 @@
 import React, {ChangeEvent, FocusEvent, useState} from 'react';
 import {SEditableText} from "./styled";
-import {useSelector} from "react-redux";
-import {TRootState} from "../../redux/reduxStore";
 import {SText} from "../Text/SText";
+import {useAppSelector} from "../../hooks/useAppDispatch";
 
 type TEditableText = {
     text: string
@@ -17,7 +16,7 @@ const EditableText: React.FC<TEditableText> = ({setText, text, myId, maxLength, 
     const [isEditable, setIsEditable] = useState<boolean>(false)
     const [error, setError] = useState('')
 
-    const currentId = useSelector<TRootState, number>(state => state.profilePage.activeProfile.userId)
+    const currentId = useAppSelector(state => state.profilePage.activeProfile.userId)
 
     const onBlurHandler = (e: FocusEvent<HTMLSpanElement>) => {
         let value = e.currentTarget.innerText

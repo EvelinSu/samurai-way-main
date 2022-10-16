@@ -11,13 +11,12 @@ import {getAuthThunk, TAuth} from "./redux/authReducer";
 import GlobalLoader from "./components/GlobalLoader/GlobalLoader";
 import Modal from "./components/modal/Modal";
 import {useDispatch, useSelector} from "react-redux";
-import {TRootState} from "./redux/reduxStore";
-import {TLoader} from "./redux/loaderReducer";
+import {useAppSelector} from "./hooks/useAppDispatch";
 
 const App: React.FC = (props) => {
     const dispatch = useDispatch()
-    const auth = useSelector<TRootState, TAuth>(state => state.auth)
-    const loader = useSelector<TRootState, TLoader>(state => state.loader)
+    const auth = useAppSelector(state => state.auth)
+    const loader = useAppSelector(state => state.loader)
 
     useEffect(() => {
         dispatch(getAuthThunk())

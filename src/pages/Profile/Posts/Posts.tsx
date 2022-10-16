@@ -4,10 +4,8 @@ import {STitle} from "../../../components/Text/STitle";
 import Post from "./Post";
 import {theme} from "../../../styles/constants";
 import {SText} from "../../../components/Text/SText";
-import { useSelector} from "react-redux";
-import {TRootState} from "../../../redux/reduxStore";
-import {TProfilePage} from "../../../redux/profileReducer";
 import AddPost from "./AddPost";
+import {useAppSelector} from "../../../hooks/useAppDispatch";
 
 type TPostsProps = {
     avatar: string,
@@ -16,7 +14,7 @@ type TPostsProps = {
 }
 const Posts: FC<TPostsProps> = (props) => {
 
-    const state = useSelector<TRootState, TProfilePage>(state => state.profilePage)
+    const state = useAppSelector(state => state.profilePage)
     return (
         <>
             <Box

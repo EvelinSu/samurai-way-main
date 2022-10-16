@@ -7,9 +7,9 @@ import Button from "../../components/Button/Button";
 import {theme} from "../../styles/constants";
 import {followToggleThunk, TUser} from "../../redux/usersReducer";
 import {NavLink} from "react-router-dom";
-import {useDispatch, useSelector} from "react-redux";
-import {TRootState} from "../../redux/reduxStore";
+import {useDispatch} from "react-redux";
 import {authModalToggleAC} from "../../redux/authReducer";
+import {useAppSelector} from "../../hooks/useAppDispatch";
 
 type TUserProps = {
     user: TUser
@@ -18,8 +18,8 @@ type TUserProps = {
 
 const User: React.FC<TUserProps> = ({user, id, ...props}) => {
     const dispatch = useDispatch()
-    const isAuth = useSelector<TRootState, boolean>(state => state.auth.isAuth)
-    const followingInProgress = useSelector<TRootState, number[]>(state => state.usersPage.followingInProgress)
+    const isAuth = useAppSelector(state => state.auth.isAuth)
+    const followingInProgress = useAppSelector(state => state.usersPage.followingInProgress)
 
     const onClickHandler = (user: TUser) => {
         isAuth
