@@ -1,101 +1,96 @@
-import React from 'react';
+import React, {Fragment} from 'react';
 import {STitle} from '../../Text/STitle';
 import Input from "../../Form/Input";
 import UserIcon from "../../../assets/icons/UserIcon";
 import Button from "../../Button/Button";
 import {SForm} from "../../Form/styled";
 import Checkbox from "../../Checkbox/Checkbox";
-import {Field, FieldProps, Formik, FormikErrors, FormikValues} from "formik";
+import {useFormik} from "formik";
 import {Box} from '../../Box/Box';
-import {loginThunk} from "../../../redux/authReducer";
 import {useDispatch} from "react-redux";
 import {SErrorBox} from "../../Errors/styles";
 import LockIcon from "../../../assets/icons/LockIcon";
 import {useAppSelector} from "../../../hooks/useAppDispatch";
+import * as Yup from 'yup';
+import {loginThunk} from "../../../redux/authReducer";
 
-const authValidate = (values: FormikValues) => {
-    const errors: FormikErrors<any> = {};
-    if (!values.email) {
-        errors.email = 'Required';
-    }
-    if (!values.password) {
-        errors.password = 'Required'
-    }
-    return errors;
+type LoginRequest = {
+    email: string;
+    password: string;
+    rememberMe: boolean;
 }
-
 const AuthModal = () => {
 
     const dispatch = useDispatch()
     const authMessages = useAppSelector(state => state.auth.messages)
 
+    const {
+        handleBlur,
+        handleSubmit,
+        touched,
+        handleChange,
+        isValid,
+        setFieldValue,
+        values,
+        errors,
+    } = useFormik<LoginRequest>({
+        initialValues: {
+            email: "",
+            password: "",
+            rememberMe: false
+        },
+        validationSchema: Yup.object({
+            email: Yup.string().email('Invalid email address').required('Required'),
+            password: Yup.string().min(6, "Минимальный размер пароля - 6 символ").required('Required'),
+        }),
+        onSubmit: ({email, password, rememberMe}) => {
+            dispatch(loginThunk(email, password, rememberMe))
+        }
+    });
+
     return (
-        <>
+        <Fragment>
             <STitle fontSize={"20px"}>Authorization</STitle>
-            <Formik
-                initialValues={{email: '', password: '', rememberMe: false}}
-                validate={authValidate}
-                onSubmit={(values, {setSubmitting}) => {
-                    let {email, password, rememberMe} = values
-                    dispatch(loginThunk(email, password, rememberMe))
-                    setSubmitting(false);
-                }}
-            >
-                {({isSubmitting, errors}) => (
-                    <SForm>
-                        <Field
-                            type="email"
-                            name="email"
-                        >
-                            {({field}: FieldProps) => (
-                                <Input
-                                    error={errors.email}
-                                    required
-                                    placeholder={"Email"}
-                                    icon={<UserIcon />} {...field}
-                                />
-                            )}
-                        </Field>
-                        <Field
-                            type="password"
-                            name="password"
-                        >
-                            {({field}: FieldProps) => (
-                                <Input
-                                    type="password"
-                                    error={errors.password}
-                                    placeholder={"Password"}
-                                    icon={<LockIcon />}
-                                    required
-                                    {...field}
-                                />)}
-                        </Field>
-                        {authMessages.length > 0 && (
-                            <SErrorBox>
-                                {authMessages}
-                            </SErrorBox>
-                        )}
-                        <Field
-                            type={'checkbox'}
-                            name="rememberMe"
-                        >
-                            {({field}: FieldProps) => <Checkbox label={'Remember me'} {...field} />}
-                        </Field>
-
-                        <Box justifyContent={"center"}>
-                            <Button
-                                type="submit"
-                                size={'lg'}
-                                isDisabled={isSubmitting}
-                                label={'Login'}
-                            />
-                        </Box>
-
-
-                    </SForm>
-                )}
-            </Formik>
-        </>
+            <SForm onSubmit={handleSubmit}>
+                <Input
+                    error={touched.email ? errors.email : ""}
+                    value={values.email}
+                    onBlur={handleBlur}
+                    onChange={handleChange}
+                    type="email"
+                    name="email"
+                    placeholder="Email"
+                    icon={<UserIcon />}
+                    required
+                />
+                <Input
+                    error={touched.password ? errors.password : ""}
+                    value={values.password}
+                    onBlur={handleBlur}
+                    onChange={handleChange}
+                    type="password"
+                    name="password"
+                    placeholder="Password"
+                    icon={<LockIcon />}
+                    required
+                />
+                <Checkbox
+                    label="Remember me"
+                    type="checkbox"
+                    name="rememberMe"
+                    onChange={(event) => setFieldValue("rememberMe", event.target.checked)}
+                />
+                {authMessages.length > 0 && <SErrorBox> {authMessages} </SErrorBox>}
+                <Box justifyContent={"center"}>
+                    <Button
+                        type="submit"
+                        size={'lg'}
+                        isDisabled={!isValid}
+                        label={'Login'}
+                    />
+                </Box>
+            </SForm>
+        </Fragment>
     );
 };
 

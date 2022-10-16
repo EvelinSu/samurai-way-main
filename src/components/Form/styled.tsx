@@ -1,9 +1,8 @@
 import styled from "styled-components";
 import {theme} from "../../styles/constants";
-import {Form} from "formik";
 import {DefaultInputPropsType} from "./Input";
 
-export const SForm = styled(Form)((props) => ({
+export const SForm = styled.form((props) => ({
     display: "flex",
     flexDirection: "column",
     gap: 25,
