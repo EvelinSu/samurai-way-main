@@ -15,6 +15,7 @@ type TPostsProps = {
 const Posts: FC<TPostsProps> = (props) => {
 
     const state = useAppSelector(state => state.profilePage)
+
     return (
         <>
             <Box
@@ -28,7 +29,8 @@ const Posts: FC<TPostsProps> = (props) => {
                     <STitle
                         color={theme.colors.primaryLightest}
                     >
-                        {state.activeProfile.fullName} posts
+                        {/*{state.activeProfile.fullName} posts*/}
+                        Demo posts
                     </STitle>
                     <SText
                         opacity={0.4}

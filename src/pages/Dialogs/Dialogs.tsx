@@ -1,4 +1,4 @@
-import React, {FC} from 'react';
+import React from 'react';
 import {useHistory, useParams} from "react-router-dom";
 import {
     SDialogs,
@@ -14,8 +14,7 @@ import {presentationUsers} from "../../redux/usersReducer";
 import DialogContent from "./DialogContent/DialogContent";
 import {useAppSelector} from "../../hooks/useAppDispatch";
 
-type TDialogsProps = {}
-const Dialogs: FC<TDialogsProps> = (props) => {
+const Dialogs = () => {
 
     const {id} = useParams<{ id: string }>();
     const history = useHistory();
@@ -23,13 +22,13 @@ const Dialogs: FC<TDialogsProps> = (props) => {
     const auth = useAppSelector(state => state.auth)
 
     const state = useAppSelector(state => state.dialogsPage)
-    const users= presentationUsers
+    const users = presentationUsers
 
     const onClickHandler = (key: string) => history.push(`${PATH.messages}/${key}`)
 
     return (
         <SSiteContent>
-            <PagePanel title={auth.isAuth ? "Messages" : "Presentation messages"}>
+            <PagePanel title={auth.isAuth ? "Demo messages" : "Demo messages"}>
                 {/*<Input icon={<UserIcon/>} placeholder={"in progress..."}/>*/}
             </PagePanel>
             <SDialogs>
@@ -40,7 +39,6 @@ const Dialogs: FC<TDialogsProps> = (props) => {
                             user={users.find(el => el.id === +id)}
                             messages={state.dialogsMessages}
                             dialogs={state.dialogs}
-
                         />
                         : <SNoneDialog>Select a chat </SNoneDialog>
                     }

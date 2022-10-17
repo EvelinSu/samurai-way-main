@@ -1,7 +1,6 @@
 import React, {ChangeEvent, FocusEvent, useState} from 'react';
 import {SEditableText} from "./styled";
 import {SText} from "../Text/SText";
-import {useAppSelector} from "../../hooks/useAppDispatch";
 
 type TEditableText = {
     text: string
@@ -10,13 +9,12 @@ type TEditableText = {
     setText: (newText: string) => void
     maxLength: number
     title?: string
+    currentId?: number
 }
 
-const EditableText: React.FC<TEditableText> = ({setText, text, myId, maxLength, ...props}) => {
+const EditableText: React.FC<TEditableText> = ({setText, text, myId, maxLength, currentId, ...props}) => {
     const [isEditable, setIsEditable] = useState<boolean>(false)
     const [error, setError] = useState('')
-
-    const currentId = useAppSelector(state => state.profilePage.activeProfile.userId)
 
     const onBlurHandler = (e: FocusEvent<HTMLSpanElement>) => {
         let value = e.currentTarget.innerText
@@ -35,6 +33,16 @@ const EditableText: React.FC<TEditableText> = ({setText, text, myId, maxLength, 
         if (error.length) setError('')
     }
 
+    const onKeyDownHandler = (e: React.KeyboardEvent<HTMLSpanElement>) => {
+        let value = e.currentTarget.innerText
+        if(e.key === 'Enter' && e.shiftKey) return
+        if(e.key === 'Enter') {
+            e.preventDefault()
+            setText(value.trim())
+            setIsEditable(false)
+        }
+    }
+
     return (
         myId === currentId
             ? (
@@ -42,6 +50,7 @@ const EditableText: React.FC<TEditableText> = ({setText, text, myId, maxLength, 
                     opacity={(!text && !isEditable) ? 0.3 : 1}
                     onClick={() => setIsEditable(true)}
                     onBlur={onBlurHandler}
+                    onKeyDown={onKeyDownHandler}
                     onInput={onChangeHandler}
                     contentEditable={isEditable}
                     suppressContentEditableWarning={isEditable}

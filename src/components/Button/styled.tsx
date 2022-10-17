@@ -8,7 +8,6 @@ const buttonLoad = keyframes`
   }
   50% {
     box-shadow: 0 0 10px 0 rgba(255, 255, 255, 0.3);
-
   }
   100% {
     box-shadow: 0 0 0 0 rgba(0, 0, 0, 0);
@@ -48,7 +47,7 @@ export const SButton = styled.button<TSButton>(({disabled, ...props}) => ({
     },
     ...props.hasIcon && {
         gap: 10,
-        svg:{
+        svg: {
             backgroundColor: "rgba(255, 255, 255, 0.1)",
             borderRadius: "50%",
             width: 20,

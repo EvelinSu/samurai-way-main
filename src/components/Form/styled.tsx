@@ -24,18 +24,8 @@ export const SInputWrapper = styled.div<TSInputWrapperProps>((props) => ({
             content: `'${props.error}'`,
             position: "absolute",
             left: "calc(100% + 10px)",
-            backgroundColor: theme.colors.status.error,
-            padding: "3px 10px",
-            fontSize: 12,
-            zIndex: theme.orders.inputErrors,
-            borderRadius: 5,
-            opacity: 0,
-            transition: "0.2s",
-        },
-        "&:before": {
-            content: `'${props.error}'`,
-            position: "absolute",
-            left: "calc(100% + 10px)",
+            maxWidth: 200,
+            width: "max-content",
             backgroundColor: theme.colors.status.error,
             padding: "3px 10px",
             fontSize: 12,
@@ -45,16 +35,11 @@ export const SInputWrapper = styled.div<TSInputWrapperProps>((props) => ({
             transition: "0.2s",
         },
         "&:hover": {
-            "&:before": {
-                opacity: 1,
-            },
             "&:after": {
                 opacity: 1
             }
         },
-
     }
-
 }))
 
 type TSInputProps = {

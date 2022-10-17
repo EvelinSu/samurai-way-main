@@ -1,8 +1,7 @@
 import React from 'react';
 import {STextarea} from "../../../components/Textarea/STextarea";
 import Button from "../../../components/Button/Button";
-import {useDispatch, useSelector} from "react-redux";
-import {TRootState} from "../../../redux/reduxStore";
+import {useDispatch} from "react-redux";
 import {changeNewMessageTextAC, sendMessageAC} from "../../../redux/dialogsReducer";
 import {useAppSelector} from "../../../hooks/useAppDispatch";
 

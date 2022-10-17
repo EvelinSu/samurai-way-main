@@ -18,7 +18,7 @@ type TMessageProps = {
 
 }
 
-const Message: FC<TMessageProps> = ({ text, time, me, name, avatar, ...props}) => {
+const Message: FC<TMessageProps> = ({ text, time, me, name, avatar}) => {
     return (
         <SMessage isMine={me}>
             {avatar &&

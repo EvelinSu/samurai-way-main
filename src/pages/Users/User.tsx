@@ -16,7 +16,7 @@ type TUserProps = {
     id: string
 }
 
-const User: React.FC<TUserProps> = ({user, id, ...props}) => {
+const User: React.FC<TUserProps> = ({user, id}) => {
     const dispatch = useDispatch()
     const isAuth = useAppSelector(state => state.auth.isAuth)
     const followingInProgress = useAppSelector(state => state.usersPage.followingInProgress)

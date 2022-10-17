@@ -1,6 +1,4 @@
-import React, {ReactChildren} from 'react';
-import { STitle } from '../components/Text/STitle';
-import Input from "../components/Form/Input";
+import React from 'react';
 import {SPagePanel, SPagePanelTitle} from "./styled";
 import {Box} from "../components/Box/Box";
 

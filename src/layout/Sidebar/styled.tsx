@@ -76,7 +76,7 @@ export const SSidebarItem = styled.div<TSSidebarItemProps>(({disabled, isActive,
         transition: "0.2s",
     },
     "&:hover": {
-        transform: "scale(0.9)",
+        opacity: 0.8,
         "&:after": {
             transform: "scale(1)",
             opacity: 1,
@@ -106,7 +106,7 @@ export const SSidebarItem = styled.div<TSSidebarItemProps>(({disabled, isActive,
 type TSSidebarItemIconProps = {
     isActive?: boolean,
 }
-export const SSidebarItemIcon = styled.div<TSSidebarItemIconProps>(({isActive, ...props}) => ({
+export const SSidebarItemIcon = styled.div<TSSidebarItemIconProps>(({isActive}) => ({
     display: "flex",
     alignItems: "center",
     justifyContent: "center",

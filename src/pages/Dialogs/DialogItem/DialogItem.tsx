@@ -16,7 +16,7 @@ type TDialogItemProps = {
     isMyFollow: boolean
 }
 
-const DialogItem: FC<TDialogItemProps> = ({isMyFollow, onClick, avatar, name, lastMessage, isActive}, ...props) => {
+const DialogItem: FC<TDialogItemProps> = ({isMyFollow, onClick, avatar, name, lastMessage, isActive}) => {
     const onClickHandler = () => {
         onClick()
     }

@@ -34,8 +34,6 @@ const Input: React.FC<TInputProps> = ({...props}) => {
                 name={props.name}
                 value={props.value}
                 onBlur={onBlur}
-                onError={() => alert('awfpj')}
-
             />
         </SInputWrapper>
     );

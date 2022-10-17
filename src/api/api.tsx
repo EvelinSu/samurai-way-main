@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const instance = axios.create({
+export const instance = axios.create({
     withCredentials: true,
     baseURL: 'https://social-network.samuraijs.com/api/1.0/',
     headers: {
@@ -49,16 +49,3 @@ export const followAPI = {
     }
 }
 
-export const profileAPI = {
-    getProfile(id: number) {
-        return instance.get(`profile/${id}`)
-                       .then(response => response.data)
-    },
-    putProfileStatus(newStatus: string) {
-        return instance.put(`profile/status`, {status: newStatus})
-    },
-    getProfileStatus(userId: number) {
-        return instance.get(`profile/status/${userId}`)
-                       .then(response => response.data)
-    }
-}

@@ -1,4 +1,4 @@
-import React, {FC, useState} from 'react';
+import React, {useState} from 'react';
 import {SSidebar, SSidebarAvatar, SSidebarItem, SSidebarItemIcon} from "./styled";
 import {useHistory, useLocation} from "react-router-dom";
 import {navLinks} from "./sidebarData";
@@ -15,11 +15,8 @@ import defaultPhoto from  '../../assets/img/default-photo.png'
 import {PATH} from "../../redux/types";
 import {useAppSelector} from "../../hooks/useAppDispatch";
 
-type TSidebarProps = {
 
-}
-
-const Sidebar: FC<TSidebarProps> = (props) => {
+const Sidebar = () => {
     const dispatch = useDispatch()
     const state = useAppSelector(state => state.auth)
 

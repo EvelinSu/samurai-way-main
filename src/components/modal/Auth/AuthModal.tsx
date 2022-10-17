@@ -41,7 +41,7 @@ const AuthModal = () => {
         },
         validationSchema: Yup.object({
             email: Yup.string().email('Invalid email address').required('Required'),
-            password: Yup.string().min(6, "Минимальный размер пароля - 6 символ").required('Required'),
+            password: Yup.string().required('Required'),
         }),
         onSubmit: ({email, password, rememberMe}) => {
             dispatch(loginThunk(email, password, rememberMe))
