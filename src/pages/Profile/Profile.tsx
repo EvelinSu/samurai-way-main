@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useCallback, useLayoutEffect} from 'react';
 import {Box} from "../../components/Box/Box";
 import {SAvatar} from "../../components/Avatar/SAvatar";
 import {SText} from "../../components/Text/SText";
@@ -7,9 +7,8 @@ import {theme} from "../../styles/constants";
 import {SSiteContent} from "../../layout/styled";
 import Button from "../../components/Button/Button";
 import {
-    getProfile, presentationProfile, profileToggleLoader,
-    putStatus,
-    setActiveProfile,
+    getProfile,
+    putStatus
 } from "../../redux/profileReducer";
 import userPhoto from "../../assets/img/default-photo.png";
 import IconLink from "../../components/IconLink/IconLink";
@@ -17,35 +16,23 @@ import {iconsDictionary} from "../../assets/icons/contacts/_iconsDictionary";
 import {useParams} from "react-router-dom";
 import LoaderIcon from "../../assets/loaders/loader";
 import Posts from "./Posts/Posts";
-import {useAppDispatch, useAppSelector} from "../../hooks/useAppDispatch";
+import {useAppSelector} from "../../hooks/useAppDispatch";
 import EditableText from "../../components/EditableText/EditableText";
+import {useDispatch} from "react-redux";
 
 const Profile = () => {
-    const dispatch = useAppDispatch()
     const {id} = useParams<{ id: string }>()
+    useLayoutEffect(() => {
+        dispatch(getProfile(userId))
+    }, [id])
+    const dispatch = useDispatch()
     const userId = Number(id);
-    const [isLoading, setIsLoading] = useState(true);
     const profile = useAppSelector(state => state.profilePage.activeProfile)
     const isFetching = useAppSelector(state => state.profilePage.isFetching)
     const status = useAppSelector(state => state.profilePage.status)
     const myId = useAppSelector(state => state.auth.id)
 
-    useEffect(() => {
-        setIsLoading(true)
-        if (userId && userId !== 0) {
-            dispatch(getProfile(userId)).finally(() => setIsLoading(false));
-        } else {
-            setIsLoading(true)
-            dispatch(setActiveProfile(presentationProfile))
-            setTimeout(() => {
-                setIsLoading(false)
-                setIsLoading(false)
-                dispatch(profileToggleLoader(false))
-            }, 300)
-        }
-    }, [id])
-
-    const setStatus = (newStatus: string) => dispatch(putStatus(newStatus))
+    const setStatus = useCallback((newStatus: string) => dispatch(putStatus(newStatus)), [dispatch])
 
     const mappedContacts = Object.entries(profile.contacts).map((contact) => {
         if (contact[1]) {
@@ -58,7 +45,7 @@ const Profile = () => {
     }).filter(el => el)
 
     return (
-        isLoading || isFetching
+        isFetching
             ? <LoaderIcon />
             : (<SSiteContent stylized>
                 <Box alignItems={"center"} gap={20}>
@@ -69,6 +56,7 @@ const Profile = () => {
                         </STitle>
                         <EditableText
                             myId={myId}
+                            currentId={profile.userId}
                             text={status}
                             setText={setStatus}
                             placeholder={"- the user is silent -"}
