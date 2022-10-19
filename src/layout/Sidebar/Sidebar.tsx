@@ -5,7 +5,7 @@ import {navLinks} from "./sidebarData";
 import LogoutIcon from "../../assets/icons/LogoutIcon";
 import Modal from "../../components/modal/Modal";
 import LoginIcon from "../../assets/icons/LoginIcon";
-import {useDispatch} from "react-redux";
+import {shallowEqual, useDispatch} from "react-redux";
 import {
     authModalToggleAC,
     logoutThunk,
@@ -18,7 +18,7 @@ import {useAppSelector} from "../../hooks/useAppDispatch";
 
 const Sidebar = () => {
     const dispatch = useDispatch()
-    const state = useAppSelector(state => state.auth)
+    const state = useAppSelector(state => state.auth, shallowEqual)
 
     const history = useHistory();
     const location = useLocation();

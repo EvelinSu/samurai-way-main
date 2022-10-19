@@ -18,7 +18,7 @@ import LoaderIcon from "../../assets/loaders/loader";
 import Posts from "./Posts/Posts";
 import {useAppSelector} from "../../hooks/useAppDispatch";
 import EditableText from "../../components/EditableText/EditableText";
-import {useDispatch} from "react-redux";
+import {shallowEqual, useDispatch} from "react-redux";
 
 const Profile = () => {
     const {id} = useParams<{ id: string }>()
@@ -27,7 +27,7 @@ const Profile = () => {
     }, [id])
     const dispatch = useDispatch()
     const userId = Number(id);
-    const profile = useAppSelector(state => state.profilePage.activeProfile)
+    const profile = useAppSelector(state => state.profilePage.activeProfile, shallowEqual)
     const isFetching = useAppSelector(state => state.profilePage.isFetching)
     const status = useAppSelector(state => state.profilePage.status)
     const myId = useAppSelector(state => state.auth.id)

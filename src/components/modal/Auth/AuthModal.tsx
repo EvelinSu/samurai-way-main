@@ -7,7 +7,7 @@ import {SForm} from "../../Form/styled";
 import Checkbox from "../../Checkbox/Checkbox";
 import {useFormik} from "formik";
 import {Box} from '../../Box/Box';
-import {useDispatch} from "react-redux";
+import {shallowEqual, useDispatch} from "react-redux";
 import {SErrorBox} from "../../Errors/styles";
 import LockIcon from "../../../assets/icons/LockIcon";
 import {useAppSelector} from "../../../hooks/useAppDispatch";
@@ -22,7 +22,7 @@ type LoginRequest = {
 const AuthModal = () => {
 
     const dispatch = useDispatch()
-    const authMessages = useAppSelector(state => state.auth.messages)
+    const authMessages = useAppSelector(state => state.auth.messages, shallowEqual)
 
     const {
         handleBlur,

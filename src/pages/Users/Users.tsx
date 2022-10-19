@@ -4,7 +4,7 @@ import PagePanel from "../PagePanel";
 import Pagination from "../../components/Pagination/Pagination";
 import {getUsersThunk, searchUsersThunk, setUsersFilter} from "../../redux/usersReducer";
 import {useHistory, useParams} from "react-router-dom";
-import {useDispatch} from "react-redux";
+import {shallowEqual, useDispatch} from "react-redux";
 import UsersList from "./UsersList";
 import {useAppSelector} from "../../hooks/useAppDispatch";
 import SearchForm from "./SearchForm";
@@ -12,7 +12,7 @@ import {PATH} from "../../redux/types";
 
 const Users = () => {
     const dispatch = useDispatch()
-    const state = useAppSelector(state => state.usersPage)
+    const state = useAppSelector(state => state.usersPage, shallowEqual)
     const filterName = useAppSelector(state => state.usersPage.filter.name)
     const history = useHistory()
     const {page, name} = useParams<{ page: string, name: string }>()

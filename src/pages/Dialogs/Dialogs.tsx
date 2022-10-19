@@ -13,15 +13,16 @@ import DialogsItemsList from "./DialogsItemsList/DialogsItemsList";
 import {presentationUsers} from "../../redux/usersReducer";
 import DialogContent from "./DialogContent/DialogContent";
 import {useAppSelector} from "../../hooks/useAppDispatch";
+import {shallowEqual} from "react-redux";
 
 const Dialogs = () => {
 
     const {id} = useParams<{ id: string }>();
     const history = useHistory();
 
-    const auth = useAppSelector(state => state.auth)
+    const auth = useAppSelector(state => state.auth, shallowEqual)
 
-    const state = useAppSelector(state => state.dialogsPage)
+    const state = useAppSelector(state => state.dialogsPage, shallowEqual)
     const users = presentationUsers
 
     const onClickHandler = (key: string) => history.push(`${PATH.messages}/${key}`)

@@ -6,6 +6,7 @@ import {theme} from "../../../styles/constants";
 import {SText} from "../../../components/Text/SText";
 import AddPost from "./AddPost";
 import {useAppSelector} from "../../../hooks/useAppDispatch";
+import {shallowEqual} from "react-redux";
 
 type TPostsProps = {
     avatar: string,
@@ -14,7 +15,7 @@ type TPostsProps = {
 }
 const Posts: FC<TPostsProps> = (props) => {
 
-    const state = useAppSelector(state => state.profilePage)
+    const state = useAppSelector(state => state.profilePage, shallowEqual)
 
     return (
         <>

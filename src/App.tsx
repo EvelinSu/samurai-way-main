@@ -10,12 +10,12 @@ import Sidebar from "./layout/Sidebar/Sidebar";
 import {getAuthThunk} from "./redux/authReducer";
 import GlobalLoader from "./components/GlobalLoader/GlobalLoader";
 import Modal from "./components/modal/Modal";
-import {useDispatch} from "react-redux";
+import {shallowEqual, useDispatch} from "react-redux";
 import {useAppSelector} from "./hooks/useAppDispatch";
 
 const App = () => {
     const dispatch = useDispatch()
-    const auth = useAppSelector(state => state.auth)
+    const auth = useAppSelector(state => state.auth, shallowEqual)
     const loader = useAppSelector(state => state.loader)
 
     useLayoutEffect(() => {
