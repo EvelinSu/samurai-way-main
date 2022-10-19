@@ -21,16 +21,12 @@ export const usersAPI = {
 
 export const authAPI = {
     getMyData() {
-        return (
-            instance.get("auth/me")
-                    .then(response => response.data)
-        )
+        return instance.get("auth/me")
+                       .then(response => response.data)
     },
     login(email: string, password: string, rememberMe: boolean) {
-        return (
-            instance.post(`auth/login`, {email, password, rememberMe})
-                    .then(response => response.data)
-        )
+        return instance.post(`auth/login`, {email, password, rememberMe})
+                       .then(response => response.data)
     },
     logout() {
         return (
