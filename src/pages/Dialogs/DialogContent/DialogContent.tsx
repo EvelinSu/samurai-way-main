@@ -4,11 +4,11 @@ import {SAvatar} from "../../../components/Avatar/SAvatar";
 import {Box} from "../../../components/Box/Box";
 import {STitle} from "../../../components/Text/STitle";
 import {SText} from "../../../components/Text/SText";
-import {SScrollContainer} from "../../../components/ScrollContainer/ScrollContainer";
 import Message from "../../../components/Message/Message";
 import {TDialogs, TMessage} from "../../../redux/dialogsReducer";
 import {TUser} from "../../../redux/usersReducer";
 import DialogSendMessage from "./DialogSendMessage";
+import ScrollBox from "../../../components/ScrollBox/ScrollBox";
 
 type TDialogContentProps = {
     dialogs: TDialogs
@@ -44,7 +44,7 @@ const DialogContent: FC<TDialogContentProps> = ({
                 </Box>
             </SDialogWindowHeader>
             <SDialogWindowBody>
-                <SScrollContainer>
+                <ScrollBox padding={20}>
                     {
                         activeMessages.length > 0
                             ? activeMessages.map((message) => (
@@ -57,7 +57,7 @@ const DialogContent: FC<TDialogContentProps> = ({
                             ))
                             : ''
                     }
-                </SScrollContainer>
+                </ScrollBox>
             </SDialogWindowBody>
             <SDialogWindowFooter>
                 <DialogSendMessage id={id} />
