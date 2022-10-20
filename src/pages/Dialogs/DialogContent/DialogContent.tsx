@@ -44,7 +44,7 @@ const DialogContent: FC<TDialogContentProps> = ({
                 </Box>
             </SDialogWindowHeader>
             <SDialogWindowBody>
-                <ScrollBox padding={20}>
+                <ScrollBox padding={20} overflowX={"hidden"}>
                     {
                         activeMessages.length > 0
                             ? activeMessages.map((message) => (
