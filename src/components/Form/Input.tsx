@@ -4,7 +4,7 @@ import {Box} from "../Box/Box";
 
 export type DefaultInputPropsType = DetailedHTMLProps<InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>
 export type TInputProps = DefaultInputPropsType & {
-    icon?: any
+    icon?: React.ReactNode
     error?: string
 }
 

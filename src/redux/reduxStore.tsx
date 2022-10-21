@@ -4,7 +4,7 @@ import dialogsReducer from "./dialogsReducer";
 import usersReducer from "./usersReducer";
 import {authReducer} from "./authReducer";
 import {loaderReducer} from "./loaderReducer";
-import thunkMiddleware, {ThunkDispatch} from "redux-thunk"
+import thunk, {ThunkDispatch} from "redux-thunk"
 
 const rootReducer = combineReducers({
     profilePage: profileReducer,
@@ -14,7 +14,7 @@ const rootReducer = combineReducers({
     loader: loaderReducer,
 })
 
-const store = createStore(rootReducer, applyMiddleware(thunkMiddleware))
+const store = createStore(rootReducer, applyMiddleware(thunk))
 
 export type TAppDispatch = ThunkDispatch<TRootState, undefined, AnyAction>;
 

@@ -30,10 +30,10 @@ const App = () => {
                     <Sidebar />
                     <SSiteContainer>
                         <Switch>
-                            <Route path={`${PATH.profile}/:id?`} render={() => <Profile />} exact />
+                            <Route path={`${PATH.profile}/:id?`} component={Profile} exact />
                             <Redirect from="/" to={PATH.profile + '/' + auth.id} exact />
-                            <Route path={`${PATH.messages}/:id?`} render={() => <Dialogs />} exact />
-                            <Route path={`${PATH.users}/:page?/:name?`} render={() => <Users />} exact />
+                            <Route path={`${PATH.messages}/:id?`} component={Dialogs} exact />
+                            <Route path={`${PATH.users}/:page?/:name?`} component={Users} exact />
                             <Route path={"*"} component={PageNotFound} exact />
                         </Switch>
                     </SSiteContainer>
