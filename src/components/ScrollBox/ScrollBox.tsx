@@ -6,6 +6,7 @@ type TScrollBoxProps = {
     gap?: string | number
     padding?: string | number
     overflowX?: Property.OverflowX
+    children?: React.ReactNode
 }
 
 const ScrollBox: FC<TScrollBoxProps> = ({children, ...props}) => {

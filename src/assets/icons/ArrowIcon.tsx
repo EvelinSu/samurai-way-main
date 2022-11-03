@@ -4,7 +4,7 @@ import styled from "styled-components";
 
 
 
-const ArrowIcon: React.FC<TIconsProps> = (props) => {
+const ArrowIcon: React.FC<TIconsProps> = React.memo((props) => {
 
     const onClickHandler = () => props.onClick && props.onClick()
 
@@ -16,10 +16,8 @@ const ArrowIcon: React.FC<TIconsProps> = (props) => {
                 />
             </svg>
         </SArrowIcon>
-
-
     );
-};
+});
 
 export default ArrowIcon;
 

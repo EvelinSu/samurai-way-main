@@ -11,10 +11,10 @@ type TButtonProps = DefaultHTMLButtonType & {
     needAuth?: boolean
 }
 
-const Button: FC<TButtonProps> = ({isDisabled, ...props}) => {
+const Button: FC<TButtonProps> = React.memo(({isDisabled, ...props}) => {
     const onClickHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
         props.onClick && props.onClick(e);
-    };
+    }
     return (
         !props.isLoading
             ? (<SButton
@@ -33,6 +33,6 @@ const Button: FC<TButtonProps> = ({isDisabled, ...props}) => {
             </SLoadingButton>)
 
     );
-};
+});
 
 export default Button;

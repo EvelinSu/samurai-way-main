@@ -18,7 +18,7 @@ type TMessageProps = {
 
 }
 
-const Message: FC<TMessageProps> = ({ text, time, me, name, avatar}) => {
+const Message: FC<TMessageProps> = React.memo(({ text, time, me, name, avatar}) => {
     return (
         <SMessage isMine={me}>
             {avatar &&
@@ -35,7 +35,7 @@ const Message: FC<TMessageProps> = ({ text, time, me, name, avatar}) => {
             </SMessageContainer>
         </SMessage>
     );
-};
+});
 
 export default Message;
 

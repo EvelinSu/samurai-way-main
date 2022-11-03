@@ -1,7 +1,7 @@
 import React from 'react';
 import {STextarea} from "../../../components/Textarea/STextarea";
 import Button from "../../../components/Button/Button";
-import {useDispatch} from "react-redux";
+import {shallowEqual, useDispatch} from "react-redux";
 import {changeNewMessageTextAC, sendMessageAC} from "../../../redux/dialogsReducer";
 import {useAppSelector} from "../../../hooks/useAppDispatch";
 
@@ -11,7 +11,7 @@ type TDialogSendMessage = {
 
 const DialogSendMessage: React.FC<TDialogSendMessage> = (props) => {
 
-    const newMessageText = useAppSelector(state => state.dialogsPage.dialogs[props.id].newMessageText)
+    const newMessageText = useAppSelector(state => state.dialogs.dialogsList[props.id].newMessageText, shallowEqual)
     const dispatch = useDispatch()
 
     const onKeyPress = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {

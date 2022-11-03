@@ -13,6 +13,8 @@ export const SPagination = styled.div<TSPaginationProps>((props) => ({
     columnGap: 15,
     rowGap: 15,
     marginTop: "auto",
+    userSelect: "none",
+    msUserSelect: "none",
 }))
 
 export const SPaginationItem = styled.div<TSPaginationProps>((props) => ({
