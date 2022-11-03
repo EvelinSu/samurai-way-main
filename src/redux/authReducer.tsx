@@ -1,7 +1,7 @@
 import {TActions} from "./types";
 import {authAPI} from "../api/api";
 import {globalLoaderToggleAC} from "./loaderReducer";
-import {TAppDispatch} from "./reduxStore";
+import {TAppDispatch} from "./store";
 
 export type TAuth = {
     id: number,
@@ -59,18 +59,18 @@ export const getAuthThunk = () => async (dispatch: TAppDispatch) => {
     authAPI
         .getMyData()
         .then((me) => {
-            if (me.resultCode === 0) {
+            if (me.data.id) {
                 dispatch(setAuthUserDataAC(me.data))
                 return me.data.id as number
             } else {
-                return 0
+                throw new Error('Auth failed')
             }
         })
         .finally(() => dispatch(globalLoaderToggleAC(false)))
 }
 
 export const loginThunk = (email: string, password: string, rememberMe: boolean) => async (dispatch: TAppDispatch) => {
-    authAPI
+    await authAPI
         .login(email, password, rememberMe)
         .then((res) => {
             dispatch(setAuthMessages(res.messages))
@@ -82,6 +82,10 @@ export const loginThunk = (email: string, password: string, rememberMe: boolean)
                 dispatch(getAuthThunk())
                 dispatch(authModalToggleAC(false))
             }
+            else throw new Error(res.data.messages[0])
+        })
+        .catch((err) => {
+            alert(err)
         })
 }
 

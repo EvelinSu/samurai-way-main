@@ -1,6 +1,7 @@
 import {TActions} from "./types";
 import {followAPI, usersAPI} from "../api/api";
 import {Dispatch} from "redux";
+import {presentationUsers} from "./demo/usersDemo";
 
 export type TUser = {
     id: number,
@@ -21,79 +22,6 @@ export type TUsersPage = {
         name: string
     }
 }
-
-export const presentationUsers = [
-    {
-        id: 1,
-        name: "Kisa",
-        status: 'Ooh, yer not enduring me without a faith!',
-        photos: {
-            small: "https://i.imgur.com/F6qPz9E.png",
-            large: "https://i.imgur.com/F6qPz9E.png"
-        },
-        followed: false
-    },
-    {
-        id: 2,
-        name: "Kuki",
-        photos: {
-            small: "https://i.imgur.com/RxAof5Q.png",
-            large: "https://i.imgur.com/RxAof5Q.png"
-        },
-        status: 'Never love a bilge rat.',
-        followed: false
-    },
-    {
-        id: 12,
-        name: "Anon",
-        photos: {
-            small: '',
-            large: ''
-        },
-        status: '',
-        followed: false
-    },
-    {
-        id: 3,
-        name: "Bred",
-        photos: {
-            small: "https://i.imgur.com/S4Qr4IC.png",
-            large: "https://i.imgur.com/S4Qr4IC.png"
-        },
-        status: 'Oh, shiny jack. go to isla de muerta.',
-        followed: true
-    },
-    {
-        id: 4,
-        name: "Maryl",
-        photos: {
-            small: "https://i.imgur.com/BrMe8Wb.png",
-            large: "https://i.imgur.com/BrMe8Wb.png"
-        },
-        status: 'Ah, scrawny anchor. you wont rob the bikini atoll.',
-        followed: true
-    },
-    {
-        id: 13,
-        name: "NewUser",
-        photos: {
-            small: '',
-            large: ''
-        },
-        status: '',
-        followed: false
-    },
-    {
-        id: 5,
-        name: "Jack",
-        photos: {
-            small: "https://i.imgur.com/uwfZokb.png",
-            large: "https://i.imgur.com/uwfZokb.png"
-        },
-        status: 'The cockroach hauls with greed, trade the brig until it grows.',
-        followed: true
-    },
-]
 
 const initialState: TUsersPage = {
     users: [],
@@ -187,20 +115,24 @@ export const getUsersThunk = (currentPage: number, pageSize: number) => (dispatc
     usersAPI.getUsers(currentPage, pageSize).then(response => {
         dispatch(setTotalUsersCount(response.totalCount))
         dispatch(setUsers(response.items))
-        dispatch(usersToggleLoader(false))
     })
+            .catch((err) => {
+                alert(`${err.message}, ......you can see demo users! but can't see their profiles....`)
+                dispatch(setUsers(presentationUsers))
+            })
+            .finally(() => dispatch(usersToggleLoader(false)))
 }
 //
 
-export const searchUsersThunk = (name: string, currentPage: number, pageSize: number) => (dispatch: Dispatch) => {
+export const searchUsersThunk = (name: string, currentPage: string, pageSize: number) => (dispatch: Dispatch) => {
     dispatch(usersToggleLoader(true))
     usersAPI.searchUsers(name, currentPage, pageSize).then(response => {
         dispatch(setUsersFilter(name))
         dispatch(setTotalUsersCount(response.totalCount))
         dispatch(setUsers(response.items))
-        dispatch(usersToggleLoader(false))
     })
-
+            .catch((err) => alert(err.message))
+            .finally(() => dispatch(usersToggleLoader(false)))
 }
 
 export const followToggleThunk = (user: TUser) => (dispatch: Dispatch) => {
@@ -208,8 +140,8 @@ export const followToggleThunk = (user: TUser) => (dispatch: Dispatch) => {
     if (!user.followed) {
         followAPI
             .postFollow(user.id)
-            .then((response) => {
-                if (response.data.resultCode === 0) {
+            .then((res) => {
+                if (res.data.resultCode === 0) {
                     dispatch(followToggle(user.id))
                     dispatch(setFollowingProgress(user.id, false))
                 }
@@ -217,8 +149,8 @@ export const followToggleThunk = (user: TUser) => (dispatch: Dispatch) => {
     } else {
         followAPI
             .unFollow(user.id)
-            .then((response) => {
-                if (response.data.resultCode === 0) {
+            .then((res) => {
+                if (res.data.resultCode === 0) {
                     dispatch(followToggle(user.id))
                     dispatch(setFollowingProgress(user.id, false))
                 }

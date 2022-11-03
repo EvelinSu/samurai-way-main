@@ -5,11 +5,13 @@ import usersReducer from "./usersReducer";
 import {authReducer} from "./authReducer";
 import {loaderReducer} from "./loaderReducer";
 import thunk, {ThunkDispatch} from "redux-thunk"
+import postsReducer from "./postsReducer";
 
 const rootReducer = combineReducers({
-    profilePage: profileReducer,
-    dialogsPage: dialogsReducer,
-    usersPage: usersReducer,
+    profile: profileReducer,
+    dialogs: dialogsReducer,
+    users: usersReducer,
+    posts: postsReducer,
     auth: authReducer,
     loader: loaderReducer,
 })

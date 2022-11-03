@@ -1,47 +1,23 @@
-import {v1} from "uuid";
-import {getStringDate} from "../common/utils";
 import {TActions} from "./types";
-import {TPost} from "../pages/Profile/Posts/types";
 import {authAPI} from "../api/api";
-import {TAppDispatch} from "./reduxStore";
+import {TAppDispatch} from "./store";
 import {profileAPI, TActiveProfile} from "../api/profileApi";
-import {demoPosts, demoProfile} from "./demo/profileDemo";
+import {demoProfile} from "./demo/profileDemo";
 
 export type TProfilePage = {
     isFetching: boolean,
     activeProfile: TActiveProfile,
-    newPostText: string,
     status: string,
-    posts: Array<TPost>
 }
 
 export const initialState: TProfilePage = ({
     isFetching: true,
     activeProfile: demoProfile,
-    newPostText: '',
-    status: 'Mew',
-    posts: demoPosts,
+    status: "Mew",
 })
 
 const profileReducer = (state: TProfilePage = initialState, action: TActions): TProfilePage => {
     switch (action.type) {
-        case "ADD-POST":
-            const newPost: TPost = {
-                id: v1(),
-                text: action.postText,
-                likes: 0,
-                isLiked: false,
-                date: getStringDate(new Date())
-            }
-            return {
-                ...state,
-                posts: [newPost, ...state.posts]
-            }
-        case "CHANGE-NEW-POST-TEXT":
-            return {
-                ...state,
-                newPostText: action.newPostText
-            }
         case "CHANGE-MY-STATUS":
             return {
                 ...state,
@@ -62,26 +38,15 @@ const profileReducer = (state: TProfilePage = initialState, action: TActions): T
     }
 }
 
-export const addPostAC = (text: string) => ({
-    type: "ADD-POST",
-    postText: text
-} as const)
-
-export const changeNewPostTextAC = (text: string) => ({
-    type: "CHANGE-NEW-POST-TEXT",
-    newPostText: text
-} as const)
-
 export const setActiveProfile = (activeProfile: TActiveProfile) => ({
     type: "SET-ACTIVE-PROFILE",
     activeProfile
 } as const)
-
 export const profileToggleLoader = (isFetching: boolean) => ({
     type: "TOGGLE-LOADER",
     isFetching
 } as const)
-export const changeMyStatus = (newStatus: string) => ({
+export const setMyStatus = (newStatus: string) => ({
     type: "CHANGE-MY-STATUS",
     newStatus
 } as const)
@@ -94,7 +59,7 @@ export const getProfile = (userId: number) => async (dispatch: TAppDispatch) => 
         profileAPI
             .getProfile(userId || myId)
             .then(profile => dispatch(setActiveProfile(profile)))
-            .then(() => dispatch(changeMyStatus(userStatus)))
+            .then(() => dispatch(setMyStatus(userStatus)))
             .catch(() => {})
             .finally(() => dispatch(profileToggleLoader(false)))
     } else {
@@ -106,7 +71,7 @@ export const getProfile = (userId: number) => async (dispatch: TAppDispatch) => 
 export const putStatus = (newStatus: string) => (dispatch: TAppDispatch) => {
     profileAPI
         .putProfileStatus(newStatus)
-        .then(() => dispatch(changeMyStatus(newStatus)))
+        .then(() => dispatch(setMyStatus(newStatus)))
         .then(() => alert('..hello...I.. just wanted to say that the status has been changed!....'))
 }
 

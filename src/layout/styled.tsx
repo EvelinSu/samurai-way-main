@@ -11,14 +11,13 @@ export const SSiteWrapper = styled.div( props => ({
     width: "100%",
     color: theme.colors.text,
     minWidth: 800,
-
 }))
 
 export const SSiteContainer = styled.div( props => ({
     display: "flex",
     height: "100%",
     width: "100%",
-    maxWidth: 880,
+    maxWidth: 900,
 
 }))
 

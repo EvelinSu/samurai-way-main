@@ -60,7 +60,13 @@ export const SLoadingButton = styled(SButton)`
   pointer-events: none;
   animation: 1s ${buttonLoad} ease-out infinite;
   background-color: ${theme.colors.button.cancel};
-  opacity: 1;
+  opacity: 0.8;
   transition: 0.2s;
+  ${(props) => props.size === 'lg' && {
+    padding: "10px 20px",
+    borderRadius: 25,
+    fontSize: 18,
+  }}
+
 `
 

@@ -22,11 +22,11 @@ export type TMessage = {
     userId?: string
 }
 export type TDialogsPage = {
-    dialogs: TDialogs
+    dialogsList: TDialogs
     dialogsMessages: Array<TMessage>
 }
 const initialState: TDialogsPage = {
-    dialogs: demoDialogs,
+    dialogsList: demoDialogs,
     dialogsMessages: demoMessages,
 }
 
@@ -45,11 +45,11 @@ export const dialogsReducer = (state: TDialogsPage = initialState, action: TActi
                 ...state,
                 dialogsMessages: [...state.dialogsMessages, newMessage],
             }
-            stateCopy.dialogs[action.activeDialogKey].messagesId = [...state.dialogs[action.activeDialogKey].messagesId, messageId]
+            stateCopy.dialogsList[action.activeDialogKey].messagesId = [...state.dialogsList[action.activeDialogKey].messagesId, messageId]
             return stateCopy
         case "CHANGE-NEW-MESSAGE-TEXT":
             stateCopy = {...state}
-            stateCopy.dialogs[action.activeDialogKey].newMessageText = action.newMessageText
+            stateCopy.dialogsList[action.activeDialogKey].newMessageText = action.newMessageText
             return stateCopy
         default:
             return state

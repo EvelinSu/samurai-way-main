@@ -1,4 +1,4 @@
-import React, {Fragment} from 'react';
+import React, {Fragment, useState} from 'react';
 import {STitle} from '../../Text/STitle';
 import Input from "../../Form/Input";
 import UserIcon from "../../../assets/icons/UserIcon";
@@ -14,7 +14,6 @@ import {useAppDispatch, useAppSelector} from "../../../hooks/useAppDispatch";
 import {loginThunk} from "../../../redux/authReducer";
 import * as Yup from 'yup';
 
-
 type LoginRequest = {
     email: string;
     password: string;
@@ -24,6 +23,7 @@ const AuthModal = () => {
 
     const dispatch = useAppDispatch()
     const authMessages = useAppSelector(state => state.auth.messages, shallowEqual)
+    const [isLoading, setIsLoading] = useState(false)
 
     const {
         handleBlur,
@@ -45,7 +45,11 @@ const AuthModal = () => {
             password: Yup.string().required('Required'),
         }),
         onSubmit: ({email, password, rememberMe}) => {
+            setIsLoading(true)
             dispatch(loginThunk(email, password, rememberMe))
+                .then(() => {
+                    setIsLoading(false)
+                })
         }
     });
 
@@ -86,8 +90,9 @@ const AuthModal = () => {
                     <Button
                         type="submit"
                         size={'lg'}
-                        isDisabled={!isValid}
+                        isDisabled={!isValid || isLoading}
                         label={'Login'}
+                        isLoading={isLoading}
                     />
                 </Box>
             </SForm>

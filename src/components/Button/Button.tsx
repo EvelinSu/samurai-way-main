@@ -28,7 +28,9 @@ const Button: FC<TButtonProps> = React.memo(({isDisabled, ...props}) => {
                 {props.icon}
                 {props.label}
             </SButton>)
-            : (<SLoadingButton>
+            : (<SLoadingButton
+                size={props.size}
+            >
                 {props.label}
             </SLoadingButton>)
 

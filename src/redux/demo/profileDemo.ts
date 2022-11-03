@@ -2,8 +2,8 @@ import {v1} from "uuid";
 
 export const demoProfile = {
     contacts: {
-        facebook: '',
-        website: '',
+        facebook: "",
+        website: "",
         vk: "",
         twitter: "",
         youtube: "https://www.youtube.com/watch?v=dQw4w9WgXcQ&t=0s&ab_channel=RickAstley",
