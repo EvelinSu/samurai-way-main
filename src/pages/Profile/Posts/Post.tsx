@@ -11,7 +11,7 @@ type TPostProps = {
     post: TPost
     avatar: string
 }
-const Post: FC<TPostProps> = ({post, avatar}) => {
+const Post: FC<TPostProps> = React.memo(({post, avatar}) => {
     const [likes, setLikes] = useState<number>(post.likes)
     const [isLiked, setIsLiked] = useState<boolean>(post.isLiked)
     const onClickHandler = () => {
@@ -33,7 +33,7 @@ const Post: FC<TPostProps> = ({post, avatar}) => {
             </SPostPanel>
         </SPost>
     );
-};
+});
 
 export default Post;
 

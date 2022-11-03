@@ -9,22 +9,23 @@ type TUsersList = {
     state: TUsersPage
 }
 
-const UsersList: React.FC<TUsersList> = ({state}) => {
+const UsersList: React.FC<TUsersList> = React.memo(({state}) => {
 
     return state.isFetching
         ? <LoaderIcon />
-        : <Grid columns={"repeat(auto-fill, minmax(150px, 1fr))"}>
-            {state.users
-                ? state.users.map((user) => (
+        : state.users.length
+            ? <Grid columns={"repeat(auto-fill, minmax(150px, 1fr))"}>
+                {state.users.map((user) => (
                     <User
                         key={user.id}
                         user={user}
                         id={String(user.id)}
                     />))
-                : <UsersNotFound />
-            }
-        </Grid>
 
-};
+                }
+            </Grid>
+            : <UsersNotFound />
+
+});
 
 export default UsersList;

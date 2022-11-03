@@ -2,8 +2,8 @@ import React from 'react';
 import {STextarea} from "../../../components/Textarea/STextarea";
 import {Box} from "../../../components/Box/Box";
 import Button from "../../../components/Button/Button";
-import {addPostAC, changeNewPostTextAC} from "../../../redux/profileReducer";
 import {useDispatch} from "react-redux";
+import {addPostAC, changeNewPostTextAC} from "../../../redux/postsReducer";
 
 type TAddPost = {
     newPostText: string

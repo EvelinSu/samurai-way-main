@@ -7,13 +7,10 @@ import {TUser} from "../../../redux/usersReducer";
 type TDialogsItemsList = {
     dialogs: TDialogs
     messages: Array<TMessage>
-    onClickHandler: (key: string) => void
-    id: string
     users: Array<TUser>
 }
 
-const DialogsItemsList:FC<TDialogsItemsList> = ({dialogs, messages, onClickHandler, users, id}) => {
-
+const DialogsItemsList:FC<TDialogsItemsList> = ({dialogs, messages, users}) => {
 
     return (
         <SDialogsItemsList>
@@ -22,14 +19,10 @@ const DialogsItemsList:FC<TDialogsItemsList> = ({dialogs, messages, onClickHandl
                 return (
                     (messagesId.length > 0 || user.followed) &&
                     <DialogItem
-                        onClick={() => onClickHandler(String(user.id))}
-                        name={user.name}
-                        avatar={user.photos.small}
-                        isMyFollow={user.followed}
+                        key={user.id}
+                        user={user}
                         lastMessage={messages.find(
                             (el) => el.id === messagesId[messagesId.length - 1] || '')}
-                        isActive={id === String(user.id)}
-                        key={user.id}
                     />
                 )
             })}

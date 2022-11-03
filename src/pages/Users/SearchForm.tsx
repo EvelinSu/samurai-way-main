@@ -8,7 +8,7 @@ type TSearchFormProps = {
     searchText: string,
     setSearchText: (text: string) => void
     onSearchHandler: () => void
-    textInUrl: string
+    textInUrl?: string
 }
 
 const SearchForm: React.FC<TSearchFormProps> = ({searchText, setSearchText, textInUrl, onSearchHandler}) => {

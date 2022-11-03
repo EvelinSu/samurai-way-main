@@ -1,31 +1,27 @@
 import React from 'react';
-import {useHistory, useParams} from "react-router-dom";
+import { useParams} from "react-router-dom";
 import {
     SDialogs,
     SDialogsSidebar,
     SDialogContainer,
     SNoneDialog
 } from "./styled";
-import {PATH} from "../../redux/types";
 import {SSiteContent} from "../../layout/styled";
 import PagePanel from "../PagePanel";
 import DialogsItemsList from "./DialogsItemsList/DialogsItemsList";
-import {presentationUsers} from "../../redux/usersReducer";
 import DialogContent from "./DialogContent/DialogContent";
 import {useAppSelector} from "../../hooks/useAppDispatch";
 import {shallowEqual} from "react-redux";
+import {presentationUsers} from "../../redux/demo/usersDemo";
 
 const Dialogs = () => {
 
     const {id} = useParams<{ id: string }>();
-    const history = useHistory();
 
     const auth = useAppSelector(state => state.auth, shallowEqual)
-
-    const state = useAppSelector(state => state.dialogsPage, shallowEqual)
+    const state = useAppSelector(state => state.dialogs, shallowEqual)
     const users = presentationUsers
 
-    const onClickHandler = (key: string) => history.push(`${PATH.messages}/${key}`)
 
     return (
         <SSiteContent>
@@ -39,16 +35,14 @@ const Dialogs = () => {
                             id={id}
                             user={users.find(el => el.id === +id)}
                             messages={state.dialogsMessages}
-                            dialogs={state.dialogs}
+                            dialogs={state.dialogsList}
                         />
                         : <SNoneDialog>Select a chat </SNoneDialog>
                     }
                 </SDialogContainer>
                 <SDialogsSidebar>
                     <DialogsItemsList
-                        id={id}
-                        onClickHandler={onClickHandler}
-                        dialogs={state.dialogs}
+                        dialogs={state.dialogsList}
                         messages={state.dialogsMessages}
                         users={users}
                     />

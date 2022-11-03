@@ -4,9 +4,10 @@ import {Box} from "../components/Box/Box";
 
 type TPagePanelProps = {
     title: string
+    children?: React.ReactNode
 }
 
-const PagePanel: React.FC<TPagePanelProps> = (props) => {
+const PagePanel: React.FC<TPagePanelProps> = React.memo((props) => {
     return (
         <SPagePanel>
             <SPagePanelTitle>{props.title}</SPagePanelTitle>
@@ -16,6 +17,6 @@ const PagePanel: React.FC<TPagePanelProps> = (props) => {
         </SPagePanel>
 
     );
-};
+});
 
 export default PagePanel;

@@ -15,7 +15,8 @@ type TPostsProps = {
 }
 const Posts: FC<TPostsProps> = (props) => {
 
-    const state = useAppSelector(state => state.profilePage, shallowEqual)
+    const posts = useAppSelector(state => state.posts, shallowEqual)
+    const activeProfile = useAppSelector(state => state.profile.activeProfile, shallowEqual)
 
     return (
         <>
@@ -37,19 +38,19 @@ const Posts: FC<TPostsProps> = (props) => {
                         opacity={0.4}
                         title={'Всего постов'}
                     >
-                        ({state.posts.length})
+                        ({posts.postsList.length})
                     </SText>
                 </Box>
-                {props.myId === state.activeProfile.userId && (
-                    <AddPost newPostText={state.newPostText}/>
+                {props.myId === activeProfile.userId && (
+                    <AddPost newPostText={posts.newPostText}/>
                 )}
             </Box>
-            {state.posts.length > 0
+            {posts.postsList.length > 0
                 ? <Box
                     gap={25}
                     flexDirection={"column"}
                 >
-                    {state.posts.map((post) => (
+                    {posts.postsList.map((post) => (
                         <Post
                             avatar={props.avatar}
                             key={post.id}

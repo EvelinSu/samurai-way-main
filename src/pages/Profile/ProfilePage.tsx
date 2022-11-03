@@ -16,20 +16,20 @@ import {iconsDictionary} from "../../assets/icons/contacts/_iconsDictionary";
 import {useParams} from "react-router-dom";
 import LoaderIcon from "../../assets/loaders/loader";
 import Posts from "./Posts/Posts";
-import {useAppSelector} from "../../hooks/useAppDispatch";
+import {useAppDispatch, useAppSelector} from "../../hooks/useAppDispatch";
 import EditableText from "../../components/EditableText/EditableText";
-import {shallowEqual, useDispatch} from "react-redux";
+import {shallowEqual} from "react-redux";
 
-const Profile = () => {
+const ProfilePage = () => {
     const {id} = useParams<{ id: string }>()
     useLayoutEffect(() => {
         dispatch(getProfile(userId))
     }, [id])
-    const dispatch = useDispatch()
+    const dispatch = useAppDispatch()
     const userId = Number(id);
-    const profile = useAppSelector(state => state.profilePage.activeProfile, shallowEqual)
-    const isFetching = useAppSelector(state => state.profilePage.isFetching)
-    const status = useAppSelector(state => state.profilePage.status)
+    const profile = useAppSelector(state => state.profile.activeProfile, shallowEqual)
+    const isFetching = useAppSelector(state => state.profile.isFetching)
+    const status = useAppSelector(state => state.profile.status)
     const myId = useAppSelector(state => state.auth.id)
 
     const setStatus = useCallback((newStatus: string) => dispatch(putStatus(newStatus)), [dispatch])
@@ -92,4 +92,4 @@ const Profile = () => {
     );
 };
 
-export default Profile;
+export default ProfilePage;

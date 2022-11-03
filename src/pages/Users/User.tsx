@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useCallback, useState} from 'react';
 import {BoxShadowContent, SUserBox, SUserBoxHeader, SUserName, SUserStatus, SUserStatusText} from "./styled";
 import {SAvatar} from "../../components/Avatar/SAvatar";
 import userPhoto from "../../assets/img/default-photo.png";
@@ -7,25 +7,25 @@ import Button from "../../components/Button/Button";
 import {theme} from "../../styles/constants";
 import {followToggleThunk, TUser} from "../../redux/usersReducer";
 import {NavLink} from "react-router-dom";
-import {useDispatch} from "react-redux";
+import {shallowEqual} from "react-redux";
 import {authModalToggleAC} from "../../redux/authReducer";
-import {useAppSelector} from "../../hooks/useAppDispatch";
+import {useAppDispatch, useAppSelector} from "../../hooks/useAppDispatch";
 
 type TUserProps = {
     user: TUser
     id: string
 }
 
-const User: React.FC<TUserProps> = ({user, id}) => {
-    const dispatch = useDispatch()
-    const isAuth = useAppSelector(state => state.auth.isAuth)
-    const followingInProgress = useAppSelector(state => state.usersPage.followingInProgress)
+const User: React.FC<TUserProps> = React.memo(({user, id}) => {
+    const dispatch = useAppDispatch()
+    const isAuth = useAppSelector(state => state.auth.isAuth, shallowEqual)
+    const followingInProgress = useAppSelector(state => state.users.followingInProgress, shallowEqual)
 
-    const onClickHandler = (user: TUser) => {
+    const onClickHandler = useCallback((user: TUser) => {
         isAuth
             ? dispatch(followToggleThunk(user))
             : dispatch(authModalToggleAC(true))
-    }
+    }, [dispatch])
 
     const [isHovered, setIsHovered] = useState<string>('')
 
@@ -68,6 +68,6 @@ const User: React.FC<TUserProps> = ({user, id}) => {
             </BoxShadowContent>
         </SUserBox>
     );
-};
+});
 
 export default User;
