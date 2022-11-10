@@ -1,6 +1,6 @@
 export const demoDialogs = {
-    "3": {
-        userId: '3',
+    "4": {
+        userId: '4',
         messagesId: [],
         newMessageText: '',
     },
@@ -14,10 +14,10 @@ export const demoDialogs = {
         newMessageText: '',
         messagesId: ["3", "5", "10"],
     },
-    "4": {
-        userId: '4',
+    "3": {
+        userId: '3',
         newMessageText: '',
-        messagesId: ["6", "7", "8", "9", "10"],
+        messagesId: ["6", "7", "8", "9", "1"],
     },
     "5": {
         userId: '5',

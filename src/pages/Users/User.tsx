@@ -9,7 +9,7 @@ import {followToggleThunk, TUser} from "../../redux/usersReducer";
 import {NavLink} from "react-router-dom";
 import {shallowEqual} from "react-redux";
 import {authModalToggleAC} from "../../redux/authReducer";
-import {useAppDispatch, useAppSelector} from "../../hooks/useAppDispatch";
+import {useAppDispatch, useAppSelector} from "../../hooks/hooks";
 
 type TUserProps = {
     user: TUser
@@ -18,17 +18,16 @@ type TUserProps = {
 
 const User: React.FC<TUserProps> = React.memo(({user, id}) => {
     const dispatch = useAppDispatch()
-    const isAuth = useAppSelector(state => state.auth.isAuth, shallowEqual)
+    const isAuth = useAppSelector(state => state.auth.isAuth)
     const followingInProgress = useAppSelector(state => state.users.followingInProgress, shallowEqual)
 
     const onClickHandler = useCallback((user: TUser) => {
         isAuth
             ? dispatch(followToggleThunk(user))
             : dispatch(authModalToggleAC(true))
-    }, [dispatch])
+    }, [dispatch, isAuth])
 
     const [isHovered, setIsHovered] = useState<string>('')
-
 
     return (
         <SUserBox

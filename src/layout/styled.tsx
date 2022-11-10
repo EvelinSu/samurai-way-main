@@ -17,7 +17,7 @@ export const SSiteContainer = styled.div( props => ({
     display: "flex",
     height: "100%",
     width: "100%",
-    maxWidth: 900,
+    maxWidth: 950,
 
 }))
 

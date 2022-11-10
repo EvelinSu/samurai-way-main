@@ -16,7 +16,7 @@ export const theme = {
           error: "#dc6666",
         },
         message: {
-            default: "#293657",
+            default: "#48507a",
             mine: "#4a66a1"
         },
         button: {

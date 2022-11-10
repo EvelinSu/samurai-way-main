@@ -54,7 +54,7 @@ const Pagination: React.FC<TPaginationProps> = React.memo((props) => {
         }
     }
     const onClickHandler = (el: number) => {
-        let filterName = PATH.profile + '/' + props.filterName
+        let filterName = '/' + props.filterName
         navigate.push(`${PATH.users}/${el}${filterName}`)
 
     }
