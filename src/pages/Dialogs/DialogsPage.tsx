@@ -10,7 +10,7 @@ import {SSiteContent} from "../../layout/styled";
 import PagePanel from "../PagePanel";
 import DialogsItemsList from "./DialogsItemsList/DialogsItemsList";
 import DialogContent from "./DialogContent/DialogContent";
-import {useAppSelector} from "../../hooks/useAppDispatch";
+import {useAppSelector} from "../../hooks/hooks";
 import {shallowEqual} from "react-redux";
 import {presentationUsers} from "../../redux/demo/usersDemo";
 

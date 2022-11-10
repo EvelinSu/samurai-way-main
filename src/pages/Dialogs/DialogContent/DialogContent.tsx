@@ -1,4 +1,4 @@
-import React, {FC, Fragment} from "react";
+import React, {FC, Fragment, useEffect, useRef} from "react";
 import {SDialogWindowBody, SDialogWindowFooter, SDialogWindowHeader} from "../styled";
 import {SAvatar} from "../../../components/Avatar/SAvatar";
 import {Box} from "../../../components/Box/Box";
@@ -8,7 +8,7 @@ import Message from "../../../components/Message/Message";
 import {TDialogs, TMessage} from "../../../redux/dialogsReducer";
 import {TUser} from "../../../redux/usersReducer";
 import DialogSendMessage from "./DialogSendMessage";
-import ScrollBox from "../../../components/ScrollBox/ScrollBox";
+import ScrollBox, {SScrollBox, SScrollBoxWrapper} from "../../../components/ScrollBox/ScrollBox";
 
 type TDialogContentProps = {
     dialogs: TDialogs
@@ -27,12 +27,30 @@ const DialogContent: FC<TDialogContentProps> = ({
     const activeMessagesId = id ? dialogs[id].messagesId : "0"
     const activeMessages = messages.filter((el) => activeMessagesId.includes(el.id))
 
+    const dialogsBody = useRef(null)
+
+    useEffect(() => {
+        // @ts-ignore
+        dialogsBody.current?.scrollTo({top: document.body.scrollHeight})
+    }, [id])
+
+    const scrollToBottom = () => {
+        setTimeout(() => {
+            // @ts-ignore
+            dialogsBody.current?.scrollTo({
+                top: document.body.scrollHeight,
+                left: 0,
+                behavior: "smooth"
+            })
+        }, 0)
+    }
+
     return (
         <Fragment>
             <SDialogWindowHeader>
                 <SAvatar
                     size={40}
-                    src={user && user.photos.small }
+                    src={user && user.photos.small}
                 />
                 <Box gap={1} flexDirection={"column"}>
                     <STitle>
@@ -44,23 +62,25 @@ const DialogContent: FC<TDialogContentProps> = ({
                 </Box>
             </SDialogWindowHeader>
             <SDialogWindowBody>
-                <ScrollBox padding={20} overflowX={"hidden"}>
-                    {
-                        activeMessages.length > 0
-                            ? activeMessages.map((message) => (
-                                <Message
-                                    key={message.id}
-                                    text={message.text}
-                                    time={message.time}
-                                    me={message.me}
-                                />
-                            ))
-                            : ''
-                    }
-                </ScrollBox>
+                <SScrollBoxWrapper  >
+                    <SScrollBox padding={20} overflowX={"hidden"} ref={dialogsBody}>
+                        {
+                            activeMessages.length > 0
+                                ? activeMessages.map((message) => (
+                                    <Message
+                                        key={message.id}
+                                        text={message.text}
+                                        time={message.time}
+                                        me={message.me}
+                                    />
+                                ))
+                                : ''
+                        }
+                    </SScrollBox>
+                </SScrollBoxWrapper>
             </SDialogWindowBody>
             <SDialogWindowFooter>
-                <DialogSendMessage id={id} />
+                <DialogSendMessage id={id} scrollToBottom={scrollToBottom} />
             </SDialogWindowFooter>
         </Fragment>
     );

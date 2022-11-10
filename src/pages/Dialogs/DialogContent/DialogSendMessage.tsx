@@ -1,35 +1,36 @@
 import React from 'react';
 import {STextarea} from "../../../components/Textarea/STextarea";
 import Button from "../../../components/Button/Button";
-import {shallowEqual, useDispatch} from "react-redux";
 import {changeNewMessageTextAC, sendMessageAC} from "../../../redux/dialogsReducer";
-import {useAppSelector} from "../../../hooks/useAppDispatch";
+import {useAppDispatch, useAppSelector} from "../../../hooks/hooks";
 
 type TDialogSendMessage = {
     id: string
+    scrollToBottom: () => void
 }
 
 const DialogSendMessage: React.FC<TDialogSendMessage> = (props) => {
 
-    const newMessageText = useAppSelector(state => state.dialogs.dialogsList[props.id].newMessageText, shallowEqual)
-    const dispatch = useDispatch()
+    const newMessageText = useAppSelector(state => state.dialogs.dialogsList[props.id].newMessageText)
+    const dispatch = useAppDispatch()
 
     const onKeyPress = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
         if (e.key === 'Enter' && e.shiftKey) return
         if (e.key === 'Enter') {
             e.preventDefault()
-            onClickHandler()
+            addNewMessage()
         }
     }
 
-    const onClickHandler = () => {
+    const addNewMessage = () => {
         if (newMessageText.trim() !== '') {
-            dispatch(sendMessageAC(newMessageText.trim(), props.id))
-            dispatch(changeNewMessageTextAC('', props.id))
+            dispatch(sendMessageAC({messageText: newMessageText.trim(), activeDialogKey: props.id}))
+            dispatch(changeNewMessageTextAC({newMessageText: '', activeDialogKey: props.id}))
+            props.scrollToBottom()
         }
     }
     const onChangeSetNewMessageText = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-        dispatch(changeNewMessageTextAC(e.currentTarget.value, props.id))
+        dispatch(changeNewMessageTextAC({newMessageText: e.currentTarget.value, activeDialogKey: props.id}))
     }
 
     return (
@@ -42,7 +43,11 @@ const DialogSendMessage: React.FC<TDialogSendMessage> = (props) => {
                 placeholder={"Write" +
                     " your message..."}
             />
-            <Button isDisabled={newMessageText.trim() === ''} label={'Send'} onClick={onClickHandler} />
+            <Button
+                isDisabled={newMessageText.trim() === ''}
+                label={'Send'}
+                onClick={addNewMessage}
+            />
         </>
 
     );
