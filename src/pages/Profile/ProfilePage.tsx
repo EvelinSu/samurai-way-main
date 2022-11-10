@@ -16,7 +16,7 @@ import {iconsDictionary} from "../../assets/icons/contacts/_iconsDictionary";
 import {useParams} from "react-router-dom";
 import LoaderIcon from "../../assets/loaders/loader";
 import Posts from "./Posts/Posts";
-import {useAppDispatch, useAppSelector} from "../../hooks/useAppDispatch";
+import {useAppDispatch, useAppSelector} from "../../hooks/hooks";
 import EditableText from "../../components/EditableText/EditableText";
 import {shallowEqual} from "react-redux";
 

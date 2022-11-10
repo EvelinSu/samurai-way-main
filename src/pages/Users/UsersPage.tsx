@@ -6,7 +6,7 @@ import {getUsersThunk, searchUsersThunk, setUsersFilter} from "../../redux/users
 import {useHistory , useParams} from "react-router-dom";
 import {shallowEqual} from "react-redux";
 import UsersList from "./UsersList";
-import {useAppDispatch, useAppSelector} from "../../hooks/useAppDispatch";
+import {useAppDispatch, useAppSelector} from "../../hooks/hooks";
 import SearchForm from "./SearchForm";
 import {PATH} from "../../redux/types";
 
@@ -35,7 +35,7 @@ const UsersPage = React.memo(() => {
     const onSearchHandler = useCallback(() => {
         if ((searchText !== name) && (searchText || name)) {
             searchText ? history.push(PATH.users + '/1/' + searchText) : history.push(PATH.users + '/1')
-            dispatch(searchUsersThunk(searchText, page || '', state.pageSize))
+            dispatch(searchUsersThunk(searchText, page || '1', state.pageSize))
         }
     }, [dispatch, searchText, page, state.pageSize])
 

@@ -10,7 +10,7 @@ import {Box} from '../../Box/Box';
 import {shallowEqual} from "react-redux";
 import {SErrorBox} from "../../Errors/styles";
 import LockIcon from "../../../assets/icons/LockIcon";
-import {useAppDispatch, useAppSelector} from "../../../hooks/useAppDispatch";
+import {useAppDispatch, useAppSelector} from "../../../hooks/hooks";
 import {loginThunk} from "../../../redux/authReducer";
 import * as Yup from 'yup';
 

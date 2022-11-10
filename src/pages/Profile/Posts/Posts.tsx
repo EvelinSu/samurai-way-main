@@ -5,7 +5,7 @@ import Post from "./Post";
 import {theme} from "../../../styles/constants";
 import {SText} from "../../../components/Text/SText";
 import AddPost from "./AddPost";
-import {useAppSelector} from "../../../hooks/useAppDispatch";
+import {useAppSelector} from "../../../hooks/hooks";
 import {shallowEqual} from "react-redux";
 
 type TPostsProps = {

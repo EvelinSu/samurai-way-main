@@ -5,7 +5,7 @@ import {SModalWrapper} from "./styled";
 import DefaultModal from "./Default/DefaultModal";
 import {useDispatch} from "react-redux";
 import {authModalToggleAC} from "../../redux/authReducer";
-import {useAppSelector} from "../../hooks/useAppDispatch";
+import {useAppSelector} from "../../hooks/hooks";
 
 type TModalProps = {
     type: 'auth' | 'default'
