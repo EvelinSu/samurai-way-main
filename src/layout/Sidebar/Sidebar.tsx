@@ -12,7 +12,7 @@ import {
 import {SAvatar} from '../../components/Avatar/SAvatar';
 import defaultPhoto from '../../assets/img/default-photo.png'
 import {PATH} from "../../redux/types";
-import {useAppDispatch, useAppSelector} from "../../hooks/useAppDispatch";
+import {useAppDispatch, useAppSelector} from "../../hooks/hooks";
 import SidebarNavList from "./SidebarNavList";
 
 const Sidebar = React.memo(() => {

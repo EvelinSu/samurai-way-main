@@ -9,18 +9,25 @@ import Sidebar from "./layout/Sidebar/Sidebar";
 import {getAuthThunk} from "./redux/authReducer";
 import GlobalLoader from "./components/GlobalLoader/GlobalLoader";
 import Modal from "./components/modal/Modal";
-import {shallowEqual} from "react-redux";
-import {useAppDispatch, useAppSelector} from "./hooks/useAppDispatch";
+import {useAppDispatch, useAppSelector} from "./hooks/hooks";
 import DialogsPage from "./pages/Dialogs/DialogsPage";
+import {setPageSize} from "./redux/usersReducer";
 
 const App = () => {
     const dispatch = useAppDispatch()
-    const auth = useAppSelector(state => state.auth, shallowEqual)
+    const auth = useAppSelector(state => state.auth)
     const loader = useAppSelector(state => state.loader)
 
     useLayoutEffect(() => {
         dispatch(getAuthThunk())
     }, [])
+
+    const windowHeight = window.innerHeight
+
+    useLayoutEffect(() => {
+        if (windowHeight > 1000) dispatch(setPageSize(20))
+        if (windowHeight > 1300) dispatch(setPageSize(25))
+    }, [windowHeight])
 
     return (
         <HashRouter>
@@ -31,7 +38,7 @@ const App = () => {
                     <SSiteContainer>
                         <Switch>
                             <Route path={`${PATH.profile}/:id?`} component={ProfilePage} exact />
-                            <Redirect from={`/`} to={PATH.profile + '/' + auth.id} exact/>
+                            <Redirect from={`/`} to={PATH.profile + '/' + auth.id} exact />
                             <Route path={`${PATH.messages}/:id?`} component={DialogsPage} exact />
                             <Route path={`${PATH.users}/:page?/:name?`} component={UsersPage} exact />
                             <Route path={"*"} component={PageNotFound} exact />

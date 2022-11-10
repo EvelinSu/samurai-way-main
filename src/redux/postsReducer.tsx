@@ -1,8 +1,8 @@
 import {v1} from "uuid";
 import {getStringDate} from "../common/utils";
-import {TActions} from "./types";
 import {TPost} from "../pages/Profile/Posts/types";
 import {demoPosts} from "./demo/profileDemo";
+import {createSlice, PayloadAction} from "@reduxjs/toolkit";
 
 export type TPosts = {
     newPostText: string,
@@ -10,42 +10,33 @@ export type TPosts = {
 }
 
 export const initialState: TPosts = ({
-    newPostText: '',
+    newPostText: "",
     postsList: demoPosts,
 })
 
-const postsReducer = (state: TPosts = initialState, action: TActions): TPosts => {
-    switch (action.type) {
-        case "ADD-POST":
+const slice = createSlice({
+    name: "posts",
+    initialState,
+    reducers: {
+        addPostAC(state, action: PayloadAction<string>) {
             const newPost: TPost = {
                 id: v1(),
-                text: action.postText,
+                text: action.payload,
                 likes: 0,
                 isLiked: false,
                 date: getStringDate(new Date())
             }
-            return {
-                ...state,
-                postsList: [newPost, ...state.postsList]
-            }
-        case "CHANGE-NEW-POST-TEXT":
-            return {
-                ...state,
-                newPostText: action.newPostText
-            }
-        default:
-            return state
+            state.postsList.unshift(newPost)
+        },
+        changeNewPostTextAC(state, action: PayloadAction<string>) {
+            state.newPostText = action.payload
+        }
     }
-}
 
-export const addPostAC = (text: string) => ({
-    type: "ADD-POST",
-    postText: text
-} as const)
-export const changeNewPostTextAC = (text: string) => ({
-    type: "CHANGE-NEW-POST-TEXT",
-    newPostText: text
-} as const)
+})
 
+export const {addPostAC, changeNewPostTextAC} = slice.actions
+
+const postsReducer = slice.reducer
 
 export default postsReducer

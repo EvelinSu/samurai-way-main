@@ -2,32 +2,31 @@ import {changeNewMessageTextAC, sendMessageAC} from "./dialogsReducer";
 import {setMyStatus, profileToggleLoader, setActiveProfile} from "./profileReducer";
 import {
     followToggle,
-    setCurrentPage,
     setUsers,
     setTotalUsersCount,
     usersToggleLoader,
-    setFollowingProgress, setUsersFilter
+    setFollowingProgress, setUsersFilter, setPageSize
 } from "./usersReducer";
 import {authModalToggleAC, resetAuthUserDataAC, setAuthMessages, setAuthUserDataAC} from "./authReducer";
 import {globalLoaderToggleAC} from "./loaderReducer";
 import {addPostAC, changeNewPostTextAC} from "./postsReducer";
 
 export type TActions =
-// profilePage
+// profile
     ReturnType<typeof addPostAC>
     | ReturnType<typeof changeNewPostTextAC>
     | ReturnType<typeof setActiveProfile>
     | ReturnType<typeof profileToggleLoader>
     | ReturnType<typeof setMyStatus>
-    // dialogsPage
+    // dialogs
     | ReturnType<typeof sendMessageAC>
     | ReturnType<typeof changeNewMessageTextAC>
-    // usersPage
+    // users
     | ReturnType<typeof followToggle>
     | ReturnType<typeof setUsers>
-    | ReturnType<typeof setCurrentPage>
     | ReturnType<typeof setTotalUsersCount>
     | ReturnType<typeof usersToggleLoader>
+    | ReturnType<typeof setPageSize>
     | ReturnType<typeof setUsersFilter>
     | ReturnType<typeof setFollowingProgress>
     // auth

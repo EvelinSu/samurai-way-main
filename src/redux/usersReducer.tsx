@@ -1,7 +1,7 @@
-import {TActions} from "./types";
 import {followAPI, usersAPI} from "../api/api";
 import {Dispatch} from "redux";
 import {presentationUsers} from "./demo/usersDemo";
+import {createSlice, PayloadAction} from "@reduxjs/toolkit";
 
 export type TUser = {
     id: number,
@@ -34,80 +34,51 @@ const initialState: TUsersPage = {
     }
 }
 
-const usersReducer = (state: TUsersPage = initialState, action: TActions): TUsersPage => {
-    switch (action.type) {
-        case ('FOLLOW-USER-TOGGLE'):
-            return {
-                ...state, users: [...state.users.map(el => el.id === action.userId
-                    ? {...el, followed: !el.followed}
-                    : {...el}
-                )]
-            }
-        case ("SET-USERS"):
-            return {
-                ...state,
-                users: [...action.users]
-            }
-        case "SET-TOTAL-USERS-COUNT":
-            return {
-                ...state,
-                totalUsersCount: action.usersCount
-            }
-        case "TOGGLE-LOADER":
-            return {
-                ...state,
-                isFetching: action.isFetching
-            }
-        case "FOLLOWING-LOADER":
-            if (action.isInProgress) {
-                return {
-                    ...state,
-                    followingInProgress: [...state.followingInProgress, action.id]
-                }
-            } else {
-                return {
-                    ...state,
-                    followingInProgress: state.followingInProgress.filter(id => id !== action.id)
-                }
-            }
-        case "SET-USERS-FILTER":
-            return {
-                ...state,
-                filter: {...state.filter, name: action.name}
-            }
+const slice = createSlice({
+    name: "users",
+    initialState: initialState,
+    reducers: {
+        followToggle(state, action: PayloadAction<number>) {
+            state.users = state.users.map(el => el.id === action.payload
+                ? {...el, followed: !el.followed}
+                : {...el}
+            )
+        },
+        setUsers(state, action: PayloadAction<TUser[]>) {
+            state.users = action.payload
+        },
+        setTotalUsersCount(state, action: PayloadAction<number>) {
+            return {...state,totalUsersCount: action.payload}
+        },
+        usersToggleLoader(state, action: PayloadAction<boolean>) {
+            state.isFetching = action.payload
+        },
+        setFollowingProgress(state, action: PayloadAction<{ id: number, isInProgress: boolean }>) {
+            action.payload.isInProgress
+                ? state.followingInProgress.push(action.payload.id)
+                : state.followingInProgress = state.followingInProgress.filter(id => id !== action.payload.id)
+        },
+        setUsersFilter(state, action: PayloadAction<string>) {
+            state.filter.name = action.payload
+        },
+        setPageSize(state, action: PayloadAction<number>) {
+            state.pageSize = action.payload
+        }
     }
-    return state
-}
 
-export const followToggle = (userId: number) => ({
-    type: "FOLLOW-USER-TOGGLE",
-    userId,
-} as const)
-export const setUsers = (users: Array<TUser>) => ({
-    type: "SET-USERS",
-    users
-} as const)
-export const setCurrentPage = (currentPage: number) => ({
-    type: "SET-CURRENT-PAGE",
-    currentPage
-} as const)
-export const setTotalUsersCount = (usersCount: number) => ({
-    type: "SET-TOTAL-USERS-COUNT",
-    usersCount
-} as const)
-export const usersToggleLoader = (isFetching: boolean) => ({
-    type: "TOGGLE-LOADER",
-    isFetching
-} as const)
-export const setFollowingProgress = (id: number, isInProgress: boolean) => ({
-    type: "FOLLOWING-LOADER",
-    isInProgress,
-    id
-} as const)
-export const setUsersFilter = (name: string) => ({
-    type: "SET-USERS-FILTER",
-    name
-} as const)
+})
+
+const usersReducer = slice.reducer
+
+export const {
+    followToggle,
+    setUsers,
+    setTotalUsersCount,
+    usersToggleLoader,
+    setFollowingProgress,
+    setUsersFilter,
+    setPageSize
+} = slice.actions
 
 // получить определенное число юзеров на конкретной странице
 export const getUsersThunk = (currentPage: number, pageSize: number) => (dispatch: Dispatch) => {
@@ -136,14 +107,14 @@ export const searchUsersThunk = (name: string, currentPage: string, pageSize: nu
 }
 
 export const followToggleThunk = (user: TUser) => (dispatch: Dispatch) => {
-    dispatch(setFollowingProgress(user.id, true))
+    dispatch(setFollowingProgress({id: user.id, isInProgress: true}))
     if (!user.followed) {
         followAPI
             .postFollow(user.id)
             .then((res) => {
                 if (res.data.resultCode === 0) {
                     dispatch(followToggle(user.id))
-                    dispatch(setFollowingProgress(user.id, false))
+                    dispatch(setFollowingProgress({id: user.id, isInProgress: false}))
                 }
             })
     } else {
@@ -152,7 +123,7 @@ export const followToggleThunk = (user: TUser) => (dispatch: Dispatch) => {
             .then((res) => {
                 if (res.data.resultCode === 0) {
                     dispatch(followToggle(user.id))
-                    dispatch(setFollowingProgress(user.id, false))
+                    dispatch(setFollowingProgress({id: user.id, isInProgress: false}))
                 }
             })
     }

@@ -1,7 +1,7 @@
-import {TActions} from "./types";
 import {authAPI} from "../api/api";
 import {globalLoaderToggleAC} from "./loaderReducer";
 import {TAppDispatch} from "./store";
+import {createSlice, PayloadAction} from "@reduxjs/toolkit";
 
 export type TAuth = {
     id: number,
@@ -21,39 +21,28 @@ const initialState: TAuth = {
     messages: []
 }
 
-export const authReducer = (state: TAuth = initialState, action: TActions): TAuth => {
-    switch (action.type) {
-        case "SET-USER-DATA":
-            return {...state, ...action.data, isAuth: true}
-        case "RESET-USER-DATA":
-            return {...initialState}
-        case "AUTH-MODAL-OPEN-TOGGLE":
-            return {...state, authModalToggle: action.isOpen}
-        case "AUTH-ERROR-MESSAGES":
-            return {...state, messages: action.messages}
-        default:
-            return state
+const slice = createSlice({
+    name: "auth",
+    initialState,
+    reducers: {
+        setAuthUserDataAC(state, action: PayloadAction<TAuth>) {
+            return {...state, ...action.payload, isAuth: true}
+        },
+        resetAuthUserDataAC() {
+            return initialState
+        },
+        authModalToggleAC(state, action: PayloadAction<boolean>) {
+           state.authModalToggle = action.payload
+        },
+        setAuthMessages(state, action: PayloadAction<string[]>) {
+            state.messages = action.payload
+        }
     }
-}
+})
 
-export const setAuthUserDataAC = (data: TAuth) => ({
-    type: "SET-USER-DATA",
-    data
-} as const)
+const authReducer = slice.reducer
 
-export const resetAuthUserDataAC = () => ({
-    type: "RESET-USER-DATA",
-} as const)
-
-export const authModalToggleAC = (isOpen: boolean) => ({
-    type: "AUTH-MODAL-OPEN-TOGGLE",
-    isOpen
-} as const)
-
-export const setAuthMessages = (messages: string[]) => ({
-    type: "AUTH-ERROR-MESSAGES",
-    messages
-} as const)
+export const {setAuthUserDataAC, resetAuthUserDataAC, authModalToggleAC, setAuthMessages} = slice.actions
 
 export const getAuthThunk = () => async (dispatch: TAppDispatch) => {
     authAPI
@@ -81,8 +70,9 @@ export const loginThunk = (email: string, password: string, rememberMe: boolean)
                 alert("COOL, IT'S WORKS")
                 dispatch(getAuthThunk())
                 dispatch(authModalToggleAC(false))
+            } else {
+                throw new Error(res.data.messages[0])
             }
-            else throw new Error(res.data.messages[0])
         })
         .catch((err) => {
             alert(err)

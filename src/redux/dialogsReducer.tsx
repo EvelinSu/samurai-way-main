@@ -1,7 +1,7 @@
 import {v1} from "uuid";
 import {getStringDate} from "../common/utils";
-import {TActions} from "./types";
 import {demoDialogs, demoMessages} from "./demo/dialogsDemo";
+import {createSlice, PayloadAction} from "@reduxjs/toolkit";
 
 type Dictionary<T> = {
     [Key: string]: T;
@@ -30,42 +30,30 @@ const initialState: TDialogsPage = {
     dialogsMessages: demoMessages,
 }
 
-export const dialogsReducer = (state: TDialogsPage = initialState, action: TActions): TDialogsPage => {
-    let stateCopy;
-    switch (action.type) {
-        case "SEND-MESSAGE":
-            let messageId = v1()
-            const newMessage: TMessage = {
+const slice = createSlice({
+    name: "dialogs",
+    initialState: initialState,
+    reducers: {
+        changeNewMessageTextAC(state, action: PayloadAction<{ newMessageText: string, activeDialogKey: string }>) {
+            state.dialogsList[action.payload.activeDialogKey].newMessageText = action.payload.newMessageText
+        },
+        sendMessageAC(state, action: PayloadAction<{ messageText: string, activeDialogKey: string }>) {
+            const messageId = v1()
+            const newMessage = {
                 id: messageId,
-                text: action.messageText,
+                text: action.payload.messageText,
                 time: getStringDate(new Date()),
                 me: true
             }
-            stateCopy = {
-                ...state,
-                dialogsMessages: [...state.dialogsMessages, newMessage],
-            }
-            stateCopy.dialogsList[action.activeDialogKey].messagesId = [...state.dialogsList[action.activeDialogKey].messagesId, messageId]
-            return stateCopy
-        case "CHANGE-NEW-MESSAGE-TEXT":
-            stateCopy = {...state}
-            stateCopy.dialogsList[action.activeDialogKey].newMessageText = action.newMessageText
-            return stateCopy
-        default:
-            return state
+            state.dialogsMessages.push(newMessage)
+            state.dialogsList[action.payload.activeDialogKey].messagesId.push(messageId)
+
+        }
     }
-}
+})
 
-export const sendMessageAC = (text: string, id: string) => ({
-    type: "SEND-MESSAGE",
-    messageText: text,
-    activeDialogKey: id
-} as const)
+export const {changeNewMessageTextAC, sendMessageAC} = slice.actions
 
-export const changeNewMessageTextAC = (text: string, id: string) => ({
-    type: "CHANGE-NEW-MESSAGE-TEXT",
-    newMessageText: text,
-    activeDialogKey: id
-} as const)
+const dialogsReducer = slice.reducer
 
 export default dialogsReducer

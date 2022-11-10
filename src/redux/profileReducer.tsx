@@ -1,8 +1,8 @@
-import {TActions} from "./types";
 import {authAPI} from "../api/api";
 import {TAppDispatch} from "./store";
 import {profileAPI, TActiveProfile} from "../api/profileApi";
 import {demoProfile} from "./demo/profileDemo";
+import {createSlice, PayloadAction} from "@reduxjs/toolkit";
 
 export type TProfilePage = {
     isFetching: boolean,
@@ -16,44 +16,27 @@ export const initialState: TProfilePage = ({
     status: "Mew",
 })
 
-const profileReducer = (state: TProfilePage = initialState, action: TActions): TProfilePage => {
-    switch (action.type) {
-        case "CHANGE-MY-STATUS":
-            return {
-                ...state,
-                status: action.newStatus
-            }
-        case "SET-ACTIVE-PROFILE":
-            return {
-                ...state,
-                activeProfile: action.activeProfile
-            }
-        case "TOGGLE-LOADER":
-            return {
-                ...state,
-                isFetching: action.isFetching
-            }
-        default:
-            return state
+const slice = createSlice({
+    name: "profile",
+    initialState,
+    reducers: {
+        setActiveProfile(state, action: PayloadAction<TActiveProfile>) {
+            state.activeProfile = action.payload
+        },
+        profileToggleLoader(state, action: PayloadAction<boolean>) {
+            state.isFetching = action.payload
+        },
+        setMyStatus(state, action: PayloadAction<string>) {
+            state.status = action.payload
+        }
     }
-}
+})
 
-export const setActiveProfile = (activeProfile: TActiveProfile) => ({
-    type: "SET-ACTIVE-PROFILE",
-    activeProfile
-} as const)
-export const profileToggleLoader = (isFetching: boolean) => ({
-    type: "TOGGLE-LOADER",
-    isFetching
-} as const)
-export const setMyStatus = (newStatus: string) => ({
-    type: "CHANGE-MY-STATUS",
-    newStatus
-} as const)
+export const {setActiveProfile, profileToggleLoader, setMyStatus} = slice.actions
 
 export const getProfile = (userId: number) => async (dispatch: TAppDispatch) => {
     dispatch(profileToggleLoader(true))
-    const myId = await authAPI.getMyData().then((res) => res.data.id )
+    const myId = await authAPI.getMyData().then((res) => res.data.id)
     if (userId || myId) {
         const userStatus = await profileAPI.getProfileStatus(userId || myId)
         profileAPI
@@ -74,5 +57,7 @@ export const putStatus = (newStatus: string) => (dispatch: TAppDispatch) => {
         .then(() => dispatch(setMyStatus(newStatus)))
         .then(() => alert('..hello...I.. just wanted to say that the status has been changed!....'))
 }
+
+const profileReducer = slice.reducer
 
 export default profileReducer
