@@ -1,7 +1,7 @@
 import {followAPI, usersAPI} from "../api/api";
 import {Dispatch} from "redux";
 import {presentationUsers} from "./demo/usersDemo";
-import {createSlice, PayloadAction} from "@reduxjs/toolkit";
+import {createAsyncThunk, createSlice, PayloadAction} from "@reduxjs/toolkit";
 
 export type TUser = {
     id: number,
@@ -34,6 +34,20 @@ const initialState: TUsersPage = {
     }
 }
 
+export const getUsersThunk = createAsyncThunk(
+    'user/get',
+    async ({currentPage, pageSize}: { currentPage: number, pageSize: number }, thunkAPI) => {
+        try {
+            const res: TUser[] = await usersAPI.getUsers(currentPage, pageSize)
+            return res
+        } catch (err: any){
+            alert(`${err.message}, ......you can see demo users! but can't see their profiles....`)
+            throw new Error(err.message)
+        }
+
+    }
+)
+
 const slice = createSlice({
     name: "users",
     initialState: initialState,
@@ -48,7 +62,7 @@ const slice = createSlice({
             state.users = action.payload
         },
         setTotalUsersCount(state, action: PayloadAction<number>) {
-            return {...state,totalUsersCount: action.payload}
+            return {...state, totalUsersCount: action.payload}
         },
         usersToggleLoader(state, action: PayloadAction<boolean>) {
             state.isFetching = action.payload
@@ -63,6 +77,20 @@ const slice = createSlice({
         },
         setPageSize(state, action: PayloadAction<number>) {
             state.pageSize = action.payload
+        }
+    },
+    extraReducers: {
+        [getUsersThunk.pending.type]: (state, action) => {
+            state.isFetching = true
+        },
+        [getUsersThunk.fulfilled.type]: (state, action) => {
+            console.log(action)
+            state.isFetching = false
+            state.totalUsersCount = action.payload.totalCount
+            state.users = action.payload.items
+        },
+        [getUsersThunk.rejected.type]: (state, action) => {
+            state.isFetching = false
         }
     }
 
@@ -80,20 +108,7 @@ export const {
     setPageSize
 } = slice.actions
 
-// получить определенное число юзеров на конкретной странице
-export const getUsersThunk = (currentPage: number, pageSize: number) => (dispatch: Dispatch) => {
-    dispatch(usersToggleLoader(true))
-    usersAPI.getUsers(currentPage, pageSize).then(response => {
-        dispatch(setTotalUsersCount(response.totalCount))
-        dispatch(setUsers(response.items))
-    })
-            .catch((err) => {
-                alert(`${err.message}, ......you can see demo users! but can't see their profiles....`)
-                dispatch(setUsers(presentationUsers))
-            })
-            .finally(() => dispatch(usersToggleLoader(false)))
-}
-//
+
 
 export const searchUsersThunk = (name: string, currentPage: string, pageSize: number) => (dispatch: Dispatch) => {
     dispatch(usersToggleLoader(true))

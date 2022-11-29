@@ -7,10 +7,18 @@ export const instance = axios.create({
         "API-KEY": '91e439d1-ddd7-4fb6-bba9-b639e1bf5b56',
     },
 })
+export type TUser = {
+    id: number,
+    photos: { [Key: string]: string },
+    status: string,
+    name: string,
+    // lastSeen: string,
+    followed: boolean
+}
 
 export const usersAPI = {
     getUsers(currentPage: number, pageSize: number) {
-        return instance.get(`users?page=${currentPage}&count=${pageSize}`)
+        return instance.get<TUser[]>(`users?page=${currentPage}&count=${pageSize}`)
                        .then(response => response.data)
     },
     searchUsers(name: string, currentPage: string, pageSize: number) {
@@ -44,4 +52,5 @@ export const followAPI = {
         return instance.delete(`follow/${id}`)
     }
 }
+
 

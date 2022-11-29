@@ -18,8 +18,7 @@ const Dialogs = () => {
 
     const {id} = useParams<{ id: string }>();
 
-    const auth = useAppSelector(state => state.auth, shallowEqual)
-    const state = useAppSelector(state => state.dialogs, shallowEqual)
+    const {auth, dialogs} = useAppSelector(state => state, shallowEqual)
     const users = presentationUsers
 
 
@@ -34,16 +33,16 @@ const Dialogs = () => {
                         ? <DialogContent
                             id={id}
                             user={users.find(el => el.id === +id)}
-                            messages={state.dialogsMessages}
-                            dialogs={state.dialogsList}
+                            messages={dialogs.dialogsMessages}
+                            dialogs={dialogs.dialogsList}
                         />
                         : <SNoneDialog>Select a chat </SNoneDialog>
                     }
                 </SDialogContainer>
                 <SDialogsSidebar>
                     <DialogsItemsList
-                        dialogs={state.dialogsList}
-                        messages={state.dialogsMessages}
+                        dialogs={dialogs.dialogsList}
+                        messages={dialogs.dialogsMessages}
                         users={users}
                     />
                 </SDialogsSidebar>

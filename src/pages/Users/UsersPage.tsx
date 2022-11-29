@@ -23,9 +23,10 @@ const UsersPage = React.memo(() => {
     useLayoutEffect(() => {name && dispatch(setUsersFilter(name))}, [])
     //
     useEffect(() => {
+        let currentPage = page ? +page : 1
         searchText
             ? dispatch(searchUsersThunk(searchText, page || '', state.pageSize))
-            : dispatch(getUsersThunk(page && +page || 1, state.pageSize))
+            : dispatch(getUsersThunk({currentPage: currentPage, pageSize: state.pageSize}))
     }, [page, state.pageSize])
 
     let totalPagesCount = useMemo(() => {

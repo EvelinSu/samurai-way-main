@@ -2,20 +2,25 @@ import {authAPI} from "../api/api";
 import {globalLoaderToggleAC} from "./loaderReducer";
 import {TAppDispatch} from "./store";
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
+import {Dispatch} from "redux";
 
 export type TAuth = {
-    id: number,
-    email: string,
-    login: string,
+    account: {
+        id: number,
+        email: string,
+        login: string,
+    },
     isAuth: boolean
     authModalToggle?: boolean
     messages: string[]
 }
 
 const initialState: TAuth = {
-    id: 0,
-    email: '',
-    login: '',
+    account: {
+        id: 0,
+        email: '',
+        login: '',
+    },
     isAuth: false,
     authModalToggle: false,
     messages: []
@@ -25,11 +30,14 @@ const slice = createSlice({
     name: "auth",
     initialState,
     reducers: {
-        setAuthUserDataAC(state, action: PayloadAction<TAuth>) {
-            return {...state, ...action.payload, isAuth: true}
+        setAuthUserDataAC(state, action: PayloadAction<TAuth["account"]>) {
+            state.account = action.payload;
+            state.isAuth = true;
         },
-        resetAuthUserDataAC() {
-            return initialState
+        resetAuthUserDataAC(state) {
+            state.account = initialState.account
+            state.isAuth = initialState.isAuth
+            state.messages = initialState.messages
         },
         authModalToggleAC(state, action: PayloadAction<boolean>) {
            state.authModalToggle = action.payload
@@ -44,7 +52,7 @@ const authReducer = slice.reducer
 
 export const {setAuthUserDataAC, resetAuthUserDataAC, authModalToggleAC, setAuthMessages} = slice.actions
 
-export const getAuthThunk = () => async (dispatch: TAppDispatch) => {
+export const getAuthThunk = () =>  (dispatch: TAppDispatch) => {
     authAPI
         .getMyData()
         .then((me) => {
@@ -79,7 +87,7 @@ export const loginThunk = (email: string, password: string, rememberMe: boolean)
         })
 }
 
-export const logoutThunk = () => async (dispatch: TAppDispatch) => {
+export const logoutThunk = () => async (dispatch: Dispatch) => {
     authAPI
         .logout()
         .then((res) => {

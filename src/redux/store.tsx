@@ -1,17 +1,17 @@
 import profileReducer from "./profileReducer";
 import dialogsReducer from "./dialogsReducer";
-import usersReducer from "./usersReducer";
 import authReducer from "./authReducer";
 import loaderReducer from "./loaderReducer";
 import postsReducer from "./postsReducer";
 import {configureStore} from "@reduxjs/toolkit";
 import thunkMiddleware from 'redux-thunk'
+import usersReducer from "./usersReducer";
 
 const store = configureStore({
     reducer: {
+        users: usersReducer,
         profile: profileReducer,
         dialogs: dialogsReducer,
-        users: usersReducer,
         posts: postsReducer,
         auth: authReducer,
         loader: loaderReducer,

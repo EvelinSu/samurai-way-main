@@ -1,4 +1,4 @@
-import React, {useLayoutEffect} from 'react';
+import React, {useEffect, useLayoutEffect} from 'react';
 import {SSiteContainer, SSiteWrapper} from "./layout/styled";
 import {HashRouter, Redirect, Route, Switch} from "react-router-dom";
 import PageNotFound from "./pages/PageNotFound";
@@ -14,11 +14,12 @@ import DialogsPage from "./pages/Dialogs/DialogsPage";
 import {setPageSize} from "./redux/usersReducer";
 
 const App = () => {
+
     const dispatch = useAppDispatch()
-    const auth = useAppSelector(state => state.auth)
+    const {account, authModalToggle} = useAppSelector(state => state.auth)
     const loader = useAppSelector(state => state.loader)
 
-    useLayoutEffect(() => {
+    useEffect(() => {
         dispatch(getAuthThunk())
     }, [])
 
@@ -38,13 +39,13 @@ const App = () => {
                     <SSiteContainer>
                         <Switch>
                             <Route path={`${PATH.profile}/:id?`} component={ProfilePage} exact />
-                            <Redirect from={`/`} to={PATH.profile + '/' + auth.id} exact />
+                            <Redirect from={`/`} to={PATH.profile + '/' + account.id} exact />
                             <Route path={`${PATH.messages}/:id?`} component={DialogsPage} exact />
                             <Route path={`${PATH.users}/:page?/:name?`} component={UsersPage} exact />
                             <Route path={"*"} component={PageNotFound} exact />
                         </Switch>
                     </SSiteContainer>
-                    <Modal type={"auth"} isOpened={auth.authModalToggle} />
+                    <Modal type={"auth"} isOpened={authModalToggle} />
                 </SSiteWrapper>
             }
         </HashRouter>

@@ -27,14 +27,12 @@ const ProfilePage = () => {
     }, [id])
     const dispatch = useAppDispatch()
     const userId = Number(id);
-    const profile = useAppSelector(state => state.profile.activeProfile, shallowEqual)
-    const isFetching = useAppSelector(state => state.profile.isFetching)
-    const status = useAppSelector(state => state.profile.status)
-    const myId = useAppSelector(state => state.auth.id)
+    const {activeProfile, isFetching, status} = useAppSelector(state => state.profile, shallowEqual)
 
+    const myId = useAppSelector(state => state.profile.activeProfile.userId)
     const setStatus = useCallback((newStatus: string) => dispatch(putStatus(newStatus)), [dispatch])
 
-    const mappedContacts = Object.entries(profile.contacts).map((contact) => {
+    const mappedContacts = Object.entries(activeProfile.contacts).map((contact) => {
         if (contact[1]) {
             return {
                 label: contact[0],
@@ -49,14 +47,14 @@ const ProfilePage = () => {
             ? <LoaderIcon />
             : (<SSiteContent stylized>
                 <Box alignItems={"center"} gap={20}>
-                    <SAvatar border size={180} src={profile.photos.large || userPhoto} />
+                    <SAvatar border size={180} src={activeProfile.photos.large || userPhoto} />
                     <Box flexDirection={"column"} overflow={"hidden"}>
                         <STitle margin={"0 0 0 10px"} color={theme.colors.primaryLightest}>
-                            {profile.fullName}
+                            {activeProfile.fullName}
                         </STitle>
                         <EditableText
                             myId={myId}
-                            currentId={profile.userId}
+                            currentId={activeProfile.userId}
                             text={status}
                             setText={setStatus}
                             placeholder={"- the user is silent -"}
@@ -78,7 +76,7 @@ const ProfilePage = () => {
                                 </SText>}
                         </Box>
                         <SText margin={"0 0 0 10px"}>
-                            {profile.lookingForAJob && profile.lookingForAJobDescription}
+                            {activeProfile.lookingForAJob && activeProfile.lookingForAJobDescription}
                         </SText>
                     </Box>
                     <Box flexDirection={"column"} gap={20} margin={"0 0 auto auto"}>
@@ -86,7 +84,7 @@ const ProfilePage = () => {
                         <Button label={'friends'} onClick={() => alert(".... yes")} />
                     </Box>
                 </Box>
-                <Posts myId={myId} name={profile.fullName} avatar={profile.photos.small || userPhoto} />
+                <Posts myId={myId} name={activeProfile.fullName} avatar={activeProfile.photos.small || userPhoto} />
             </SSiteContent>)
 
     );

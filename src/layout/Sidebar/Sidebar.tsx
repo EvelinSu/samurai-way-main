@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import {SSidebar, SSidebarAvatar, SSidebarItem, SSidebarItemIcon} from "./styled";
-import {useHistory , useLocation} from "react-router-dom";
+import {useHistory, useLocation} from "react-router-dom";
 import LogoutIcon from "../../assets/icons/LogoutIcon";
 import Modal from "../../components/modal/Modal";
 import LoginIcon from "../../assets/icons/LoginIcon";
@@ -17,7 +17,8 @@ import SidebarNavList from "./SidebarNavList";
 
 const Sidebar = React.memo(() => {
     const dispatch = useAppDispatch()
-    const state = useAppSelector(state => state.auth, shallowEqual)
+    const account = useAppSelector(state => state.auth.account, shallowEqual);
+    const isAuth = useAppSelector(state => state.auth.isAuth);
 
     const history = useHistory();
     const location = useLocation();
@@ -25,7 +26,7 @@ const Sidebar = React.memo(() => {
     const [isOpened, setIsOpened] = useState<boolean>(false)
 
     const onClickHandler = () => {
-        if (!state.isAuth) {
+        if (!isAuth) {
             return dispatch(authModalToggleAC(true))
         } else {
             setIsOpened(true)
@@ -45,22 +46,22 @@ const Sidebar = React.memo(() => {
         <SSidebar>
             <SSidebarAvatar
                 // disabled={!state.isAuth}
-                isActive={location.pathname === (PATH.profile + '/' + state.id)}
-                onClick={() => history.push(PATH.profile + '/' + state.id)}
+                isActive={location.pathname === (PATH.profile + '/' + account.id)}
+                onClick={() => history.push(PATH.profile + '/' + account.id)}
             >
                 <SAvatar size={40} src={defaultPhoto} />
             </SSidebarAvatar>
             <SidebarNavList
-                isAuth={state.isAuth}
+                isAuth={isAuth}
                 onClick={onSidebarNavClickHandler}
             />
             <SSidebarItem
-                label={state.isAuth ? 'LogOut' : 'LogIn'}
+                label={isAuth ? 'LogOut' : 'LogIn'}
                 onClick={onClickHandler}
                 disabled={false}
             >
                 <SSidebarItemIcon>
-                    {state.isAuth ? <LogoutIcon /> : <LoginIcon />}
+                    {isAuth ? <LogoutIcon /> : <LoginIcon />}
                 </SSidebarItemIcon>
             </SSidebarItem>
             {isOpened &&
