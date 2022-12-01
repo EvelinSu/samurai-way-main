@@ -42,13 +42,13 @@ const Avatar: FC<TAvatarProps> = ({size, img, isEditable, isFetching, ...props})
                         onChange={encodeImageFileAsURL}
                         style={{display: "none"}}
                     />
-                    <PhotoIcon/>
+                    <PhotoIcon />
                     {img && img !== "https://i.imgur.com/lqN6w1t.png" && (
                         <SAvatarDeleteIcon
                             onClick={deleteImageHandler}
                             title={"Delete avatar"}
                         >
-                            <DeleteIcon/>
+                            <DeleteIcon />
                         </SAvatarDeleteIcon>
                     )}
                 </SAvatarShadow>

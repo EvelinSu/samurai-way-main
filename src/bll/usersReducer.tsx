@@ -119,24 +119,24 @@ export const searchUsersThunk = (name: string, currentPage: string, pageSize: nu
             .finally(() => dispatch(usersToggleLoader(false)))
 }
 
-export const followToggleThunk = (user: TUser) => (dispatch: Dispatch) => {
-    dispatch(setFollowingProgress({id: user.id, isInProgress: true}))
-    if (!user.followed) {
+export const followToggleThunk = (id: number, followed: boolean) => (dispatch: Dispatch) => {
+    dispatch(setFollowingProgress({id: id, isInProgress: true}))
+    if (!followed) {
         followAPI
-            .postFollow(user.id)
+            .postFollow(id)
             .then((res) => {
                 if (res.data.resultCode === 0) {
-                    dispatch(followToggle(user.id))
-                    dispatch(setFollowingProgress({id: user.id, isInProgress: false}))
+                    dispatch(followToggle(id))
+                    dispatch(setFollowingProgress({id: id, isInProgress: false}))
                 }
             })
     } else {
         followAPI
-            .unFollow(user.id)
+            .unFollow(id)
             .then((res) => {
                 if (res.data.resultCode === 0) {
-                    dispatch(followToggle(user.id))
-                    dispatch(setFollowingProgress({id: user.id, isInProgress: false}))
+                    dispatch(followToggle(id))
+                    dispatch(setFollowingProgress({id: id, isInProgress: false}))
                 }
             })
     }

@@ -21,9 +21,9 @@ const User: React.FC<TUserProps> = React.memo(({user, id}) => {
     const isAuth = useAppSelector(state => state.auth.isAuth)
     const followingInProgress = useAppSelector(state => state.users.followingInProgress, shallowEqual)
 
-    const onClickHandler = useCallback((user: TUser) => {
+    const onClickHandler = useCallback((id: number, follow: boolean) => {
         isAuth
-            ? dispatch(followToggleThunk(user))
+            ? dispatch(followToggleThunk(id, follow))
             : dispatch(authModalToggleAC(true))
     }, [dispatch, isAuth])
 
@@ -60,7 +60,7 @@ const User: React.FC<TUserProps> = React.memo(({user, id}) => {
                             isLoading={followingInProgress.includes(user.id)}
                             backgroundColor={!user.followed ? theme.colors.button.active : theme.colors.button.cancel}
                             label={user.followed ? 'unfollow' : 'follow'}
-                            onClick={() => onClickHandler(user)}
+                            onClick={() => onClickHandler(user.id, user.followed)}
                         />
                     </Box>
                 </Box>

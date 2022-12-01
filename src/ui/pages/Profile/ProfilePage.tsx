@@ -1,4 +1,4 @@
-import React, {useCallback, useLayoutEffect} from 'react';
+import React, {useCallback, useLayoutEffect, useState} from 'react';
 import {Box} from "../../common/Box/Box";
 import {SText} from "../../common/Text/SText";
 import {STitle} from "../../common/Text/STitle";
@@ -18,6 +18,8 @@ import Posts from "./Posts/Posts";
 import {useAppDispatch, useAppSelector} from "../../../common/hooks/hooks";
 import EditableText from "../../common/EditableText/EditableText";
 import Avatar from "../../common/Avatar/Avatar";
+import {followToggleThunk} from "../../../bll/usersReducer";
+import {authModalToggleAC} from "../../../bll/authReducer";
 
 const ProfilePage = () => {
     const dispatch = useAppDispatch()
@@ -28,10 +30,14 @@ const ProfilePage = () => {
     }, [id])
     const userId = Number(id);
 
+    const [follow, setIsFollow] = useState(false)
+
     const {activeProfile, isFetching, status} = useAppSelector(state => state.profile)
 
-    const myId = useAppSelector(state => state.profile.activeProfile.userId)
+    const myId = useAppSelector(state => state.auth.account.id)
+    const isAuth = useAppSelector(state => state.auth.isAuth)
     const setStatus = useCallback((newStatus: string) => dispatch(putStatus(newStatus)), [dispatch])
+
 
     const mappedContacts = Object.entries(activeProfile.contacts).map((contact) => {
         if (contact[1]) {
@@ -55,7 +61,6 @@ const ProfilePage = () => {
                     <Avatar
                         size={"large"}
                         onClick={changeAvatarHandler}
-                        deleteImageHandler={() => dispatch(putAvatar(''))}
                         img={activeProfile.photos.large || userPhoto}
                         isEditable={activeProfile.userId === myId && myId !== 0}
                     />
@@ -92,16 +97,20 @@ const ProfilePage = () => {
                     </Box>
                     <Box
                         flexDirection={"column"}
+                        alignItems={"flex-end"}
                         gap={20}
                         margin={"0 0 auto auto"}
                     >
                         {activeProfile.userId !== myId && (
                             <Button
-                                label={'follow'}
-                                onClick={() => alert("in progress")}
+                                backgroundColor={follow ? theme.colors.button.active : theme.colors.button.cancel}
+                                label={follow ? 'unfollow' : 'follow'}
+                                onClick={() => setIsFollow(!follow)}
                             />
                         )}
-                        <Button label={'friends'} onClick={() => alert("in progress")} />
+                        <Box>
+                            <Button label={'friends'} onClick={() => alert("in progress")} />
+                        </Box>
                     </Box>
                 </Box>
                 <Posts

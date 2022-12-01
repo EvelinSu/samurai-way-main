@@ -13,6 +13,7 @@ import LockIcon from "../../assets/icons/LockIcon";
 import {useAppDispatch, useAppSelector} from "../../../common/hooks/hooks";
 import {loginThunk} from "../../../bll/authReducer";
 import * as Yup from 'yup';
+import {SText} from "../../common/Text/SText";
 
 type LoginRequest = {
     email: string;
@@ -47,15 +48,37 @@ const AuthModal = () => {
         onSubmit: ({email, password, rememberMe}) => {
             setIsLoading(true)
             dispatch(loginThunk(email, password, rememberMe))
-                .then(() => {
-                    setIsLoading(false)
-                })
+                .then(() => setIsLoading(false))
         }
     });
+
+    const testAccountHandler = () => {
+        const email = "free@samuraijs.com"
+        const password = "free"
+        setIsLoading(true)
+        dispatch(loginThunk(email, password, false))
+            .then(() => setIsLoading(false))
+
+    }
 
     return (
         <Fragment>
             <STitle fontSize={"20px"}>Authorization</STitle>
+            <Box flexDirection={"column"}>
+                <SText>
+                    <SText opacity={0.3}>
+                        To log in get registered
+                    </SText>
+                    <a href={"https://social-network.samuraijs.com/"}
+                       target={"_blank"}
+                    >here</a>
+                </SText>
+                <SText>
+                    <SText opacity={0.3}>or click</SText>
+                    <a onClick={testAccountHandler}>here</a>
+                    <SText opacity={0.3}>to log in to a test account</SText>
+                </SText>
+            </Box>
             <SForm onSubmit={handleSubmit}>
                 <Input
                     error={touched.email ? errors.email : ""}
@@ -85,7 +108,7 @@ const AuthModal = () => {
                     name="rememberMe"
                     onChange={(event) => setFieldValue("rememberMe", event.target.checked)}
                 />
-                {authMessages.length > 0 && <SErrorBox> {authMessages} </SErrorBox>}
+                {authMessages.length > 0 ? <SErrorBox> {authMessages} </SErrorBox> : <></>}
                 <Box justifyContent={"center"}>
                     <Button
                         type="submit"

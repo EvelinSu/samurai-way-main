@@ -22,6 +22,8 @@ const App = () => {
 
     const windowHeight = window.innerHeight
 
+    console.log(loader.globalLoading)
+
     useLayoutEffect(() => {
         if (windowHeight > 1000) dispatch(setPageSize(20))
         if (windowHeight > 1300) dispatch(setPageSize(25))

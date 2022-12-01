@@ -1,5 +1,6 @@
 import styled, {css} from "styled-components";
 import {Property} from "csstype";
+import {theme} from "../../styles/constants";
 
 interface TSTextProps {
     isEllipsis?: boolean;
@@ -25,6 +26,7 @@ export const SText = styled.span<TSTextProps>(
         line-height: ${props.lineHeight};
         text-align: ${props.textAlign};
         white-space: ${props.whiteSpace};
+
         ${props.lineClamp && css`
             display: -webkit-box;
             -webkit-line-clamp: ${props.lineClamp};
@@ -39,11 +41,22 @@ export const SText = styled.span<TSTextProps>(
         `}
         ${props.isLink && css`
             text-decoration: underline;
-            color: ${props.theme.colors.button.success};
+            color: ${theme.colors.button.success};
             cursor: pointer;
+
             &:hover {
                 text-decoration: none;
             }
         `}
+        a {
+            color: ${theme.colors.button.success};
+            text-decoration: underline;
+            margin: 0 5px;
+            cursor: pointer;
+            &:hover {
+                opacity: 0.7;
+            }
+            
+        }
     `
 );
