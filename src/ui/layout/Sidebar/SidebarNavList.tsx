@@ -2,6 +2,8 @@ import React from 'react';
 import {navLinks} from "./sidebarData";
 import {SSidebarItem, SSidebarItemIcon} from "./styled";
 import {useLocation} from "react-router-dom";
+import {authModalToggleAC} from "../../../bll/authReducer";
+import {useAppDispatch, useAppSelector} from "../../../common/hooks/hooks";
 
 type TSidebarItemProps = {
     isAuth: boolean
@@ -9,20 +11,27 @@ type TSidebarItemProps = {
 }
 
 const SidebarNavList: React.FC<TSidebarItemProps> = React.memo((props) => {
-
+    const dispatch = useAppDispatch()
     const location = useLocation();
 
+    const isAuth = useAppSelector(state => state.auth.isAuth)
+
+    const onItemClickHandler = (needAuth?: boolean, link?: string) => {
+        needAuth && !isAuth
+            ? dispatch(authModalToggleAC(true))
+            : link && props.onClick(link)
+    }
 
     return (
         <>
-            {navLinks.map(({disabled, needAuth, link, icon, label, id, margin}) => (
+            {navLinks.map(({disabled, link, icon, label, id, margin, needAuth}) => (
                 <SSidebarItem
-                    disabled={disabled || (needAuth  && !props.isAuth)}
+                    disabled={disabled}
                     label={label}
                     key={id}
                     margin={margin}
                     isActive={link ? location.pathname.includes(link) : false}
-                    onClick={() => link && props.onClick(link)}
+                    onClick={() => onItemClickHandler(needAuth, link)}
                 >
                     <SSidebarItemIcon isActive={link ? location.pathname.includes(link) : false}>
                         {icon}

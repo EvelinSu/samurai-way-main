@@ -7,7 +7,7 @@ export const profileAPI = {
                        .then(response => response.data)
     },
     putProfileStatus(newStatus: string) {
-        return instance.put<TCommonResponse<{status: string}>>(`profile/status`, {status: newStatus})
+        return instance.put<TCommonResponse<{ status: string }>>(`profile/status`, {status: newStatus})
                        .then(response => response.data)
     },
     getProfileStatus(userId: number) {
@@ -17,7 +17,11 @@ export const profileAPI = {
     putProfileImage(image: FormData | string) {
         return instance.put<TCommonResponse<TProfileImageResponse>>(`profile/photo`, image)
                        .then(response => response.data)
-    }
+    },
+    putProfile(data: Omit<TActiveProfile, "photos">) {
+        return instance.put<TCommonResponse<TActiveProfile>>(`profile`, data)
+                       .then(response => response.data)
+    },
 }
 
 

@@ -42,12 +42,17 @@ const Sidebar = React.memo(() => {
         setIsOpened(false)
     }
 
+    const onAvatarClickHandler = () => {
+        isAuth
+            ? history.push(PATH.profile + '/' + account.id)
+            : dispatch(authModalToggleAC(true))
+    }
+
     return (
         <SSidebar>
             <SSidebarAvatar
-                // disabled={!state.isAuth}
                 isActive={location.pathname === (PATH.profile + '/' + account.id)}
-                onClick={() => history.push(PATH.profile + '/' + account.id)}
+                onClick={onAvatarClickHandler}
             >
                 <SAvatar size={"small"} img={defaultPhoto} />
             </SSidebarAvatar>

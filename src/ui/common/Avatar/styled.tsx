@@ -56,7 +56,7 @@ export const SAvatarShadow = styled.div((props) => ({
     width: "100%",
     height: "100%",
     zIndex: 1,
-    opacity: 0,
+    opacity: 0.6,
     cursor: "pointer",
     transition: "0.2s",
     "&:hover": {

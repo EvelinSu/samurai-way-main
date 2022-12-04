@@ -7,7 +7,7 @@ import GlobalLoader from "./ui/common/GlobalLoader/GlobalLoader";
 import Modal from "./ui/modals/Modal";
 import {useAppDispatch, useAppSelector} from "./common/hooks/hooks";
 import {setPageSize} from "./bll/usersReducer";
-import {Routes} from "./routes/Routes";
+import {Routes} from "./ui/routes/Routes";
 import Notification from "./ui/common/Notification/Notification";
 
 const App = () => {
@@ -22,8 +22,6 @@ const App = () => {
 
     const windowHeight = window.innerHeight
 
-    console.log(loader.globalLoading)
-
     useLayoutEffect(() => {
         if (windowHeight > 1000) dispatch(setPageSize(20))
         if (windowHeight > 1300) dispatch(setPageSize(25))
@@ -36,9 +34,9 @@ const App = () => {
                 : <SSiteWrapper>
                     <Sidebar />
                     <SSiteContainer>
-                        <Routes/>
+                        <Routes />
                     </SSiteContainer>
-                    <Notification/>
+                    <Notification />
                     <Modal type={"auth"} isOpened={authModalToggle} />
                 </SSiteWrapper>
             }

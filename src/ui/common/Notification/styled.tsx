@@ -1,4 +1,4 @@
-import styled, { css } from "styled-components";
+import styled, {css} from "styled-components";
 import {theme} from "../../styles/constants";
 
 type TSNotificationWrapper = {
@@ -16,26 +16,26 @@ export const SNotificationWrapper = styled.div<TSNotificationWrapper>`
     color: #fff;
     z-index: ${theme.orders.notifications};
     ${(props) =>
-        props.notificationsCount > 1 &&
-        css`
-            &:after {
-                content: "${props.notificationsCount}";
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                background-color: ${theme.colors.secondary};
-                color: ${props.theme.colors.textOnSecondary};
-                box-shadow: 1px 1px 2px rgb(0, 0, 0, 0.1), -1px -1px 2px rgb(0, 0, 0, 0.1);
-                width: 30px;
-                height: 30px;
-                border-radius: 50%;
-                font-size: 12px;
-                position: absolute;
-                right: -170px;
-                top: -70px;
-                z-index: ${theme.orders.notifications};
-            }
-        `}
+            props.notificationsCount > 1 &&
+            css`
+                &:after {
+                    content: "${props.notificationsCount}";
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    background-color: ${theme.colors.secondary};
+                    color: ${theme.colors.textOnSecondary};
+                    box-shadow: 1px 1px 2px rgb(0, 0, 0, 0.1), -1px -1px 2px rgb(0, 0, 0, 0.1);
+                    width: 30px;
+                    height: 30px;
+                    border-radius: 50%;
+                    font-size: 12px;
+                    position: absolute;
+                    right: -170px;
+                    top: -70px;
+                    z-index: ${theme.orders.notifications};
+                }
+            `}
 `;
 
 type TSNotificationContainerProps = {
@@ -56,11 +56,11 @@ export const SNotificationContainer = styled.div<TSNotificationContainerProps>`
     height: 60px;
     padding: 10px 20px;
     background-color: ${(props) =>
-        props.severity === "error"
-            ? theme.colors.status.error
-            : props.severity === "success"
-            ? theme.colors.status.success
-            : theme.colors.primary};
+            props.severity === "error"
+                    ? theme.colors.status.error
+                    : props.severity === "success"
+                            ? theme.colors.status.success
+                            : theme.colors.primary};
     z-index: ${theme.orders.notifications};
 
     &:last-of-type {

@@ -5,10 +5,7 @@ import {STitle} from "../../common/Text/STitle";
 import {theme} from "../../styles/constants";
 import {SSiteContent} from "../../layout/styled";
 import Button from "../../common/Button/Button";
-import {
-    getProfile, putAvatar,
-    putStatus
-} from "../../../bll/profileReducer";
+import {getProfile, putStatus} from "../../../bll/profileReducer";
 import userPhoto from "../../assets/img/default-photo.png";
 import IconLink from "../../common/IconLink/IconLink";
 import {iconsDictionary} from "../../assets/icons/contacts/_iconsDictionary";
@@ -18,26 +15,23 @@ import Posts from "./Posts/Posts";
 import {useAppDispatch, useAppSelector} from "../../../common/hooks/hooks";
 import EditableText from "../../common/EditableText/EditableText";
 import Avatar from "../../common/Avatar/Avatar";
-import {followToggleThunk} from "../../../bll/usersReducer";
 import {authModalToggleAC} from "../../../bll/authReducer";
 
 const ProfilePage = () => {
     const dispatch = useAppDispatch()
 
     const {id} = useParams<{ id: string }>()
-    useLayoutEffect(() => {
-        dispatch(getProfile(userId))
-    }, [id])
     const userId = Number(id);
 
     const [follow, setIsFollow] = useState(false)
 
     const {activeProfile, isFetching, status} = useAppSelector(state => state.profile)
-
     const myId = useAppSelector(state => state.auth.account.id)
     const isAuth = useAppSelector(state => state.auth.isAuth)
-    const setStatus = useCallback((newStatus: string) => dispatch(putStatus(newStatus)), [dispatch])
 
+    const setStatusHandler = useCallback((newStatus: string) => {
+        dispatch(putStatus(newStatus))
+    }, [dispatch])
 
     const mappedContacts = Object.entries(activeProfile.contacts).map((contact) => {
         if (contact[1]) {
@@ -49,9 +43,9 @@ const ProfilePage = () => {
         }
     }).filter(el => el)
 
-    const changeAvatarHandler = (newAvatar: FormData) => {
-        dispatch(putAvatar(newAvatar))
-    }
+    useLayoutEffect(() => {
+        dispatch(getProfile(userId))
+    }, [id])
 
     return (
         isFetching
@@ -60,9 +54,7 @@ const ProfilePage = () => {
                 <Box alignItems={"center"} gap={20}>
                     <Avatar
                         size={"large"}
-                        onClick={changeAvatarHandler}
                         img={activeProfile.photos.large || userPhoto}
-                        isEditable={activeProfile.userId === myId && myId !== 0}
                     />
                     <Box flexDirection={"column"} overflow={"hidden"}>
                         <STitle margin={"0 0 0 10px"} color={theme.colors.primaryLightest}>
@@ -72,7 +64,7 @@ const ProfilePage = () => {
                             myId={myId}
                             currentId={activeProfile.userId}
                             text={status}
-                            setText={setStatus}
+                            setText={setStatusHandler}
                             placeholder={"- the user is silent -"}
                             maxLength={300}
                             title={'Click to change status'}
@@ -105,7 +97,7 @@ const ProfilePage = () => {
                             <Button
                                 backgroundColor={follow ? theme.colors.button.active : theme.colors.button.cancel}
                                 label={follow ? 'unfollow' : 'follow'}
-                                onClick={() => setIsFollow(!follow)}
+                                onClick={() => isAuth ? setIsFollow(!follow) : dispatch(authModalToggleAC(true))}
                             />
                         )}
                         <Box>

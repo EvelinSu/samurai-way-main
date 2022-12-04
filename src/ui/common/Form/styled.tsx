@@ -18,6 +18,7 @@ export const SInputWrapper = styled.div<TSInputWrapperProps>((props) => ({
     flexDirection: "row",
     alignItems: "center",
     gap: 15,
+    flexGrow: 1,
     position: "relative",
     ...props.error && {
         "&:after": {

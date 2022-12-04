@@ -26,7 +26,7 @@ export const navLinks: TNavLinks = [
         label: "Messages",
         icon: <MessageIcon />,
         link: PATH.messages,
-        // needAuth: true,
+        needAuth: true,
         disabled: false
     },
     {
@@ -58,7 +58,6 @@ export const navLinks: TNavLinks = [
         margin: "auto 0 0 0",
         link: PATH.settings,
         needAuth: true,
-        disabled: true
     },
 
 ]

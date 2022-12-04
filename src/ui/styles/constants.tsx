@@ -9,6 +9,7 @@ export const theme = {
 
         secondary: "#31375e",
         secondaryLight: "#474f93",
+        textOnSecondary: "#fff",
 
         text: "#eaeaea",
 

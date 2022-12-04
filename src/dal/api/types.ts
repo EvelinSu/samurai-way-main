@@ -1,4 +1,3 @@
-
 export type TCommonResponse<T> = {
     data: T,
     messages: string[],
@@ -30,5 +29,6 @@ export type TActiveProfile = {
     photos: {
         small: string,
         large: string
-    }
+    },
+    aboutMe?: string
 }

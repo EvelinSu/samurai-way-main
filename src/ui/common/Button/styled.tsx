@@ -41,7 +41,7 @@ export const SButton = styled.button<TSButton>(({disabled, ...props}) => ({
         pointerEvents: "none",
     },
     ...props.size === 'lg' && {
-        padding: "10px 20px",
+        padding: "10px 25px",
         borderRadius: 25,
         fontSize: 18,
     },

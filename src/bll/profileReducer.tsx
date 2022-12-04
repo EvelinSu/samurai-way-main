@@ -1,5 +1,5 @@
 import {TAppDispatch} from "./store/store";
-import {demoProfile} from "./demo/profileDemo";
+import {defaultProfile, demoProfile} from "./demo/profileDemo";
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
 import {authAPI} from "../dal/api/authApi";
 import {setAppMessage, setIsFetching} from "./appReducer";
@@ -14,7 +14,7 @@ export type TProfilePage = {
 
 export const initialState: TProfilePage = ({
     isFetching: true,
-    activeProfile: demoProfile,
+    activeProfile: defaultProfile,
     status: "Mew",
 })
 
@@ -34,6 +34,9 @@ const slice = createSlice({
         setMyAvatar(state, action: PayloadAction<TProfileImageResponse>) {
             state.activeProfile.photos.large = action.payload.photos.large
             state.activeProfile.photos.small = action.payload.photos.small
+        },
+        setProfile(state, action: PayloadAction<Omit<TActiveProfile, "photos">>) {
+            state.activeProfile = {...state.activeProfile, ...action.payload, photos: state.activeProfile.photos}
         }
     }
 })
@@ -55,6 +58,23 @@ export const getProfile = (userId: number) => async (dispatch: TAppDispatch) => 
     }
 }
 
+export const changeProfile = (values: TActiveProfile) => async (dispatch: TAppDispatch) => {
+    dispatch(profileToggleLoader(true))
+    try {
+        const newProfile = await profileAPI.putProfile(values)
+        if (newProfile.resultCode === 0) {
+            dispatch(setProfile(newProfile.data))
+            dispatch(setAppMessage({severity: "success", text: "Profile changed!"}))
+        } else {
+            throw new Error(newProfile.messages[0])
+        }
+    } catch (e) {
+        dispatch(setAppMessage({severity: "error", text: `${e}`}))
+    } finally {
+        dispatch(profileToggleLoader(false))
+    }
+}
+
 export const putStatus = (newStatus: string) => (dispatch: TAppDispatch) => {
     dispatch(setIsFetching(true))
     profileAPI
@@ -63,6 +83,7 @@ export const putStatus = (newStatus: string) => (dispatch: TAppDispatch) => {
         .catch(() => dispatch(setAppMessage({severity: "error", text: "Some error"})))
         .finally(() => dispatch(setIsFetching(false)))
 }
+
 export const putAvatar = (newImage: FormData | string) => (dispatch: TAppDispatch) => {
     dispatch(setIsFetching(true))
     profileAPI
@@ -80,6 +101,6 @@ export const putAvatar = (newImage: FormData | string) => (dispatch: TAppDispatc
 
 const profileReducer = slice.reducer
 
-export const {setActiveProfile, profileToggleLoader, setMyStatus, setMyAvatar} = slice.actions
+export const {setActiveProfile, profileToggleLoader, setMyStatus, setMyAvatar, setProfile} = slice.actions
 
 export default profileReducer

@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { SText } from "../Text/SText";
+import {SText} from "../Text/SText";
 import {theme} from "../../styles/constants";
 
 type TSEditableTextProps = {

@@ -1,4 +1,27 @@
 import {v1} from "uuid";
+import {TActiveProfile} from "../../dal/api/types";
+
+export const defaultProfile: TActiveProfile = {
+    contacts: {
+        facebook: "",
+        website: "",
+        vk: "",
+        twitter: "",
+        youtube: "",
+        github: "",
+        instagram: "",
+        mainLink: ""
+    },
+    lookingForAJob: false,
+    lookingForAJobDescription: "",
+    fullName: "",
+    userId: 0,
+    photos: {
+        small: "",
+        large: ""
+    },
+    aboutMe: "",
+}
 
 export const demoProfile = {
     contacts: {
