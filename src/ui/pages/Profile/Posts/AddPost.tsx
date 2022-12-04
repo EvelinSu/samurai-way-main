@@ -42,7 +42,11 @@ const AddPost: React.FC<TAddPost> = ({newPostText}) => {
                 placeholder={"Write a new post..."}
             />
             <Box justifyContent={"flex-end"}>
-                <Button onClick={onClickAddPost} isDisabled={newPostText.trim() === ''} label={"Send"} />
+                <Button
+                    onClick={onClickAddPost}
+                    isDisabled={newPostText.trim() === ''}
+                    label={"Send"}
+                />
             </Box>
         </>
     );

@@ -1,10 +1,7 @@
 import styled from "styled-components";
 import {theme} from "../../../styles/constants";
 
-type TSDialogItemProps = {
-    isActive?: boolean,
-}
-export const SDialogItem = styled.div<TSDialogItemProps>(({isActive}) => ({
+export const SDialogItem = styled.div<{ isActive?: boolean }>(({isActive}) => ({
     display: "flex",
     flexDirection: "row",
     alignItems: "center",

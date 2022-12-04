@@ -3,7 +3,7 @@ import {SSiteContent} from "../../layout/styled";
 import PagePanel from "../PagePanel";
 import Pagination from "../../common/Pagination/Pagination";
 import {getUsersThunk, searchUsersThunk, setUsersFilter} from "../../../bll/usersReducer";
-import {useHistory , useParams} from "react-router-dom";
+import {useHistory, useParams} from "react-router-dom";
 import {shallowEqual} from "react-redux";
 import UsersList from "./UsersList";
 import {useAppDispatch, useAppSelector} from "../../../common/hooks/hooks";
@@ -20,7 +20,9 @@ const UsersPage = React.memo(() => {
     const [searchText, setSearchText] = useState<string>(name || '')
 
     //при первой прогрузке проверить есть ли в адресной строке значение
-    useLayoutEffect(() => {name && dispatch(setUsersFilter(name))}, [])
+    useLayoutEffect(() => {
+        name && dispatch(setUsersFilter(name))
+    }, [])
     //
     useEffect(() => {
         let currentPage = page ? +page : 1
@@ -35,7 +37,9 @@ const UsersPage = React.memo(() => {
 
     const onSearchHandler = useCallback(() => {
         if ((searchText !== name) && (searchText || name)) {
-            searchText ? history.push(PATH.users + '/1/' + searchText) : history.push(PATH.users + '/1')
+            searchText
+                ? history.push(PATH.users + '/1/' + searchText)
+                : history.push(PATH.users + '/1')
             dispatch(searchUsersThunk(searchText, page || '1', state.pageSize))
         }
     }, [dispatch, searchText, page, state.pageSize])

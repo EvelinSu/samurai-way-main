@@ -2,11 +2,10 @@ import React, {FC, useState} from "react";
 import {SPost, SPostContent, SPostDate, SPostPanel, SPostText} from "./styled";
 import FavoriteIcon from "../../../assets/icons/FavoriteIcon";
 import FavoriteFillIcon from "../../../assets/icons/FavoriteFillIcon";
-import {TPost} from "./types";
 import Avatar from "../../../common/Avatar/Avatar";
 import {useAppDispatch, useAppSelector} from "../../../../common/hooks/hooks";
 import {authModalToggleAC} from "../../../../bll/authReducer";
-
+import {TPost} from "../../../../bll/postsReducer";
 
 type TPostProps = {
     post: TPost
@@ -23,7 +22,9 @@ const Post: FC<TPostProps> = React.memo(({post, avatar}) => {
     const onClickHandler = () => {
         if (isAuth) {
             setIsLiked(!isLiked);
-            isLiked ? setLikes(likes - 1) : setLikes(likes + 1)
+            isLiked
+                ? setLikes(likes - 1)
+                : setLikes(likes + 1)
         } else {
             dispatch(authModalToggleAC(true))
         }
@@ -36,10 +37,12 @@ const Post: FC<TPostProps> = React.memo(({post, avatar}) => {
                 <SPostText>
                     {post.text}
                 </SPostText>
-                <SPostDate>{ post.date }</SPostDate>
+                <SPostDate>{post.date}</SPostDate>
             </SPostContent>
-
-            <SPostPanel likes={likes} onClick={() => onClickHandler()}>
+            <SPostPanel
+                likes={likes}
+                onClick={() => onClickHandler()}
+            >
                 {isLiked ? <FavoriteFillIcon /> : <FavoriteIcon />}
             </SPostPanel>
         </SPost>

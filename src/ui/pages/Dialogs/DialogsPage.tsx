@@ -1,11 +1,6 @@
 import React from 'react';
-import { useParams} from "react-router-dom";
-import {
-    SDialogs,
-    SDialogsSidebar,
-    SDialogContainer,
-    SNoneDialog
-} from "./styled";
+import {useParams} from "react-router-dom";
+import {SDialogContainer, SDialogs, SDialogsSidebar, SNoneDialog} from "./styled";
 import {SSiteContent} from "../../layout/styled";
 import PagePanel from "../PagePanel";
 import DialogsItemsList from "./DialogsItemsList/DialogsItemsList";
@@ -20,7 +15,6 @@ const Dialogs = () => {
 
     const {auth, dialogs} = useAppSelector(state => state, shallowEqual)
     const users = presentationUsers
-
 
     return (
         <SSiteContent>

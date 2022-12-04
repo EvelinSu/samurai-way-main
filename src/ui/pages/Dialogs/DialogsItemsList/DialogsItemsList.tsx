@@ -10,7 +10,7 @@ type TDialogsItemsList = {
     users: Array<TUser>
 }
 
-const DialogsItemsList:FC<TDialogsItemsList> = ({dialogs, messages, users}) => {
+const DialogsItemsList: FC<TDialogsItemsList> = ({dialogs, messages, users}) => {
 
     return (
         <SDialogsItemsList>

@@ -2,8 +2,6 @@ import styled from "styled-components";
 import {theme} from "../../styles/constants";
 import {Box} from "../../common/Box/Box";
 
-
-
 export const SDialogs = styled.div(props => ({
     display: "flex",
     flexDirection: "row",
@@ -29,7 +27,6 @@ export const SDialogsItemsList = styled.div((props) => ({
     overflow: "auto",
     gap: 10,
 }))
-
 
 export const SDialogContainer = styled(Box)((props) => ({
     display: "flex",

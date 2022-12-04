@@ -2,9 +2,7 @@ import styled from "styled-components";
 import {Box} from "../../common/Box/Box";
 import {theme} from "../../styles/constants";
 
-export const SUsers = styled.div(() => ({
-
-}))
+export const SUsers = styled.div(() => ({}))
 
 type TUserBox = {
     img?: string,
@@ -20,7 +18,6 @@ export const SUserBox = styled(Box)<TUserBox>((props) => ({
     backgroundSize: "cover",
     borderRadius: theme.blockSettings.borderRadius,
 }))
-
 
 export const SUserBoxHeader = styled.div((props) => ({
     display: "flex",

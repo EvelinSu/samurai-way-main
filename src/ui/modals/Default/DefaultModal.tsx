@@ -2,7 +2,7 @@ import React from 'react';
 import {Box} from '../../common/Box/Box';
 import Button from "../../common/Button/Button";
 import {theme} from "../../styles/constants";
-import { STitle } from '../../common/Text/STitle';
+import {STitle} from '../../common/Text/STitle';
 
 type TDefaultModalProps = {
     onSuccessClick: () => void
@@ -19,8 +19,17 @@ const DefaultModal: React.FC<TDefaultModalProps> = (props) => {
                 </STitle>
             </Box>
             <Box flexDirection={"row"} justifyContent={"center"}>
-                <Button size={"lg"} label={'Yes'} onClick={props.onSuccessClick} />
-                <Button size={"lg"} label={'Cancel'} onClick={props.onCancelClick} backgroundColor={theme.colors.button.cancel}/>
+                <Button
+                    size={"lg"}
+                    label={'Yes'}
+                    onClick={props.onSuccessClick}
+                />
+                <Button
+                    size={"lg"}
+                    label={'Cancel'}
+                    onClick={props.onCancelClick}
+                    backgroundColor={theme.colors.button.cancel}
+                />
             </Box>
         </>
 

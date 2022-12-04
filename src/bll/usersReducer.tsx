@@ -39,7 +39,7 @@ export const getUsersThunk = createAsyncThunk(
         try {
             const res: TUser[] = await usersAPI.getUsers(currentPage, pageSize)
             return res
-        } catch (err: any){
+        } catch (err: any) {
             alert(`${err.message}, ......you can see demo users! but can't see their profiles....`)
             throw new Error(err.message)
         }
@@ -94,20 +94,6 @@ const slice = createSlice({
 
 })
 
-const usersReducer = slice.reducer
-
-export const {
-    followToggle,
-    setUsers,
-    setTotalUsersCount,
-    usersToggleLoader,
-    setFollowingProgress,
-    setUsersFilter,
-    setPageSize
-} = slice.actions
-
-
-
 export const searchUsersThunk = (name: string, currentPage: string, pageSize: number) => (dispatch: Dispatch) => {
     dispatch(usersToggleLoader(true))
     usersAPI.searchUsers(name, currentPage, pageSize).then(response => {
@@ -141,5 +127,17 @@ export const followToggleThunk = (id: number, followed: boolean) => (dispatch: D
             })
     }
 }
+
+const usersReducer = slice.reducer
+
+export const {
+    followToggle,
+    setUsers,
+    setTotalUsersCount,
+    usersToggleLoader,
+    setFollowingProgress,
+    setUsersFilter,
+    setPageSize
+} = slice.actions
 
 export default usersReducer

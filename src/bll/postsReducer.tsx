@@ -1,8 +1,15 @@
 import {v1} from "uuid";
 import {getStringDate} from "../common/utils";
-import {TPost} from "../ui/pages/Profile/Posts/types";
 import {demoPosts} from "./demo/profileDemo";
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
+
+export type TPost = {
+    id: string,
+    text: string,
+    likes: number,
+    isLiked: boolean,
+    date: string,
+}
 
 export type TPosts = {
     newPostText: string,

@@ -10,6 +10,8 @@ import {setPageSize} from "./bll/usersReducer";
 import {Routes} from "./ui/routes/Routes";
 import Notification from "./ui/common/Notification/Notification";
 
+const windowHeight = window.innerHeight
+
 const App = () => {
 
     const dispatch = useAppDispatch()
@@ -19,8 +21,6 @@ const App = () => {
     useEffect(() => {
         dispatch(getAuthThunk())
     }, [])
-
-    const windowHeight = window.innerHeight
 
     useLayoutEffect(() => {
         if (windowHeight > 1000) dispatch(setPageSize(20))

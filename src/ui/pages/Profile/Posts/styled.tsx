@@ -1,12 +1,12 @@
 import styled from "styled-components";
 import {theme} from "../../../styles/constants";
-import {TSPostPanelProps} from "./types";
 
 export const SPost = styled.div((props) => ({
     display: "flex",
     flexDirection: "row",
     gap: 20,
 }))
+
 export const SPostContent = styled.div((props) => ({
     display: "flex",
     flexWrap: "wrap",
@@ -43,14 +43,14 @@ export const SPostDate = styled.div((props) => ({
     fontSize: 14,
 }))
 
-export const SPostPanel = styled.div<TSPostPanelProps>((props) => ({
+export const SPostPanel = styled.div<{ likes: number }>((props) => ({
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
     alignSelf: "flex-end",
     position: "relative",
     marginBottom: 20,
-    svg:{
+    svg: {
         borderRadius: "50%",
         width: 30,
         height: 30,
@@ -59,7 +59,7 @@ export const SPostPanel = styled.div<TSPostPanelProps>((props) => ({
         transition: "0.2s",
     },
     "&:hover": {
-        svg:{
+        svg: {
             transform: "scale(0.9)",
             backgroundColor: "rgba(0, 0, 0, 0.3)"
         },

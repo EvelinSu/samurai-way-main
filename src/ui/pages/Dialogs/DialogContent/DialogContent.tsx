@@ -23,28 +23,26 @@ const DialogContent: FC<TDialogContentProps> = ({
     messages,
     user,
     id
-
 }) => {
     const activeMessagesId = id ? dialogs[id].messagesId : "0"
     const activeMessages = messages.filter((el) => activeMessagesId.includes(el.id))
 
     const dialogsBody = useRef(null)
 
-    useEffect(() => {
-        // @ts-ignore
-        dialogsBody.current?.scrollTo({top: document.body.scrollHeight})
-    }, [id])
-
     const scrollToBottom = () => {
+        const ref = dialogsBody.current as unknown as HTMLDivElement
         setTimeout(() => {
-            // @ts-ignore
-            dialogsBody.current?.scrollTo({
+            ref.scrollTo({
                 top: document.body.scrollHeight,
                 left: 0,
                 behavior: "smooth"
             })
         }, 0)
     }
+
+    useEffect(() => {
+        scrollToBottom()
+    }, [id])
 
     return (
         <Fragment>
@@ -63,7 +61,7 @@ const DialogContent: FC<TDialogContentProps> = ({
                 </Box>
             </SDialogWindowHeader>
             <SDialogWindowBody>
-                <SScrollBoxWrapper  >
+                <SScrollBoxWrapper>
                     <SScrollBox padding={20} overflowX={"hidden"} ref={dialogsBody}>
                         {
                             activeMessages.length > 0

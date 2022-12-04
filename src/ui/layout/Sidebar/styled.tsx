@@ -2,8 +2,7 @@ import styled from "styled-components";
 import {theme} from "../../styles/constants";
 import {Property} from "csstype";
 
-type TSSidebarProps = {}
-export const SSidebar = styled.div<TSSidebarProps>((props) => ({
+export const SSidebar = styled.div((props) => ({
     display: "flex",
     flexDirection: "column",
     backgroundColor: theme.colors.primary,
@@ -16,7 +15,6 @@ export const SSidebar = styled.div<TSSidebarProps>((props) => ({
     width: 74,
     margin: "30px 0 30px 30px",
 }))
-
 
 type TSSidebarAvatar = {
     isActive?: boolean
@@ -103,10 +101,7 @@ export const SSidebarItem = styled.div<TSSidebarItemProps>(({disabled, isActive,
     }
 }))
 
-type TSSidebarItemIconProps = {
-    isActive?: boolean,
-}
-export const SSidebarItemIcon = styled.div<TSSidebarItemIconProps>(({isActive}) => ({
+export const SSidebarItemIcon = styled.div<{ isActive?: boolean }>(({isActive}) => ({
     display: "flex",
     alignItems: "center",
     justifyContent: "center",

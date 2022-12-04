@@ -16,7 +16,7 @@ type TPostsProps = {
 const Posts: FC<TPostsProps> = (props) => {
 
     const posts = useAppSelector(state => state.posts, shallowEqual)
-    const activeProfile = useAppSelector(state => state.profile.activeProfile, shallowEqual)
+    const userId = useAppSelector(state => state.profile.activeProfile.userId)
 
     return (
         <>
@@ -31,7 +31,6 @@ const Posts: FC<TPostsProps> = (props) => {
                     <STitle
                         color={theme.colors.primaryLightest}
                     >
-                        {/*{state.activeProfile.fullName} posts*/}
                         Demo posts
                     </STitle>
                     <SText
@@ -41,8 +40,8 @@ const Posts: FC<TPostsProps> = (props) => {
                         ({posts.postsList.length})
                     </SText>
                 </Box>
-                {props.myId === activeProfile.userId && (
-                    <AddPost newPostText={posts.newPostText}/>
+                {props.myId === userId && (
+                    <AddPost newPostText={posts.newPostText} />
                 )}
             </Box>
             {posts.postsList.length > 0

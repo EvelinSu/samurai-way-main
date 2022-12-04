@@ -1,4 +1,3 @@
-
 import {TAppDispatch} from "./store/store";
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
 import {Dispatch} from "redux";
@@ -42,7 +41,7 @@ const slice = createSlice({
             state.messages = initialState.messages
         },
         authModalToggleAC(state, action: PayloadAction<boolean>) {
-           state.authModalToggle = action.payload
+            state.authModalToggle = action.payload
         },
         setAuthMessages(state, action: PayloadAction<string[]>) {
             state.messages = action.payload
@@ -50,11 +49,7 @@ const slice = createSlice({
     }
 })
 
-const authReducer = slice.reducer
-
-export const {setAuthUserDataAC, resetAuthUserDataAC, authModalToggleAC, setAuthMessages} = slice.actions
-
-export const getAuthThunk = () =>  (dispatch: TAppDispatch) => {
+export const getAuthThunk = () => (dispatch: TAppDispatch) => {
     authAPI
         .getMyData()
         .then((me) => {
@@ -100,6 +95,7 @@ export const logoutThunk = () => async (dispatch: Dispatch) => {
         })
 }
 
+const authReducer = slice.reducer
 export default authReducer
 
-
+export const {setAuthUserDataAC, resetAuthUserDataAC, authModalToggleAC, setAuthMessages} = slice.actions

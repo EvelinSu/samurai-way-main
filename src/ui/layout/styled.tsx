@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import {theme} from "../styles/constants";
 
-export const SSiteWrapper = styled.div( props => ({
+export const SSiteWrapper = styled.div(props => ({
     display: "flex",
     justifyContent: "center",
     gap: 30,
@@ -13,7 +13,7 @@ export const SSiteWrapper = styled.div( props => ({
     minWidth: 800,
 }))
 
-export const SSiteContainer = styled.div( props => ({
+export const SSiteContainer = styled.div(props => ({
     display: "flex",
     height: "100%",
     width: "100%",
@@ -21,11 +21,7 @@ export const SSiteContainer = styled.div( props => ({
 
 }))
 
-type TSSiteContent = {
-    stylized?: boolean
-}
-
-export const SSiteContent = styled.div<TSSiteContent>(({stylized}) => ({
+export const SSiteContent = styled.div<{ stylized?: boolean }>(({stylized}) => ({
     display: "flex",
     flexDirection: "column",
     overflow: "auto",
@@ -41,6 +37,4 @@ export const SSiteContent = styled.div<TSSiteContent>(({stylized}) => ({
         background: `linear-gradient(to left bottom, ${theme.colors.secondary}, ${theme.colors.primaryLight})`,
 
     }
-
-
 }))
