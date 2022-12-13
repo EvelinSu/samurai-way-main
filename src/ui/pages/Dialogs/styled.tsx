@@ -8,7 +8,6 @@ export const SDialogs = styled.div(props => ({
     overflow: "hidden",
     gap: 20,
     height: "100%",
-
 }))
 
 export const SDialogsSidebar = styled.div((props) => ({
@@ -20,7 +19,7 @@ export const SDialogsSidebar = styled.div((props) => ({
     gap: 10,
 }))
 
-export const SDialogsItemsList = styled.div((props) => ({
+export const SDialogItemList = styled.div((props) => ({
     display: "flex",
     flexDirection: "column",
     width: "100%",
@@ -43,7 +42,6 @@ export const SNoneDialog = styled.div((props) => ({
     borderRadius: theme.blockSettings.borderRadius,
     backgroundColor: "rgba(255, 255, 255, 0.1)",
     padding: "3px 15px",
-
 }))
 
 export const SDialogWindowHeader = styled.div((props) => ({
@@ -53,7 +51,6 @@ export const SDialogWindowHeader = styled.div((props) => ({
     backgroundColor: "rgba(0, 0, 0, 0.1)",
     borderRadius: `${theme.blockSettings.borderRadius} 0 ${theme.blockSettings.borderRadius} 0`,
     gap: 20,
-
 }))
 
 export const SDialogWindowBody = styled.div((props) => ({
@@ -69,5 +66,4 @@ export const SDialogWindowFooter = styled.div((props) => ({
     gap: 20,
     padding: 10,
     borderRadius: theme.blockSettings.borderRadius,
-
 }))

@@ -2,8 +2,8 @@ import React, {useEffect, useState} from 'react';
 import {SPagination, SPaginationItem} from "./styled";
 import ArrowIcon from "../../assets/icons/ArrowIcon";
 import {SText} from '../Text/SText';
-import {useHistory , useParams} from "react-router-dom";
-import {PATH} from "../../../bll/types";
+import {useHistory, useParams} from "react-router-dom";
+import {PATH} from "../../routes/types";
 
 type TPaginationProps = {
     totalPagesCount: number
@@ -15,14 +15,14 @@ const initialState = {
     pageCount: 8,
 }
 
+const pageCount = initialState.pageCount - 1
+
 const Pagination: React.FC<TPaginationProps> = React.memo((props) => {
 
     const navigate = useHistory()
     const {page} = useParams<{ page: string }>()
 
-    //pagination logic
     const [visiblePages, setVisiblePages] = useState([initialState.minPageCount, initialState.pageCount])
-    // const staticPages = [initialState.minPageCount, props.totalPagesCount]
 
     const refreshPages = () => {
         let pages: number[] = []
@@ -33,19 +33,7 @@ const Pagination: React.FC<TPaginationProps> = React.memo((props) => {
         return pages
     }
 
-    useEffect(() => {
-        refreshPages()
-    }, [visiblePages])
-
-    useEffect(() => {
-        if (page && +page > props.totalPagesCount) navigate.push(String(props.totalPagesCount))
-    }, [props.totalPagesCount])
-
-    //
-
-    const pageCount = initialState.pageCount - 1
-
-    const onArrowClick = (direction: 'backward' | 'forward') => {
+    const onArrowClickHandler = (direction: 'backward' | 'forward') => {
         if (direction === "backward" && visiblePages[0] > 1) {
             setVisiblePages([visiblePages[0] - pageCount, visiblePages[1] - pageCount])
         }
@@ -56,27 +44,22 @@ const Pagination: React.FC<TPaginationProps> = React.memo((props) => {
     const onClickHandler = (el: number) => {
         let filterName = '/' + props.filterName
         navigate.push(`${PATH.users}/${el}${filterName}`)
-
     }
+
+    useEffect(() => {
+        refreshPages()
+    }, [visiblePages])
+
+    useEffect(() => {
+        if (page && +page > props.totalPagesCount) navigate.push(String(props.totalPagesCount))
+    }, [props.totalPagesCount])
 
     return (
         <SPagination>
             <ArrowIcon
-                onClick={() => onArrowClick('backward')}
+                onClick={() => onArrowClickHandler('backward')}
                 isDisabled={visiblePages[0] === 1}
             />
-            {/*{visiblePages[0] !== 1 &&*/}
-            {/*    <>*/}
-            {/*        <SPaginationItem*/}
-            {/*            key={staticPages[0]}*/}
-            {/*            isActive={+page ? +page === staticPages[0] : staticPages[0] === 1}*/}
-            {/*            onClick={() => onClickHandler(staticPages[0])}*/}
-            {/*        >*/}
-            {/*            {staticPages[0]}*/}
-            {/*        </SPaginationItem>*/}
-            {/*        <SText opacity={0.4}>. . . </SText>*/}
-            {/*    </>*/}
-            {/*}*/}
             {refreshPages().map((el) => {
                 return (
                     <SPaginationItem
@@ -88,25 +71,13 @@ const Pagination: React.FC<TPaginationProps> = React.memo((props) => {
                     </SPaginationItem>
                 )
             })}
-            {/*{visiblePages[1] < props.totalPagesCount &&*/}
-            {/*    <>*/}
-            {/*        <SText opacity={0.4}>. . . </SText>*/}
-            {/*        <SPaginationItem*/}
-            {/*            key={staticPages[1]}*/}
-            {/*            isActive={+page ? +page === staticPages[1] : staticPages[1] === 1}*/}
-            {/*            onClick={() => onClickHandler(staticPages[1])}*/}
-            {/*        >*/}
-            {/*            {staticPages[1]}*/}
-            {/*        </SPaginationItem>*/}
-            {/*    </>*/}
-            {/*}*/}
             {
                 visiblePages[1] < props.totalPagesCount
                 && visiblePages[1] > initialState.pageCount - 1
                 && <SText opacity={0.4}>. . . {props.totalPagesCount}</SText>
             }
             <ArrowIcon
-                onClick={() => onArrowClick('forward')}
+                onClick={() => onArrowClickHandler('forward')}
                 rotate={"180deg"}
                 isDisabled={visiblePages[1] >= props.totalPagesCount}
             />

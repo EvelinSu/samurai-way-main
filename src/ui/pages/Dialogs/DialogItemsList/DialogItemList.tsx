@@ -1,8 +1,8 @@
 import React, {FC} from 'react';
 import DialogItem from "../DialogItem/DialogItem";
-import {SDialogsItemsList} from "../styled";
+import {SDialogItemList} from "../styled";
 import {TDialogs, TMessage} from "../../../../bll/dialogsReducer";
-import {TUser} from "../../../../bll/usersReducer";
+import {TUser} from "../../../../dal/api/usersApi";
 
 type TDialogsItemsList = {
     dialogs: TDialogs
@@ -10,10 +10,10 @@ type TDialogsItemsList = {
     users: Array<TUser>
 }
 
-const DialogsItemsList: FC<TDialogsItemsList> = ({dialogs, messages, users}) => {
+const DialogItemList: FC<TDialogsItemsList> = ({dialogs, messages, users}) => {
 
     return (
-        <SDialogsItemsList>
+        <SDialogItemList>
             {users.map((user) => {
                 let messagesId = dialogs[user.id]?.messagesId || ''
                 return (
@@ -26,8 +26,8 @@ const DialogsItemsList: FC<TDialogsItemsList> = ({dialogs, messages, users}) => 
                     />
                 )
             })}
-        </SDialogsItemsList>
+        </SDialogItemList>
     );
 };
 
-export default DialogsItemsList;
+export default DialogItemList;

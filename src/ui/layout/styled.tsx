@@ -18,7 +18,6 @@ export const SSiteContainer = styled.div(props => ({
     height: "100%",
     width: "100%",
     maxWidth: 950,
-
 }))
 
 export const SSiteContent = styled.div<{ stylized?: boolean }>(({stylized}) => ({
@@ -35,6 +34,5 @@ export const SSiteContent = styled.div<{ stylized?: boolean }>(({stylized}) => (
         margin: "30px 0",
         borderRadius: theme.blockSettings.borderRadius,
         background: `linear-gradient(to left bottom, ${theme.colors.secondary}, ${theme.colors.primaryLight})`,
-
     }
 }))

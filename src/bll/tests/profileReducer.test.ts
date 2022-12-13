@@ -1,7 +1,7 @@
-import profileReducer, {setMyStatus, setActiveProfile, TProfilePage} from "../profileReducer";
-import {TActiveProfile} from "../../dal/api/types";
+import profileReducer, {setActiveProfile, setMyStatus, TProfileState} from "../profileReducer";
+import {TActiveProfileResponse} from "../../dal/api/types";
 
-let initialState: TProfilePage;
+let initialState: TProfileState;
 
 beforeEach(() => {
     initialState = ({
@@ -32,7 +32,7 @@ beforeEach(() => {
 
 test('set profile', () => {
 
-    const newProfile: TActiveProfile = {
+    const newProfile: TActiveProfileResponse = {
         contacts: {
             facebook: "link",
             website: "link1",

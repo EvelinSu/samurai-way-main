@@ -6,8 +6,8 @@ import UserIcon from "../../../assets/icons/UserIcon";
 import defaultPhoto from '../../../assets/img/default-photo.png'
 import {TMessage} from "../../../../bll/dialogsReducer";
 import {useHistory, useParams} from "react-router-dom";
-import {TUser} from "../../../../bll/usersReducer";
-import {PATH} from "../../../../bll/types";
+import {TUser} from "../../../../dal/api/usersApi";
+import {PATH} from "../../../routes/types";
 import Avatar from "../../../common/Avatar/Avatar";
 
 type TDialogItemProps = {

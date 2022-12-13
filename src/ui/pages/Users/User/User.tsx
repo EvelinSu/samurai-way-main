@@ -1,15 +1,16 @@
 import React, {useCallback, useState} from 'react';
 import {BoxShadowContent, SUserBox, SUserBoxHeader, SUserName, SUserStatus, SUserStatusText} from "./styled";
-import userPhoto from "../../assets/img/default-photo.png";
-import {Box} from "../../common/Box/Box";
-import Button from "../../common/Button/Button";
-import {theme} from "../../styles/constants";
-import {followToggleThunk, TUser} from "../../../bll/usersReducer";
+import userPhoto from "../../../assets/img/default-photo.png";
+import {Box} from "../../../common/Box/Box";
+import Button from "../../../common/Button/Button";
+import {theme} from "../../../styles/constants";
 import {NavLink} from "react-router-dom";
 import {shallowEqual} from "react-redux";
-import {authModalToggleAC} from "../../../bll/authReducer";
-import {useAppDispatch, useAppSelector} from "../../../common/hooks/hooks";
-import Avatar from "../../common/Avatar/Avatar";
+import {authModalToggleAC} from "../../../../bll/authReducer";
+import {useAppDispatch, useAppSelector} from "../../../../common/hooks";
+import Avatar from "../../../common/Avatar/Avatar";
+import {followToggleThunk} from "../../../../bll/usersReducer";
+import {TUser} from "../../../../dal/api/usersApi";
 
 type TUserProps = {
     user: TUser
@@ -18,6 +19,9 @@ type TUserProps = {
 
 const User: React.FC<TUserProps> = React.memo(({user, id}) => {
     const dispatch = useAppDispatch()
+
+    const [isHovered, setIsHovered] = useState<string>('')
+
     const isAuth = useAppSelector(state => state.auth.isAuth)
     const followingInProgress = useAppSelector(state => state.users.followingInProgress, shallowEqual)
 
@@ -25,9 +29,7 @@ const User: React.FC<TUserProps> = React.memo(({user, id}) => {
         isAuth
             ? dispatch(followToggleThunk(id, follow))
             : dispatch(authModalToggleAC(true))
-    }, [dispatch, isAuth])
-
-    const [isHovered, setIsHovered] = useState<string>('')
+    }, [isAuth])
 
     return (
         <SUserBox
@@ -45,7 +47,9 @@ const User: React.FC<TUserProps> = React.memo(({user, id}) => {
                                 img={userPhoto}
                             />
                         )}
-                        <SUserName title={user.name} isHovered={isHovered === id}>{user.name}</SUserName>
+                        <SUserName title={user.name} isHovered={isHovered === id}>
+                            {user.name}
+                        </SUserName>
                     </SUserBoxHeader>
                 </NavLink>
                 <Box flexGrow={1} width={"100%"} flexDirection={"column"}>

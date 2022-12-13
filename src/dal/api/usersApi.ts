@@ -1,31 +1,35 @@
 import {instance} from "./instance";
+import {TCommonResponse} from "./types";
 
 export const usersAPI = {
     getUsers(currentPage: number, pageSize: number) {
-        return instance.get<TUser[]>(`users?page=${currentPage}&count=${pageSize}`)
+        return instance.get<TCommonResponse<TUser[]>>(`users?page=${currentPage}&count=${pageSize}`)
                        .then(response => response.data)
     },
     searchUsers(name: string, currentPage: string, pageSize: number) {
-        return instance.get(`users?page=${currentPage}&count=${pageSize}&term=${name}`)
+        return instance.get<TUsersResponse>(`users?page=${currentPage}&count=${pageSize}&term=${name}`)
                        .then(response => response.data)
     }
 }
 
 export const followAPI = {
     postFollow(id: number) {
-        return instance.post(`follow/${id}`, {})
+        return instance.post<TCommonResponse>(`follow/${id}`, {})
     },
     unFollow(id: number) {
-        return instance.delete(`follow/${id}`)
+        return instance.delete<TCommonResponse>(`follow/${id}`)
     }
 }
 
+export type TUsersResponse = {
+    items: TUser[],
+    totalCount: number
+}
 
 export type TUser = {
     id: number,
     photos: { [Key: string]: string },
     status: string,
     name: string,
-    // lastSeen: string,
     followed: boolean
 }

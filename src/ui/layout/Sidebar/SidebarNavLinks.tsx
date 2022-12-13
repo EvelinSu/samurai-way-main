@@ -1,16 +1,16 @@
 import React from 'react';
-import {navLinks} from "./sidebarData";
+import {navLinks} from "./navLinks";
 import {SSidebarItem, SSidebarItemIcon} from "./styled";
 import {useLocation} from "react-router-dom";
 import {authModalToggleAC} from "../../../bll/authReducer";
-import {useAppDispatch, useAppSelector} from "../../../common/hooks/hooks";
+import {useAppDispatch, useAppSelector} from "../../../common/hooks";
 
 type TSidebarItemProps = {
     isAuth: boolean
     onClick: (link: string) => void
 }
 
-const SidebarNavList: React.FC<TSidebarItemProps> = React.memo((props) => {
+const SidebarNavLinks: React.FC<TSidebarItemProps> = React.memo((props) => {
     const dispatch = useAppDispatch()
     const location = useLocation();
 
@@ -39,8 +39,7 @@ const SidebarNavList: React.FC<TSidebarItemProps> = React.memo((props) => {
                 </SSidebarItem>
             ))}
         </>
-
     );
 });
 
-export default SidebarNavList;
+export default SidebarNavLinks;

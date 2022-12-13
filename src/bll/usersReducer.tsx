@@ -1,55 +1,67 @@
 import {Dispatch} from "redux";
 import {createAsyncThunk, createSlice, PayloadAction} from "@reduxjs/toolkit";
-import {followAPI, usersAPI} from "../dal/api/usersApi";
-
-export type TUser = {
-    id: number,
-    photos: { [Key: string]: string },
-    status: string,
-    name: string,
-    // lastSeen: string,
-    followed: boolean
-}
-
-export type TUsersPage = {
-    users: Array<TUser>
-    pageSize: number,
-    totalUsersCount: number
-    isFetching: boolean
-    followingInProgress: Array<number>
-    filter: {
-        name: string
-    }
-}
-
-const initialState: TUsersPage = {
-    users: [],
-    pageSize: 15,
-    totalUsersCount: 15,
-    isFetching: true,
-    followingInProgress: [],
-    filter: {
-        name: ''
-    }
-}
+import {followAPI, TUser, usersAPI} from "../dal/api/usersApi";
+import {setAppMessage} from "./appReducer";
+import {TCommonResponse} from "../dal/api/types";
+import {AxiosResponse} from "axios";
 
 export const getUsersThunk = createAsyncThunk(
     'user/get',
-    async ({currentPage, pageSize}: { currentPage: number, pageSize: number }) => {
+    async ({currentPage, pageSize}: { currentPage: number, pageSize: number }, {dispatch}) => {
         try {
-            const res: TUser[] = await usersAPI.getUsers(currentPage, pageSize)
-            return res
-        } catch (err: any) {
-            alert(`${err.message}, ......you can see demo users! but can't see their profiles....`)
-            throw new Error(err.message)
+            return await usersAPI.getUsers(currentPage, pageSize)
+        } catch (err) {
+            dispatch(setAppMessage({text: `${err}`, severity: "error"}))
         }
-
     }
 )
 
+export const searchUsersThunk = (name: string, currentPage: string, pageSize: number) => async (dispatch: Dispatch) => {
+    dispatch(usersToggleLoader(true))
+    try {
+        const response = await usersAPI.searchUsers(name, currentPage, pageSize)
+        dispatch(setTotalUsersCount(response.totalCount))
+        dispatch(setUsersFilter(name))
+        dispatch(setUsers(response.items))
+    } catch {
+        dispatch(setAppMessage({text: `Something went wrong`, severity: "error"}))
+    } finally {
+        dispatch(usersToggleLoader(false))
+    }
+}
+
+export const followToggleThunk = (id: number, followed: boolean) => async (dispatch: Dispatch) => {
+    dispatch(setFollowingProgress({id: id, isInProgress: true}))
+    try {
+        let response: AxiosResponse<TCommonResponse>;
+        if (!followed) {
+            response = await followAPI.postFollow(id)
+        } else {
+            response = await followAPI.unFollow(id)
+        }
+        if (response.data.resultCode === 0) {
+            dispatch(followToggle(id))
+            dispatch(setFollowingProgress({id: id, isInProgress: false}))
+        } else {
+            throw new Error(response.data.messages[0])
+        }
+    } catch (err) {
+        dispatch(setAppMessage({text: `${err}`, severity: "error"}))
+    }
+}
+
 const slice = createSlice({
     name: "users",
-    initialState: initialState,
+    initialState: {
+        users: [],
+        pageSize: 15,
+        totalUsersCount: 15,
+        isFetching: true,
+        followingInProgress: [],
+        filter: {
+            name: ''
+        }
+    } as TUsersState,
     reducers: {
         followToggle(state, action: PayloadAction<number>) {
             state.users = state.users.map(el => el.id === action.payload
@@ -61,7 +73,7 @@ const slice = createSlice({
             state.users = action.payload
         },
         setTotalUsersCount(state, action: PayloadAction<number>) {
-            return {...state, totalUsersCount: action.payload}
+            state.totalUsersCount = action.payload
         },
         usersToggleLoader(state, action: PayloadAction<boolean>) {
             state.isFetching = action.payload
@@ -91,40 +103,16 @@ const slice = createSlice({
             state.isFetching = false
         }
     }
-
 })
 
-export const searchUsersThunk = (name: string, currentPage: string, pageSize: number) => (dispatch: Dispatch) => {
-    dispatch(usersToggleLoader(true))
-    usersAPI.searchUsers(name, currentPage, pageSize).then(response => {
-        dispatch(setUsersFilter(name))
-        dispatch(setTotalUsersCount(response.totalCount))
-        dispatch(setUsers(response.items))
-    })
-            .catch((err) => alert(err.message))
-            .finally(() => dispatch(usersToggleLoader(false)))
-}
-
-export const followToggleThunk = (id: number, followed: boolean) => (dispatch: Dispatch) => {
-    dispatch(setFollowingProgress({id: id, isInProgress: true}))
-    if (!followed) {
-        followAPI
-            .postFollow(id)
-            .then((res) => {
-                if (res.data.resultCode === 0) {
-                    dispatch(followToggle(id))
-                    dispatch(setFollowingProgress({id: id, isInProgress: false}))
-                }
-            })
-    } else {
-        followAPI
-            .unFollow(id)
-            .then((res) => {
-                if (res.data.resultCode === 0) {
-                    dispatch(followToggle(id))
-                    dispatch(setFollowingProgress({id: id, isInProgress: false}))
-                }
-            })
+export type TUsersState = {
+    users: Array<TUser>
+    pageSize: number,
+    totalUsersCount: number
+    isFetching: boolean
+    followingInProgress: Array<number>
+    filter: {
+        name: string
     }
 }
 

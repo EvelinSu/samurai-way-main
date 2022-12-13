@@ -3,36 +3,12 @@ import {getStringDate} from "../common/utils";
 import {demoDialogs, demoMessages} from "./demo/dialogsDemo";
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
 
-type Dictionary<T> = {
-    [Key: string]: T;
-}
-type TDialog = {
-    newMessageText: string
-    messagesId: Array<string>,
-    userId: string
-}
-
-export type TDialogs = Dictionary<TDialog>
-
-export type TMessage = {
-    id: string,
-    text: string,
-    time: string,
-    me?: boolean,
-    userId?: string
-}
-export type TDialogsPage = {
-    dialogsList: TDialogs
-    dialogsMessages: Array<TMessage>
-}
-const initialState: TDialogsPage = {
-    dialogsList: demoDialogs,
-    dialogsMessages: demoMessages,
-}
-
 const slice = createSlice({
     name: "dialogs",
-    initialState: initialState,
+    initialState: {
+        dialogsList: demoDialogs,
+        dialogsMessages: demoMessages,
+    } as TDialogsState,
     reducers: {
         changeNewMessageTextAC(state, action: PayloadAction<{ newMessageText: string, activeDialogKey: string }>) {
             state.dialogsList[action.payload.activeDialogKey].newMessageText = action.payload.newMessageText
@@ -47,10 +23,30 @@ const slice = createSlice({
             }
             state.dialogsMessages.push(newMessage)
             state.dialogsList[action.payload.activeDialogKey].messagesId.push(messageId)
-
         }
     }
 })
+
+export type TMessage = {
+    id: string,
+    text: string,
+    time: string,
+    me?: boolean,
+    userId?: string
+}
+
+type TDialog = {
+    newMessageText: string
+    messagesId: Array<string>,
+    userId: string
+}
+
+export type TDialogs = { [Key: string]: TDialog }
+
+type TDialogsState = {
+    dialogsList: TDialogs;
+    dialogsMessages: Array<TMessage>
+}
 
 export const {changeNewMessageTextAC, sendMessageAC} = slice.actions
 

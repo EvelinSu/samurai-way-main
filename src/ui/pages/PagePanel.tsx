@@ -15,7 +15,6 @@ const PagePanel: React.FC<TPagePanelProps> = React.memo((props) => {
                 {props.children}
             </Box>
         </SPagePanel>
-
     );
 });
 

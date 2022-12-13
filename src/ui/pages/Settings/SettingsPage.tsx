@@ -3,7 +3,7 @@ import {SSiteContent} from "../../layout/styled";
 import Avatar from "../../common/Avatar/Avatar";
 import userPhoto from "../../assets/img/default-photo.png";
 import {changeProfile, putAvatar} from "../../../bll/profileReducer";
-import {useAppDispatch, useAppSelector} from "../../../common/hooks/hooks";
+import {useAppDispatch, useAppSelector} from "../../../common/hooks";
 import {Box} from "../../common/Box/Box";
 import Input from "../../common/Form/Input";
 import {useFormik} from "formik";
@@ -22,8 +22,8 @@ import MainLinkIcon from "../../assets/icons/contacts/MainLinkIcon";
 import WebsiteIcon from "../../assets/icons/contacts/WebsiteIcon";
 import YouTubeIcon from "../../assets/icons/contacts/YouTubeIcon";
 import {Redirect} from "react-router-dom";
-import {PATH} from "../../../bll/types";
-import {TActiveProfile} from "../../../dal/api/types";
+import {PATH} from "../../routes/types";
+import {TActiveProfileResponse} from "../../../dal/api/types";
 
 export const SettingsPage = () => {
     const dispatch = useAppDispatch()
@@ -54,7 +54,7 @@ export const SettingsPage = () => {
             ,
         }),
         onSubmit: (values) => {
-            const validProfile: TActiveProfile = {
+            const validProfile: TActiveProfileResponse = {
                 aboutMe: "Just me",
                 lookingForAJob: values.lookingForAJob,
                 lookingForAJobDescription: values.lookingForAJobDescription,

@@ -1,11 +1,7 @@
 import styled from "styled-components";
 import {theme} from "../../styles/constants";
 
-type TSGlobalLoaderProps = {
-
-}
-
-export const SGlobalLoader = styled.div<TSGlobalLoaderProps>((props) => ({
+export const SGlobalLoader = styled.div((props) => ({
     display: "flex",
     alignItems: "center",
     justifyContent: "center",

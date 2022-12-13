@@ -3,17 +3,17 @@ import {Property} from "csstype";
 import {theme} from "../../styles/constants";
 
 interface TSTextProps {
-    isEllipsis?: boolean;
-    opacity?: string | number;
+    opacity?: Property.Opacity | number;
     fontWeight?: Property.FontWeight;
     fontSize?: Property.FontSize;
-    margin?: string;
-    isLink?: boolean;
+    margin?: Property.Margin | number;
     textAlign?: Property.TextAlign;
     lineHeight?: Property.LineHeight;
     lineClamp?: Property.LineClamp;
     maxWidth?: Property.MaxWidth;
     whiteSpace?: Property.WhiteSpace;
+    isLink?: boolean;
+    isEllipsis?: boolean;
 }
 
 export const SText = styled.span<TSTextProps>(
@@ -53,10 +53,10 @@ export const SText = styled.span<TSTextProps>(
             text-decoration: underline;
             margin: 0 5px;
             cursor: pointer;
+
             &:hover {
                 opacity: 0.7;
             }
-            
         }
     `
 );

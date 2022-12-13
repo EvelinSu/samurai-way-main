@@ -1,13 +1,11 @@
 import React, {ChangeEvent} from 'react';
 import {DefaultInputPropsType} from "../Form/Input";
-import { SText } from '../Text/SText';
+import {SText} from '../Text/SText';
 import {SCheckbox, SLabel} from "./styled";
 
-
-type TCheckboxProps =  DefaultInputPropsType & {
+type TCheckboxProps = DefaultInputPropsType & {
     label: string
     onChangeChecked?: (checked: boolean) => void
-
 }
 
 const Checkbox: React.FC<TCheckboxProps> = (props) => {
@@ -26,7 +24,6 @@ const Checkbox: React.FC<TCheckboxProps> = (props) => {
                 onChange={onChangeCallback}
             />
             {props.label && <SText>{props.label}</SText>}
-
         </SLabel>
     );
 };

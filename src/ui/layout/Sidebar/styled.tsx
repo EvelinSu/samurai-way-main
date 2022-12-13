@@ -39,19 +39,15 @@ export const SSidebarAvatar = styled.div<TSSidebarAvatar>((props) => ({
         pointerEvents: "none",
         opacity: 0.3,
     }
-
 }))
 
 type TSSidebarItemProps = {
-    margin?: Property.Margin,
-    label?: string,
-    onClick?: () => void,
-    isActive?: boolean,
-    activeTab?: string
-    to?: string,
-    disabled?: boolean
+    margin: Property.Margin,
+    label: string,
+    isActive: boolean,
+    disabled: boolean
 }
-export const SSidebarItem = styled.div<TSSidebarItemProps>(({disabled, isActive, ...props}) => ({
+export const SSidebarItem = styled.div<Partial<TSSidebarItemProps>>(({disabled, isActive, ...props}) => ({
     display: "flex",
     flexDirection: "column",
     alignItems: "center",

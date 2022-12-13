@@ -42,12 +42,3 @@ export const SEditableText = styled(SText)<TSEditableTextProps>((props) => ({
         }
     }
 }))
-
-// export const SEditableTextInput = styled(SInput)(() => ({
-//     borderRadius: 15,
-//     padding: "3px 10px",
-//     cursor: "pointer",
-//     "&:hover": {
-//         backgroundColor: "rgba(255, 255, 255, 0.2)",
-//     }
-// }))

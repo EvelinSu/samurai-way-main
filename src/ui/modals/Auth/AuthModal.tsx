@@ -10,7 +10,7 @@ import {Box} from '../../common/Box/Box';
 import {shallowEqual} from "react-redux";
 import {SErrorBox} from "../../common/Errors/styles";
 import LockIcon from "../../assets/icons/LockIcon";
-import {useAppDispatch, useAppSelector} from "../../../common/hooks/hooks";
+import {useAppDispatch, useAppSelector} from "../../../common/hooks";
 import {loginThunk} from "../../../bll/authReducer";
 import * as Yup from 'yup';
 import {SText} from "../../common/Text/SText";
@@ -21,10 +21,11 @@ type LoginRequest = {
     rememberMe: boolean;
 }
 const AuthModal = () => {
-
     const dispatch = useAppDispatch()
-    const authMessages = useAppSelector(state => state.auth.messages, shallowEqual)
+
     const [isLoading, setIsLoading] = useState(false)
+
+    const authMessages = useAppSelector(state => state.auth.messages, shallowEqual)
 
     const {
         handleBlur,
@@ -58,7 +59,6 @@ const AuthModal = () => {
         setIsLoading(true)
         dispatch(loginThunk(email, password, false))
             .then(() => setIsLoading(false))
-
     }
 
     return (
@@ -108,7 +108,7 @@ const AuthModal = () => {
                     name="rememberMe"
                     onChange={(event) => setFieldValue("rememberMe", event.target.checked)}
                 />
-                {authMessages.length > 0 ? <SErrorBox> {authMessages} </SErrorBox> : <></>}
+                {authMessages?.length > 0 ? <SErrorBox> {authMessages} </SErrorBox> : <></>}
                 <Box justifyContent={"center"}>
                     <Button
                         type="submit"

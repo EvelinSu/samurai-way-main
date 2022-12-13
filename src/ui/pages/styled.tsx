@@ -1,11 +1,7 @@
 import styled from "styled-components";
 import {STitle} from "../common/Text/STitle";
 
-type TSPagePanelProps = {
-
-}
-
-export const SPagePanel = styled.div<TSPagePanelProps>((props) => ({
+export const SPagePanel = styled.div((props) => ({
     display: "flex",
     justifyContent: "space-between",
     alignItems: "center",

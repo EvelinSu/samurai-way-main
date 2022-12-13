@@ -71,6 +71,5 @@ export const SPostPanel = styled.div<{ likes: number }>((props) => ({
         bottom: -15,
         opacity: 0.4,
         pointerEvents: "none",
-
     }
 }))

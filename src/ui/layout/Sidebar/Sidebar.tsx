@@ -5,32 +5,26 @@ import LogoutIcon from "../../assets/icons/LogoutIcon";
 import Modal from "../../modals/Modal";
 import LoginIcon from "../../assets/icons/LoginIcon";
 import {shallowEqual} from "react-redux";
-import {
-    authModalToggleAC,
-    logoutThunk,
-} from "../../../bll/authReducer";
+import {authModalToggleAC, logoutThunk,} from "../../../bll/authReducer";
 import defaultPhoto from '../../assets/img/default-photo.png'
-import {PATH} from "../../../bll/types";
-import {useAppDispatch, useAppSelector} from "../../../common/hooks/hooks";
-import SidebarNavList from "./SidebarNavList";
+import {PATH} from "../../routes/types";
+import {useAppDispatch, useAppSelector} from "../../../common/hooks";
+import SidebarNavLinks from "./SidebarNavLinks";
 import {SAvatar} from "../../common/Avatar/styled";
 
 const Sidebar = React.memo(() => {
     const dispatch = useAppDispatch()
-    const account = useAppSelector(state => state.auth.account, shallowEqual);
-    const isAuth = useAppSelector(state => state.auth.isAuth);
-
     const history = useHistory();
     const location = useLocation();
 
     const [isOpened, setIsOpened] = useState<boolean>(false)
 
+    const account = useAppSelector(state => state.auth.account, shallowEqual);
+    const isAuth = useAppSelector(state => state.auth.isAuth);
+
     const onClickHandler = () => {
-        if (!isAuth) {
-            return dispatch(authModalToggleAC(true))
-        } else {
-            setIsOpened(true)
-        }
+        if (!isAuth) return dispatch(authModalToggleAC(true))
+        setIsOpened(true)
     }
 
     const onSidebarNavClickHandler = (link: string) => {
@@ -56,7 +50,7 @@ const Sidebar = React.memo(() => {
             >
                 <SAvatar size={"small"} img={defaultPhoto} />
             </SSidebarAvatar>
-            <SidebarNavList
+            <SidebarNavLinks
                 isAuth={isAuth}
                 onClick={onSidebarNavClickHandler}
             />
@@ -70,7 +64,13 @@ const Sidebar = React.memo(() => {
                 </SSidebarItemIcon>
             </SSidebarItem>
             {isOpened &&
-                <Modal type={"default"} onSuccessClick={logoutHandler} isOpened={isOpened} setIsOpened={setIsOpened} />}
+                <Modal
+                    type={"default"}
+                    onSuccessClick={logoutHandler}
+                    isOpened={isOpened}
+                    setIsOpened={setIsOpened}
+                />
+            }
         </SSidebar>
     );
 });

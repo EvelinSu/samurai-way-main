@@ -1,4 +1,6 @@
-export const demoDialogs = {
+import {TDialogs, TMessage} from "../dialogsReducer";
+
+export const demoDialogs: TDialogs = {
     "4": {
         userId: '4',
         messagesId: [],
@@ -27,7 +29,7 @@ export const demoDialogs = {
 }
 
 let defaultDate = '1 hour ago'
-export const demoMessages = [
+export const demoMessages: TMessage[] = [
     {
         id: "1",
         text: "C'mon, ye evil wave- set sails for life! All reefs fight dark, wet plunders. The gold sails with riddle, pull the cook islands until it stutters. ",

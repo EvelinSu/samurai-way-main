@@ -2,7 +2,7 @@ import React from 'react';
 import {STextarea} from "../../../common/Textarea/STextarea";
 import Button from "../../../common/Button/Button";
 import {changeNewMessageTextAC, sendMessageAC} from "../../../../bll/dialogsReducer";
-import {useAppDispatch, useAppSelector} from "../../../../common/hooks/hooks";
+import {useAppDispatch, useAppSelector} from "../../../../common/hooks";
 
 type TDialogSendMessage = {
     id: string
@@ -10,34 +10,34 @@ type TDialogSendMessage = {
 }
 
 const DialogSendMessage: React.FC<TDialogSendMessage> = (props) => {
-
-    const newMessageText = useAppSelector(state => state.dialogs.dialogsList[props.id].newMessageText)
     const dispatch = useAppDispatch()
 
-    const onKeyPress = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
+    const newMessageText = useAppSelector(state => state.dialogs.dialogsList[props.id].newMessageText)
+
+    const onKeyPressHandler = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
         if (e.key === 'Enter' && e.shiftKey) return
         if (e.key === 'Enter') {
             e.preventDefault()
-            addNewMessage()
+            addNewMessageHandler()
         }
     }
 
-    const addNewMessage = () => {
+    const addNewMessageHandler = () => {
         if (newMessageText.trim() !== '') {
             dispatch(sendMessageAC({messageText: newMessageText.trim(), activeDialogKey: props.id}))
             dispatch(changeNewMessageTextAC({newMessageText: '', activeDialogKey: props.id}))
             props.scrollToBottom()
         }
     }
-    const onChangeSetNewMessageText = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    const onChangeNewMessageTextHandler = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
         dispatch(changeNewMessageTextAC({newMessageText: e.currentTarget.value, activeDialogKey: props.id}))
     }
 
     return (
         <>
             <STextarea
-                onKeyPress={onKeyPress}
-                onChange={onChangeSetNewMessageText}
+                onKeyPress={onKeyPressHandler}
+                onChange={onChangeNewMessageTextHandler}
                 value={newMessageText}
                 height={"60px"}
                 placeholder={"Write" +
@@ -46,7 +46,7 @@ const DialogSendMessage: React.FC<TDialogSendMessage> = (props) => {
             <Button
                 isDisabled={newMessageText.trim() === ''}
                 label={'Send'}
-                onClick={addNewMessage}
+                onClick={addNewMessageHandler}
             />
         </>
 

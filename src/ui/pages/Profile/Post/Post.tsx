@@ -1,11 +1,11 @@
 import React, {FC, useState} from "react";
-import {SPost, SPostContent, SPostDate, SPostPanel, SPostText} from "./styled";
 import FavoriteIcon from "../../../assets/icons/FavoriteIcon";
 import FavoriteFillIcon from "../../../assets/icons/FavoriteFillIcon";
 import Avatar from "../../../common/Avatar/Avatar";
-import {useAppDispatch, useAppSelector} from "../../../../common/hooks/hooks";
+import {useAppDispatch, useAppSelector} from "../../../../common/hooks";
 import {authModalToggleAC} from "../../../../bll/authReducer";
 import {TPost} from "../../../../bll/postsReducer";
+import {SPost, SPostContent, SPostDate, SPostPanel, SPostText} from "./styled";
 
 type TPostProps = {
     post: TPost
@@ -28,8 +28,8 @@ const Post: FC<TPostProps> = React.memo(({post, avatar}) => {
         } else {
             dispatch(authModalToggleAC(true))
         }
-
     }
+
     return (
         <SPost>
             <Avatar img={avatar} />
@@ -46,8 +46,8 @@ const Post: FC<TPostProps> = React.memo(({post, avatar}) => {
                 {isLiked ? <FavoriteFillIcon /> : <FavoriteIcon />}
             </SPostPanel>
         </SPost>
-    );
-});
+    )
+})
 
 export default Post;
 

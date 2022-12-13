@@ -1,14 +1,9 @@
 import styled from "styled-components";
-import {Box} from "../../common/Box/Box";
-import {theme} from "../../styles/constants";
+import {Box} from "../../../common/Box/Box";
+import {theme} from "../../../styles/constants";
+import {Property} from "csstype";
 
-export const SUsers = styled.div(() => ({}))
-
-type TUserBox = {
-    img?: string,
-}
-
-export const SUserBox = styled(Box)<TUserBox>((props) => ({
+export const SUserBox = styled(Box)<{ img?: string }>((props) => ({
     flexDirection: "column",
     alignItems: "center",
     textAlign: "center",
@@ -41,15 +36,10 @@ export const BoxShadowContent = styled(Box)(props => ({
     "&:hover": {
         color: "rgba(255, 255, 255, 0.3)",
         boxShadow: `inset 0 0 100px 50px ${theme.colors.primaryDarkAlpha}`,
-
     }
 }))
 
-type TUserNameProps = {
-    isHovered?: boolean
-}
-
-export const SUserName = styled.div<TUserNameProps>(props => ({
+export const SUserName = styled.div<{ isHovered?: boolean }>(props => ({
     fontSize: 18,
     color: theme.colors.primaryLightest,
     fontWeight: 600,
@@ -72,11 +62,7 @@ export const SUserStatus = styled.div(props => ({
     flexGrow: 1,
 }))
 
-type TSUserStatusTextProps = {
-    opacity?: number
-}
-
-export const SUserStatusText = styled.div<TSUserStatusTextProps>(props => ({
+export const SUserStatusText = styled.div<{ opacity?: Property.Opacity | number }>(props => ({
     textOverflow: "ellipsis",
     overflow: "hidden",
     maxHeight: "2.4rem",

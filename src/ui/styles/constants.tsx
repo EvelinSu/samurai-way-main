@@ -14,8 +14,8 @@ export const theme = {
         text: "#eaeaea",
 
         status: {
-          error: "#dc6666",
-          success: "#539b5c",
+            error: "#dc6666",
+            success: "#539b5c",
         },
         message: {
             default: "#48507a",
@@ -36,6 +36,11 @@ export const theme = {
     orders: {
         notifications: 20,
         inputErrors: 2
+    },
+    media: {
+        extraLarge: 1140,
+        large: 960,
+        medium: 720,
+        small: 540,
     }
-
 }

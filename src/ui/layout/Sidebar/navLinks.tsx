@@ -1,14 +1,13 @@
-
 import MessageIcon from "../../assets/icons/MessageIcon";
 import PaperIcon from "../../assets/icons/PaperIcon";
 import MusicIcon from "../../assets/icons/MusicIcon";
 import SettingsIcon from "../../assets/icons/SettingsIcon";
 import React from "react";
 import {Property} from "csstype";
-import {PATH} from "../../../bll/types";
+import {PATH} from "../../routes/types";
 import UsersIcon from "../../assets/icons/UsersIcon";
 
-type TNavLink = {
+export type TNavLink = {
     id: number,
     label: string,
     icon: JSX.Element,
@@ -18,9 +17,7 @@ type TNavLink = {
     disabled?: boolean
 }
 
-type TNavLinks = Array<TNavLink>
-
-export const navLinks: TNavLinks = [
+export const navLinks: Array<TNavLink> = [
     {
         id: 1,
         label: "Messages",
@@ -49,7 +46,6 @@ export const navLinks: TNavLinks = [
         icon: <MusicIcon />,
         link: PATH.music,
         disabled: true
-
     },
     {
         id: 5,
@@ -59,5 +55,4 @@ export const navLinks: TNavLinks = [
         link: PATH.settings,
         needAuth: true,
     },
-
 ]

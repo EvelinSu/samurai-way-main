@@ -1,25 +1,12 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import {createSlice, PayloadAction} from "@reduxjs/toolkit";
 
-export type TThemes = "light" | "dark";
-
-type TAppMessage = {
-    id: string;
-    severity: "error" | "success";
-    text: string;
-};
-
-export type TApp = {
-    isInitialized: boolean;
-    messages: TAppMessage[];
-    isFetching: boolean;
-};
 const slice = createSlice({
     name: "app",
     initialState: {
         isInitialized: false,
         messages: [],
         isFetching: false,
-    } as TApp,
+    } as TAppState,
     reducers: {
         setIsInitialized(state, action: PayloadAction<boolean>) {
             state.isInitialized = action.payload;
@@ -41,9 +28,22 @@ const slice = createSlice({
         setIsFetching(state, action: PayloadAction<boolean>) {
             state.isFetching = action.payload;
         },
-
     },
 });
+
+export type TThemes = "light" | "dark";
+
+type TAppMessage = {
+    id: string;
+    severity: "error" | "success";
+    text: string;
+};
+
+type TAppState = {
+    isInitialized: boolean;
+    messages: TAppMessage[];
+    isFetching: boolean;
+};
 
 export const appReducer = slice.reducer;
 

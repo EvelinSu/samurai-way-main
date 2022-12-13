@@ -3,6 +3,7 @@ import LoaderIcon from "../../assets/loaders/loader";
 import {SGlobalLoader} from "./styled";
 
 const GlobalLoader = () => {
+
     return (
         <SGlobalLoader>
             <LoaderIcon />

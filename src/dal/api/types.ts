@@ -1,4 +1,4 @@
-export type TCommonResponse<T> = {
+export type TCommonResponse<T = {}> = {
     data: T,
     messages: string[],
     resultCode: number
@@ -11,7 +11,7 @@ export type TProfileImageResponse = {
     }
 }
 
-export type TActiveProfile = {
+export type TActiveProfileResponse = {
     contacts: {
         facebook: string,
         website: string,
@@ -31,4 +31,10 @@ export type TActiveProfile = {
         large: string
     },
     aboutMe?: string
+}
+
+export type TAccountDataResponse = {
+    id: number,
+    email: string,
+    login: string
 }

@@ -15,6 +15,7 @@ const Button: FC<TButtonProps> = React.memo(({isDisabled, ...props}) => {
     const onClickHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
         props.onClick && props.onClick(e);
     }
+
     return (
         !props.isLoading
             ? (<SButton
@@ -33,7 +34,6 @@ const Button: FC<TButtonProps> = React.memo(({isDisabled, ...props}) => {
             >
                 {props.label}
             </SLoadingButton>)
-
     );
 });
 

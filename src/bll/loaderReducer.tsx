@@ -1,21 +1,20 @@
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
 
-export type TLoader = {
-    globalLoading: boolean
-}
-export const initialState: TLoader = {
-    globalLoading: true
-}
-
 const slice = createSlice({
     name: 'loader',
-    initialState: initialState,
+    initialState: {
+        globalLoading: true
+    } as TLoaderState,
     reducers: {
         globalLoaderToggleAC(state, action: PayloadAction<boolean>) {
             state.globalLoading = action.payload
         }
     }
 })
+
+type TLoaderState = {
+    globalLoading: boolean
+}
 
 export const {globalLoaderToggleAC} = slice.actions
 

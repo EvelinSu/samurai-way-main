@@ -3,8 +3,8 @@ import styled from "styled-components";
 import {Property} from "csstype";
 
 type TScrollBoxProps = {
-    gap?: string | number
-    padding?: string | number
+    gap?: Property.Gap | number
+    padding?: Property.Padding | number
     overflowX?: Property.OverflowX
     children?: React.ReactNode
 }
@@ -27,16 +27,11 @@ export const SScrollBoxWrapper = styled.div(props => ({
     overflow: "auto",
 }))
 
-type TSScrollProps = {
-    gap?: string | number
-    padding?: string | number
-    overflowX?: Property.OverflowX
-}
-export const SScrollBox = styled.div<TSScrollProps>(({gap, padding, overflowX}) => ({
+export const SScrollBox = styled.div<Omit<TScrollBoxProps, "children">>((props) => ({
     display: "flex",
     flexDirection: "column",
-    gap: gap || 20,
-    padding: padding,
+    gap: props.gap || 20,
+    padding: props.padding,
     minHeight: "fit-content",
-    overflowX: overflowX
+    overflowX: props.overflowX
 }))

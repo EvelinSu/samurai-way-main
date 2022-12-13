@@ -1,9 +1,9 @@
 import {instance} from "./instance";
-import {TActiveProfile, TCommonResponse, TProfileImageResponse} from "./types";
+import {TActiveProfileResponse, TCommonResponse, TProfileImageResponse} from "./types";
 
 export const profileAPI = {
     getProfile(id: number) {
-        return instance.get<TActiveProfile>(`profile/${id}`)
+        return instance.get<TActiveProfileResponse>(`profile/${id}`)
                        .then(response => response.data)
     },
     putProfileStatus(newStatus: string) {
@@ -11,15 +11,15 @@ export const profileAPI = {
                        .then(response => response.data)
     },
     getProfileStatus(userId: number) {
-        return instance.get(`profile/status/${userId}`)
+        return instance.get<string>(`profile/status/${userId}`)
                        .then(response => response.data)
     },
     putProfileImage(image: FormData | string) {
         return instance.put<TCommonResponse<TProfileImageResponse>>(`profile/photo`, image)
                        .then(response => response.data)
     },
-    putProfile(data: Omit<TActiveProfile, "photos">) {
-        return instance.put<TCommonResponse<TActiveProfile>>(`profile`, data)
+    putProfile(data: Omit<TActiveProfileResponse, "photos">) {
+        return instance.put<TCommonResponse<TActiveProfileResponse>>(`profile`, data)
                        .then(response => response.data)
     },
 }

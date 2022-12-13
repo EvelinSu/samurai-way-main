@@ -1,15 +1,16 @@
 import React, {FC} from 'react';
 import {Redirect, Route, RouteProps, Switch, useLocation} from "react-router-dom";
-import {PATH} from "../../bll/types";
+import {PATH} from "./types";
 import ProfilePage from "../pages/Profile/ProfilePage";
 import DialogsPage from "../pages/Dialogs/DialogsPage";
 import UsersPage from "../pages/Users/UsersPage";
 import PageNotFound from "../pages/PageNotFound";
-import {useAppSelector} from "../../common/hooks/hooks";
+import {useAppSelector} from "../../common/hooks";
 import {SettingsPage} from "../pages/Settings/SettingsPage";
 
 const PrivateRoute: FC<RouteProps> = (props) => {
     const location = useLocation();
+
     const isAuth = useAppSelector(state => state.auth.isAuth)
 
     return isAuth

@@ -9,11 +9,7 @@ export const SForm = styled.form((props) => ({
     justifyContent: "inherit",
 }))
 
-type TSInputWrapperProps = {
-    error?: string
-}
-
-export const SInputWrapper = styled.div<TSInputWrapperProps>((props) => ({
+export const SInputWrapper = styled.div<{ error?: string }>((props) => ({
     display: "flex",
     flexDirection: "row",
     alignItems: "center",

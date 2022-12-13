@@ -5,7 +5,7 @@ import {SModalWrapper} from "./styled";
 import DefaultModal from "./Default/DefaultModal";
 import {useDispatch} from "react-redux";
 import {authModalToggleAC} from "../../bll/authReducer";
-import {useAppSelector} from "../../common/hooks/hooks";
+import {useAppSelector} from "../../common/hooks";
 
 type TModalProps = {
     type: 'auth' | 'default'
@@ -16,14 +16,16 @@ type TModalProps = {
 
 const Modal: React.FC<TModalProps> = (props) => {
     const dispatch = useDispatch()
-    const onShadowClick = () => {
+
+    const isAuthModalOpen = useAppSelector(state => state.auth.authModalToggle)
+
+    const onShadowClickHandler = () => {
         props.setIsOpened && props.setIsOpened(!props.isOpened)
         dispatch(authModalToggleAC(false))
     }
-    const isAuthModalOpen = useAppSelector(state => state.auth.authModalToggle)
 
     return props.isOpened || isAuthModalOpen ? (
-        <MegaShadow onMouseDown={onShadowClick}>
+        <MegaShadow onMouseDown={onShadowClickHandler}>
             <SModalWrapper onMouseDown={(e) => e.stopPropagation()}>
                 {props.type === 'auth' && (
                     <AuthModal />

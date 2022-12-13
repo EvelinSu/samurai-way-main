@@ -3,11 +3,11 @@ import {useParams} from "react-router-dom";
 import {SDialogContainer, SDialogs, SDialogsSidebar, SNoneDialog} from "./styled";
 import {SSiteContent} from "../../layout/styled";
 import PagePanel from "../PagePanel";
-import DialogsItemsList from "./DialogsItemsList/DialogsItemsList";
 import DialogContent from "./DialogContent/DialogContent";
-import {useAppSelector} from "../../../common/hooks/hooks";
+import {useAppSelector} from "../../../common/hooks";
 import {shallowEqual} from "react-redux";
 import {presentationUsers} from "../../../bll/demo/usersDemo";
+import DialogItemList from "./DialogItemsList/DialogItemList";
 
 const Dialogs = () => {
 
@@ -34,7 +34,7 @@ const Dialogs = () => {
                     }
                 </SDialogContainer>
                 <SDialogsSidebar>
-                    <DialogsItemsList
+                    <DialogItemList
                         dialogs={dialogs.dialogsList}
                         messages={dialogs.dialogsMessages}
                         users={users}

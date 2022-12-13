@@ -3,27 +3,12 @@ import {getStringDate} from "../common/utils";
 import {demoPosts} from "./demo/profileDemo";
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
 
-export type TPost = {
-    id: string,
-    text: string,
-    likes: number,
-    isLiked: boolean,
-    date: string,
-}
-
-export type TPosts = {
-    newPostText: string,
-    postsList: Array<TPost>
-}
-
-export const initialState: TPosts = ({
-    newPostText: "",
-    postsList: demoPosts,
-})
-
 const slice = createSlice({
     name: "posts",
-    initialState,
+    initialState: {
+        newPostText: "",
+        postsList: demoPosts,
+    } as TPostsState,
     reducers: {
         addPostAC(state, action: PayloadAction<string>) {
             const newPost: TPost = {
@@ -39,8 +24,20 @@ const slice = createSlice({
             state.newPostText = action.payload
         }
     }
-
 })
+
+export type TPost = {
+    id: string,
+    text: string,
+    likes: number,
+    isLiked: boolean,
+    date: string,
+}
+
+export type TPostsState = {
+    newPostText: string,
+    postsList: Array<TPost>
+}
 
 export const {addPostAC, changeNewPostTextAC} = slice.actions
 

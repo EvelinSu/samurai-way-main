@@ -1,64 +1,27 @@
 import {TAppDispatch} from "./store/store";
-import {defaultProfile, demoProfile} from "./demo/profileDemo";
+import {defaultProfile} from "./demo/profileDemo";
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
 import {authAPI} from "../dal/api/authApi";
 import {setAppMessage, setIsFetching} from "./appReducer";
-import {TActiveProfile, TProfileImageResponse} from "../dal/api/types";
+import {TActiveProfileResponse, TProfileImageResponse} from "../dal/api/types";
 import {profileAPI} from "../dal/api/profileApi";
-
-export type TProfilePage = {
-    isFetching: boolean,
-    activeProfile: TActiveProfile,
-    status: string,
-}
-
-export const initialState: TProfilePage = ({
-    isFetching: true,
-    activeProfile: defaultProfile,
-    status: "Mew",
-})
-
-const slice = createSlice({
-    name: "profile",
-    initialState,
-    reducers: {
-        setActiveProfile(state, action: PayloadAction<TActiveProfile>) {
-            state.activeProfile = action.payload
-        },
-        profileToggleLoader(state, action: PayloadAction<boolean>) {
-            state.isFetching = action.payload
-        },
-        setMyStatus(state, action: PayloadAction<string>) {
-            state.status = action.payload
-        },
-        setMyAvatar(state, action: PayloadAction<TProfileImageResponse>) {
-            state.activeProfile.photos.large = action.payload.photos.large
-            state.activeProfile.photos.small = action.payload.photos.small
-        },
-        setProfile(state, action: PayloadAction<Omit<TActiveProfile, "photos">>) {
-            state.activeProfile = {...state.activeProfile, ...action.payload, photos: state.activeProfile.photos}
-        }
-    }
-})
 
 export const getProfile = (userId: number) => async (dispatch: TAppDispatch) => {
     dispatch(profileToggleLoader(true))
-    const myId = await authAPI.getMyData().then((res) => res.data.id) || 0
-    if (userId || myId) {
-        const userStatus = await profileAPI.getProfileStatus(userId || myId)
-        profileAPI
-            .getProfile(userId || myId)
-            .then(profile => dispatch(setActiveProfile(profile)))
-            .then(() => dispatch(setMyStatus(userStatus)))
-            .catch(() => {})
-            .finally(() => dispatch(profileToggleLoader(false)))
-    } else {
-        dispatch(setActiveProfile(demoProfile))
+    try {
+        const accountId = await authAPI.getAccountData().then((res) => res.data.id) || 0
+        const userStatus = await profileAPI.getProfileStatus(userId || accountId)
+        const profile = await profileAPI.getProfile(userId || accountId)
+        dispatch(setActiveProfile(profile))
+        dispatch(setMyStatus(userStatus))
+    } catch {
+        dispatch(setAppMessage({text: "Something went wrong", severity: "error"}))
+    } finally {
         dispatch(profileToggleLoader(false))
     }
 }
 
-export const changeProfile = (values: TActiveProfile) => async (dispatch: TAppDispatch) => {
+export const changeProfile = (values: TActiveProfileResponse) => async (dispatch: TAppDispatch) => {
     dispatch(profileToggleLoader(true))
     try {
         const newProfile = await profileAPI.putProfile(values)
@@ -75,28 +38,71 @@ export const changeProfile = (values: TActiveProfile) => async (dispatch: TAppDi
     }
 }
 
-export const putStatus = (newStatus: string) => (dispatch: TAppDispatch) => {
+export const putStatus = (newStatus: string) => async (dispatch: TAppDispatch) => {
     dispatch(setIsFetching(true))
-    profileAPI
-        .putProfileStatus(newStatus)
-        .then(() => dispatch(setAppMessage({severity: "success", text: "Successfully!"})))
-        .catch(() => dispatch(setAppMessage({severity: "error", text: "Some error"})))
-        .finally(() => dispatch(setIsFetching(false)))
+    try {
+        const response = await profileAPI.putProfileStatus(newStatus)
+        if (response.resultCode === 0) {
+            dispatch(setAppMessage({severity: "success", text: "Successfully!"}))
+        } else {
+            throw new Error(response.messages[0])
+        }
+    } catch (err) {
+        dispatch(setAppMessage({severity: "error", text: `${err}`}))
+    } finally {
+        dispatch(setIsFetching(false))
+    }
 }
 
-export const putAvatar = (newImage: FormData | string) => (dispatch: TAppDispatch) => {
+export const putAvatar = (newImage: FormData | string) => async (dispatch: TAppDispatch) => {
     dispatch(setIsFetching(true))
-    profileAPI
-        .putProfileImage(newImage)
-        .then((res) => {
-            dispatch(setMyAvatar(res.data))
+    try {
+        const response = await profileAPI.putProfileImage(newImage)
+        if (response.resultCode === 0) {
+            dispatch(setMyAvatar(response.data))
             dispatch(setAppMessage({severity: "success", text: "Successfully!"}))
-            return res
-        })
-        .catch(() => {
-            dispatch(setAppMessage({severity: "error", text: "Some error"}))
-        })
-        .finally(() => dispatch(setIsFetching(false)))
+            return response
+        } else {
+            throw new Error(response.messages[0])
+        }
+    } catch (err) {
+        dispatch(setAppMessage({severity: "error", text: `${err}`}))
+    } finally {
+        dispatch(setIsFetching(false))
+    }
+}
+
+const slice = createSlice({
+    name: "profile",
+    initialState: {
+        isFetching: true,
+        activeProfile: defaultProfile,
+        status: "",
+    } as TProfileState,
+    reducers: {
+        setActiveProfile(state, action: PayloadAction<TActiveProfileResponse>) {
+            state.activeProfile = action.payload
+        },
+        profileToggleLoader(state, action: PayloadAction<boolean>) {
+            state.isFetching = action.payload
+        },
+        setMyStatus(state, action: PayloadAction<string>) {
+            state.status = action.payload
+        },
+        setMyAvatar(state, action: PayloadAction<TProfileImageResponse>) {
+            state.activeProfile.photos.large = action.payload.photos.large
+            state.activeProfile.photos.small = action.payload.photos.small
+        },
+        setProfile(state, action: PayloadAction<Omit<TActiveProfileResponse, "photos">>) {
+            state.activeProfile = {...state.activeProfile, ...action.payload, photos: state.activeProfile.photos}
+        }
+    }
+})
+
+export type TProfileState = {
+    isFetching: boolean,
+    activeProfile: TActiveProfileResponse,
+    status: string,
 }
 
 const profileReducer = slice.reducer

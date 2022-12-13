@@ -2,7 +2,7 @@ import React from 'react';
 import {Box} from "../../common/Box/Box";
 import Input from "../../common/Form/Input";
 import Button from "../../common/Button/Button";
-import { SLabel } from '../../common/Checkbox/styled';
+import {SLabel} from '../../common/Checkbox/styled';
 
 type TSearchFormProps = {
     searchText: string,
@@ -39,7 +39,6 @@ const SearchForm: React.FC<TSearchFormProps> = ({searchText, setSearchText, text
                         onClick={onSearchHandler}
                 />
             </SLabel>
-
         </Box>
     );
 };

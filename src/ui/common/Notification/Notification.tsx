@@ -1,13 +1,13 @@
-import React, { useEffect, useState } from "react";
-import { SNotificationContainer, SNotificationIcon, SNotificationWrapper } from "./styled";
-import { SText } from "../Text/SText";
-import { hideAppMessage, setAppLastMessage } from "../../../bll/appReducer";
-import {useAppDispatch, useAppSelector} from "../../../common/hooks/hooks";
+import React, {useEffect, useState} from "react";
+import {SNotificationContainer, SNotificationIcon, SNotificationWrapper} from "./styled";
+import {SText} from "../Text/SText";
+import {hideAppMessage, setAppLastMessage} from "../../../bll/appReducer";
+import {useAppDispatch, useAppSelector} from "../../../common/hooks";
 import CloseIcon from "../../assets/icons/CloseIcon";
 
 const Notification = () => {
     const dispatch = useAppDispatch();
-    const { messages } = useAppSelector((state) => state.app);
+    const {messages} = useAppSelector((state) => state.app);
 
     const [timerId, setTimerId] = useState(0);
 
@@ -33,7 +33,7 @@ const Notification = () => {
 
     return messages ? (
         <SNotificationWrapper notificationsCount={messages.length < 100 ? messages.length : "99+"}>
-            {messages.map(({ id, severity, text }) => (
+            {messages.map(({id, severity, text}) => (
                 <SNotificationContainer
                     onMouseOver={stopTimer}
                     onMouseLeave={startTimer}

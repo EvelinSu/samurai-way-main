@@ -1,11 +1,11 @@
-import React, {FC, Fragment, useEffect, useRef} from "react";
+import React, {FC, useEffect, useRef} from "react";
 import {SDialogWindowBody, SDialogWindowFooter, SDialogWindowHeader} from "../styled";
 import {Box} from "../../../common/Box/Box";
 import {STitle} from "../../../common/Text/STitle";
 import {SText} from "../../../common/Text/SText";
 import Message from "../../../common/Message/Message";
 import {TDialogs, TMessage} from "../../../../bll/dialogsReducer";
-import {TUser} from "../../../../bll/usersReducer";
+import {TUser} from "../../../../dal/api/usersApi";
 import DialogSendMessage from "./DialogSendMessage";
 import {SScrollBox, SScrollBoxWrapper} from "../../../common/ScrollBox/ScrollBox";
 import defaultPhoto from "../../../assets/img/default-photo.png"
@@ -17,13 +17,7 @@ type TDialogContentProps = {
     id: string
     user?: TUser,
 }
-
-const DialogContent: FC<TDialogContentProps> = ({
-    dialogs,
-    messages,
-    user,
-    id
-}) => {
+const DialogContent: FC<TDialogContentProps> = ({dialogs, messages, user, id}) => {
     const activeMessagesId = id ? dialogs[id].messagesId : "0"
     const activeMessages = messages.filter((el) => activeMessagesId.includes(el.id))
 
@@ -45,7 +39,7 @@ const DialogContent: FC<TDialogContentProps> = ({
     }, [id])
 
     return (
-        <Fragment>
+        <>
             <SDialogWindowHeader>
                 <Avatar
                     size={"small"}
@@ -63,17 +57,16 @@ const DialogContent: FC<TDialogContentProps> = ({
             <SDialogWindowBody>
                 <SScrollBoxWrapper>
                     <SScrollBox padding={20} overflowX={"hidden"} ref={dialogsBody}>
-                        {
-                            activeMessages.length > 0
-                                ? activeMessages.map((message) => (
-                                    <Message
-                                        key={message.id}
-                                        text={message.text}
-                                        time={message.time}
-                                        me={message.me}
-                                    />
-                                ))
-                                : ''
+                        {activeMessages.length > 0
+                            ? activeMessages.map((message) => (
+                                <Message
+                                    key={message.id}
+                                    text={message.text}
+                                    time={message.time}
+                                    me={message.me}
+                                />
+                            ))
+                            : ''
                         }
                     </SScrollBox>
                 </SScrollBoxWrapper>
@@ -81,7 +74,7 @@ const DialogContent: FC<TDialogContentProps> = ({
             <SDialogWindowFooter>
                 <DialogSendMessage id={id} scrollToBottom={scrollToBottom} />
             </SDialogWindowFooter>
-        </Fragment>
+        </>
     );
 };
 

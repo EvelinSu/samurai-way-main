@@ -1,7 +1,7 @@
 import React, {ChangeEvent, FocusEvent, useState} from 'react';
 import {SEditableText} from "./styled";
 import {SText} from "../Text/SText";
-import {useAppSelector} from "../../../common/hooks/hooks";
+import {useAppSelector} from "../../../common/hooks";
 
 type TEditableText = {
     text: string
@@ -39,8 +39,8 @@ const EditableText: React.FC<TEditableText> = ({setText, text, myId, maxLength, 
 
     const onKeyDownHandler = (e: React.KeyboardEvent<HTMLSpanElement>) => {
         let value = e.currentTarget.innerText
-        if(e.key === 'Enter' && e.shiftKey) return
-        if(e.key === 'Enter') {
+        if (e.key === 'Enter' && e.shiftKey) return
+        if (e.key === 'Enter') {
             e.preventDefault()
             setText(value.trim())
             setIsEditable(false)
@@ -66,7 +66,7 @@ const EditableText: React.FC<TEditableText> = ({setText, text, myId, maxLength, 
                 </SEditableText>
             )
             : (
-                <SText margin={"4px 10px"}  opacity={!text ? 0.3 : 1}>
+                <SText margin={"4px 10px"} opacity={!text ? 0.3 : 1}>
                     {text || props.placeholder}
                 </SText>
             )

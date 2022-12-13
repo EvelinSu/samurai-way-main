@@ -4,61 +4,21 @@ import {Dispatch} from "redux";
 import {authAPI} from "../dal/api/authApi";
 import {globalLoaderToggleAC} from "./loaderReducer";
 import {setAppMessage} from "./appReducer";
-
-export type TAuth = {
-    account: {
-        id: number,
-        email: string,
-        login: string,
-    },
-    isAuth: boolean
-    authModalToggle?: boolean
-    messages: string[]
-}
-
-const initialState: TAuth = {
-    account: {
-        id: 0,
-        email: '',
-        login: '',
-    },
-    isAuth: false,
-    authModalToggle: false,
-    messages: []
-}
-
-const slice = createSlice({
-    name: "auth",
-    initialState,
-    reducers: {
-        setAuthUserDataAC(state, action: PayloadAction<TAuth["account"]>) {
-            state.account = action.payload;
-            state.isAuth = true;
-        },
-        resetAuthUserDataAC(state) {
-            state.account = initialState.account
-            state.isAuth = initialState.isAuth
-            state.messages = initialState.messages
-        },
-        authModalToggleAC(state, action: PayloadAction<boolean>) {
-            state.authModalToggle = action.payload
-        },
-        setAuthMessages(state, action: PayloadAction<string[]>) {
-            state.messages = action.payload
-        }
-    }
-})
+import {TAccountDataResponse} from "../dal/api/types";
 
 export const getAuthThunk = () => (dispatch: TAppDispatch) => {
     authAPI
-        .getMyData()
-        .then((me) => {
-            if (me.data.id) {
-                dispatch(setAuthUserDataAC(me.data))
-                return me.data.id as number
+        .getAccountData()
+        .then((account) => {
+            if (account.data.id) {
+                dispatch(setAuthUserDataAC(account.data))
+                return account.data.id as number
             } else {
-                throw new Error('Auth failed')
+                throw new Error(account.messages[0])
             }
+        })
+        .catch((res) => {
+            dispatch(setAuthMessages(res.messages))
         })
         .finally(() => dispatch(globalLoaderToggleAC(false)))
 }
@@ -76,11 +36,11 @@ export const loginThunk = (email: string, password: string, rememberMe: boolean)
                 dispatch(getAuthThunk())
                 dispatch(authModalToggleAC(false))
             } else {
-                throw new Error(res.data.messages[0])
+                throw new Error(res.messages[0])
             }
         })
-        .catch(() => {
-            dispatch(setAppMessage({severity: "error", text: "Auth failed"}))
+        .catch((err) => {
+            dispatch(setAppMessage({severity: "error", text: `${err}`}))
         })
 }
 
@@ -93,6 +53,46 @@ export const logoutThunk = () => async (dispatch: Dispatch) => {
                 dispatch(resetAuthUserDataAC())
             }
         })
+}
+
+const initialAccountState = {
+    id: 0,
+    email: '',
+    login: '',
+}
+
+const slice = createSlice({
+    name: "auth",
+    initialState: {
+        account: initialAccountState,
+        isAuth: false,
+        authModalToggle: false,
+        messages: []
+    } as TAuthState,
+    reducers: {
+        setAuthUserDataAC(state, action: PayloadAction<TAuthState["account"]>) {
+            state.account = action.payload;
+            state.isAuth = true;
+        },
+        resetAuthUserDataAC(state) {
+            state.account = initialAccountState
+            state.isAuth = false
+            state.messages = []
+        },
+        authModalToggleAC(state, action: PayloadAction<boolean>) {
+            state.authModalToggle = action.payload
+        },
+        setAuthMessages(state, action: PayloadAction<string[]>) {
+            state.messages = action.payload
+        }
+    }
+})
+
+type TAuthState = {
+    account: TAccountDataResponse,
+    isAuth: boolean
+    authModalToggle?: boolean
+    messages: string[]
 }
 
 const authReducer = slice.reducer
