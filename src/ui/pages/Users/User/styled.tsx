@@ -1,9 +1,8 @@
 import styled from "styled-components";
 import {Box} from "../../../common/Box/Box";
-import {theme} from "../../../styles/constants";
 import {Property} from "csstype";
 
-export const SUserBox = styled(Box)<{ img?: string }>((props) => ({
+export const SUserBox = styled(Box)<{ img?: string }>(({theme, ...props}) => ({
     flexDirection: "column",
     alignItems: "center",
     textAlign: "center",
@@ -22,7 +21,7 @@ export const SUserBoxHeader = styled.div((props) => ({
     gap: 15,
 }))
 
-export const BoxShadowContent = styled(Box)(props => ({
+export const BoxShadowContent = styled(Box)(({theme}) => ({
     width: "100%",
     height: "100%",
     flexDirection: "column",
@@ -39,7 +38,7 @@ export const BoxShadowContent = styled(Box)(props => ({
     }
 }))
 
-export const SUserName = styled.div<{ isHovered?: boolean }>(props => ({
+export const SUserName = styled.div<{ isHovered?: boolean }>(({theme, ...props}) => ({
     fontSize: 18,
     color: theme.colors.primaryLightest,
     fontWeight: 600,

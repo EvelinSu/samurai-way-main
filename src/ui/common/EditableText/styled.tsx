@@ -1,6 +1,5 @@
 import styled from "styled-components";
 import {SText} from "../Text/SText";
-import {theme} from "../../styles/constants";
 
 type TSEditableTextProps = {
     isError: boolean
@@ -25,14 +24,14 @@ export const SEditableText = styled(SText)<TSEditableTextProps>((props) => ({
         cursor: "text",
     },
     ...props.isError && {
-        border: `1px solid ${theme.colors.status.error}`,
+        border: `1px solid ${props.theme.colors.status.error}`,
     },
     ...props.error && {
         "&:after": {
             content: `'${props.error}'`,
             justifySelf: "center",
             position: "absolute",
-            backgroundColor: theme.colors.status.error,
+            backgroundColor: props.theme.colors.status.error,
             fontSize: 12,
             padding: "3px 10px",
             borderRadius: 10,

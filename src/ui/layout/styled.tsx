@@ -1,7 +1,6 @@
 import styled from "styled-components";
-import {theme} from "../styles/constants";
 
-export const SSiteWrapper = styled.div(props => ({
+export const SSiteWrapper = styled.div(({theme}) => ({
     display: "flex",
     justifyContent: "center",
     gap: 30,
@@ -20,7 +19,7 @@ export const SSiteContainer = styled.div(props => ({
     maxWidth: 950,
 }))
 
-export const SSiteContent = styled.div<{ stylized?: boolean }>(({stylized}) => ({
+export const SSiteContent = styled.div<{ stylized?: boolean }>(({stylized, theme}) => ({
     display: "flex",
     flexDirection: "column",
     overflow: "auto",

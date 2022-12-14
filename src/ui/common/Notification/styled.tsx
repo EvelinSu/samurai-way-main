@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import {theme} from "../../styles/constants";
 
 type TSNotificationWrapper = {
     notificationsCount: string | number;
@@ -14,15 +13,15 @@ export const SNotificationWrapper = styled.div<TSNotificationWrapper>(props => (
     left: "50%",
     right: "50%",
     color: "#fff",
-    zIndex: theme.orders.notifications,
+    zIndex: props.theme.orders.notifications,
     ...props.notificationsCount > 1 && {
         "&:after": {
-            content: "${props.notificationsCount}",
+            content: `'${props.notificationsCount}'`,
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
-            backgroundColor: theme.colors.secondary,
-            color: theme.colors.textOnSecondary,
+            backgroundColor: props.theme.colors.primaryLightest,
+            color: props.theme.colors.textOnSecondary,
             boxShadow: "1px 1px 2px rgb(0, 0, 0, 0.1), -1px -1px 2px rgb(0, 0, 0, 0.1)",
             width: 30,
             height: 30,
@@ -31,7 +30,7 @@ export const SNotificationWrapper = styled.div<TSNotificationWrapper>(props => (
             position: "absolute",
             right: -170,
             top: -70,
-            zIndex: theme.orders.notifications,
+            zIndex: props.theme.orders.notifications,
         }
     }
 }))
@@ -55,11 +54,11 @@ export const SNotificationContainer = styled.div<TSNotificationContainerProps>(p
     padding: "10px 20px",
     backgroundColor:
         props.severity === "error"
-            ? theme.colors.status.error
+            ? props.theme.colors.status.error
             : props.severity === "success"
-                ? theme.colors.status.success
-                : theme.colors.primary,
-    zIndex: theme.orders.notifications,
+                ? props.theme.colors.status.success
+                : props.theme.colors.primary,
+    zIndex: props.theme.orders.notifications,
     "&:last-of-type": {
         boxShadow: "0 0 5px 0 rgb(0, 0, 0, 0.3)",
     }

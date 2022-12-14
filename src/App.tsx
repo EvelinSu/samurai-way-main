@@ -8,6 +8,8 @@ import Modal from "./ui/modals/Modal";
 import {useAppDispatch, useAppSelector} from "./common/hooks";
 import {Routes} from "./ui/routes/Routes";
 import Notification from "./ui/common/Notification/Notification";
+import {ThemeProvider} from "styled-components";
+import {baseTheme} from "./ui/styles/baseTheme";
 
 const App = () => {
 
@@ -21,17 +23,19 @@ const App = () => {
 
     return (
         <HashRouter>
-            {loader.globalLoading
-                ? <GlobalLoader />
-                : <SSiteWrapper>
-                    <Sidebar />
-                    <SSiteContainer>
-                        <Routes />
-                    </SSiteContainer>
-                    <Notification />
-                    <Modal type={"auth"} isOpened={authModalToggle} />
-                </SSiteWrapper>
-            }
+            <ThemeProvider theme={baseTheme}>
+                {loader.globalLoading
+                    ? <GlobalLoader />
+                    : <SSiteWrapper>
+                        <Sidebar />
+                        <SSiteContainer>
+                            <Routes />
+                        </SSiteContainer>
+                        <Notification />
+                        <Modal type={"auth"} isOpened={authModalToggle} />
+                    </SSiteWrapper>
+                }
+            </ThemeProvider>
         </HashRouter>
     );
 }

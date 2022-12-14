@@ -2,11 +2,12 @@ import React, {FC} from 'react';
 import {Box} from "../../../common/Box/Box";
 import {STitle} from "../../../common/Text/STitle";
 import Post from "../Post/Post";
-import {theme} from "../../../styles/constants";
 import {SText} from "../../../common/Text/SText";
 import AddPost from "./AddPost";
 import {useAppSelector} from "../../../../common/hooks";
 import {shallowEqual} from "react-redux";
+import {useTheme} from "styled-components";
+import {TDefaultTheme} from "../../../styles/baseTheme";
 
 type TPostListProps = {
     avatar: string,
@@ -14,6 +15,7 @@ type TPostListProps = {
     myId: number
 }
 const PostList: FC<TPostListProps> = (props) => {
+    const theme = useTheme() as TDefaultTheme
 
     const posts = useAppSelector(state => state.posts, shallowEqual)
     const userId = useAppSelector(state => state.profile.activeProfile.userId)

@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import {theme} from "../../styles/constants";
 import {Box} from "../../common/Box/Box";
 
 export const SDialogs = styled.div(props => ({
@@ -27,7 +26,7 @@ export const SDialogItemList = styled.div((props) => ({
     gap: 10,
 }))
 
-export const SDialogContainer = styled(Box)((props) => ({
+export const SDialogContainer = styled(Box)(({theme}) => ({
     display: "flex",
     flexDirection: "column",
     flexGrow: 1,
@@ -36,7 +35,7 @@ export const SDialogContainer = styled(Box)((props) => ({
     backgroundColor: "rgba(0, 0, 0, 0.05)",
 }))
 
-export const SNoneDialog = styled.div((props) => ({
+export const SNoneDialog = styled.div(({theme}) => ({
     alignSelf: "center",
     opacity: 0.6,
     borderRadius: theme.blockSettings.borderRadius,
@@ -44,7 +43,7 @@ export const SNoneDialog = styled.div((props) => ({
     padding: "3px 15px",
 }))
 
-export const SDialogWindowHeader = styled.div((props) => ({
+export const SDialogWindowHeader = styled.div(({theme}) => ({
     display: "flex",
     flexDirection: "row",
     padding: "10px 15px",
@@ -61,7 +60,7 @@ export const SDialogWindowBody = styled.div((props) => ({
     gap: 20,
 }))
 
-export const SDialogWindowFooter = styled.div((props) => ({
+export const SDialogWindowFooter = styled.div(({theme}) => ({
     display: "flex",
     gap: 20,
     padding: 10,

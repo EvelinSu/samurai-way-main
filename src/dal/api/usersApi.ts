@@ -2,12 +2,8 @@ import {instance} from "./instance";
 import {TCommonResponse} from "./types";
 
 export const usersAPI = {
-    getUsers(currentPage: number, pageSize: number) {
-        return instance.get<TCommonResponse<TUser[]>>(`users?page=${currentPage}&count=${pageSize}`)
-                       .then(response => response.data)
-    },
-    searchUsers(name: string, currentPage: string, pageSize: number) {
-        return instance.get<TUsersResponse>(`users?page=${currentPage}&count=${pageSize}&term=${name}`)
+    getUsers(params: string) {
+        return instance.get<TUsersResponse>(`users` + params)
                        .then(response => response.data)
     }
 }

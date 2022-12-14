@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import {theme} from "../../styles/constants";
 
 export const SMessage = styled.div<{ isMine?: boolean }>(props => ({
     display: "flex",
@@ -29,7 +28,7 @@ export const SMessageContainer = styled.div<{ isMine?: boolean }>((props) => ({
     flexDirection: "column",
     position: "relative",
     padding: "10px 10px",
-    backgroundColor: theme.colors.message.default,
+    backgroundColor: props.theme.colors.message.default,
     borderRadius: "10px 10px 10px 10px",
     maxWidth: "90%",
     "&:after": {
@@ -37,20 +36,20 @@ export const SMessageContainer = styled.div<{ isMine?: boolean }>((props) => ({
         position: "absolute",
         width: 30,
         height: 15,
-        borderRight: `10px solid ${theme.colors.message.default}`,
+        borderRight: `10px solid ${props.theme.colors.message.default}`,
         borderBottomRightRadius: "35%",
         left: -35,
         bottom: 10,
         transform: "scale(1.5) skewY(10deg) skewX(-20deg)",
         ...props.isMine && {
-            borderRight: `10px solid ${theme.colors.message.mine}`,
+            borderRight: `10px solid ${props.theme.colors.message.mine}`,
             left: "initial",
             right: -35,
             transform: "scale(-1.5, 1.5) skewY(10deg) skewX(-20deg)",
         }
     },
     ...props.isMine && {
-        backgroundColor: theme.colors.message.mine,
+        backgroundColor: props.theme.colors.message.mine,
     }
 }))
 

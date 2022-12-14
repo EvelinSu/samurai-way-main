@@ -3,7 +3,6 @@ import {BoxShadowContent, SUserBox, SUserBoxHeader, SUserName, SUserStatus, SUse
 import userPhoto from "../../../assets/img/default-photo.png";
 import {Box} from "../../../common/Box/Box";
 import Button from "../../../common/Button/Button";
-import {theme} from "../../../styles/constants";
 import {NavLink} from "react-router-dom";
 import {shallowEqual} from "react-redux";
 import {authModalToggleAC} from "../../../../bll/authReducer";
@@ -11,6 +10,8 @@ import {useAppDispatch, useAppSelector} from "../../../../common/hooks";
 import Avatar from "../../../common/Avatar/Avatar";
 import {followToggleThunk} from "../../../../bll/usersReducer";
 import {TUser} from "../../../../dal/api/usersApi";
+import {useTheme} from "styled-components";
+import {TDefaultTheme} from "../../../styles/baseTheme";
 
 type TUserProps = {
     user: TUser
@@ -19,6 +20,7 @@ type TUserProps = {
 
 const User: React.FC<TUserProps> = React.memo(({user, id}) => {
     const dispatch = useAppDispatch()
+    const theme = useTheme() as TDefaultTheme
 
     const [isHovered, setIsHovered] = useState<string>('')
 

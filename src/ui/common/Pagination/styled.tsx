@@ -1,11 +1,6 @@
 import styled from "styled-components";
-import {theme} from "../../styles/constants";
 
-type TSPaginationProps = {
-    isActive?: boolean
-}
-
-export const SPagination = styled.div<TSPaginationProps>((props) => ({
+export const SPagination = styled.div<{ isActive?: boolean }>((props) => ({
     display: "flex",
     alignItems: "center",
     gap: 15,
@@ -17,7 +12,7 @@ export const SPagination = styled.div<TSPaginationProps>((props) => ({
     msUserSelect: "none",
 }))
 
-export const SPaginationItem = styled.div<TSPaginationProps>((props) => ({
+export const SPaginationItem = styled.div<{ isActive?: boolean }>((props) => ({
     display: "flex",
     justifyContent: "center",
     textAlign: "center",
@@ -34,7 +29,7 @@ export const SPaginationItem = styled.div<TSPaginationProps>((props) => ({
         transform: "scale(0.9)",
     },
     ...props.isActive && {
-        backgroundColor: theme.colors.primaryDark,
+        backgroundColor: props.theme.colors.primaryDark,
         pointerEvents: "none",
     }
 }))

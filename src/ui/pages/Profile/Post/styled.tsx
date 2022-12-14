@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import {theme} from "../../../styles/constants";
 
 export const SPost = styled.div((props) => ({
     display: "flex",
@@ -7,7 +6,7 @@ export const SPost = styled.div((props) => ({
     gap: 20,
 }))
 
-export const SPostContent = styled.div((props) => ({
+export const SPostContent = styled.div(({theme}) => ({
     display: "flex",
     flexWrap: "wrap",
     backgroundColor: theme.colors.primaryLight,

@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import {theme} from "../../styles/constants";
 
 export const SGlobalLoader = styled.div((props) => ({
     display: "flex",
@@ -10,6 +9,6 @@ export const SGlobalLoader = styled.div((props) => ({
     bottom: 0,
     left: 0,
     right: 0,
-    backgroundColor: theme.colors.primary,
+    backgroundColor: props.theme.colors.primary,
     zIndex: 100,
 }))

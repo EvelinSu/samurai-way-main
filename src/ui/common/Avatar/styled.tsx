@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import {theme} from "../../styles/constants";
 
 type TSizes = "smallest" | "small" | "large" | "middle";
 type TSAvatarProps = {
@@ -38,7 +37,7 @@ export const SAvatar = styled.div<TSAvatarProps>((props) => ({
     },
     ...imgSizes(props.size || "middle"),
     ...props.size === "large" && {
-        border: `10px solid ${theme.colors.primaryLight}`,
+        border: `10px solid ${props.theme.colors.primaryLight}`,
     }
 }));
 
@@ -74,7 +73,7 @@ export const SAvatarDeleteIcon = styled.div(props => ({
         backgroundColor: "rgba(255, 255, 255, 0.2)"
     },
     "svg path": {
-        fill: theme.colors.status.error,
-        stroke: theme.colors.status.error
+        fill: props.theme.colors.status.error,
+        stroke: props.theme.colors.status.error
     }
 }))

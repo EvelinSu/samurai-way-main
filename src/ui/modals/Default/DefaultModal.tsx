@@ -1,8 +1,9 @@
 import React from 'react';
 import {Box} from '../../common/Box/Box';
 import Button from "../../common/Button/Button";
-import {theme} from "../../styles/constants";
 import {STitle} from '../../common/Text/STitle';
+import {useTheme} from "styled-components";
+import {TDefaultTheme} from "../../styles/baseTheme";
 
 type TDefaultModalProps = {
     onSuccessClick: () => void
@@ -10,6 +11,7 @@ type TDefaultModalProps = {
 
 }
 const DefaultModal: React.FC<TDefaultModalProps> = (props) => {
+    const theme = useTheme() as TDefaultTheme
 
     return (
         <>

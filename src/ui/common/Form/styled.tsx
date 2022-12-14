@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import {theme} from "../../styles/constants";
 import {DefaultInputPropsType} from "./Input";
 
 export const SForm = styled.form((props) => ({
@@ -9,7 +8,7 @@ export const SForm = styled.form((props) => ({
     justifyContent: "inherit",
 }))
 
-export const SInputWrapper = styled.div<{ error?: string }>((props) => ({
+export const SInputWrapper = styled.div<{ error?: string }>(({theme, ...props}) => ({
     display: "flex",
     flexDirection: "row",
     alignItems: "center",
@@ -43,7 +42,7 @@ type TSInputProps = {
     isError?: boolean
 }
 
-export const SInput = styled.input<DefaultInputPropsType & TSInputProps>(({...props}) => ({
+export const SInput = styled.input<DefaultInputPropsType & TSInputProps>(({theme, ...props}) => ({
     padding: "8px 15px",
     borderRadius: theme.blockSettings.borderRadius,
     backgroundColor: theme.colors.input.default,

@@ -9,7 +9,7 @@ import {profileAPI} from "../dal/api/profileApi";
 export const getProfile = (userId: number) => async (dispatch: TAppDispatch) => {
     dispatch(profileToggleLoader(true))
     try {
-        const accountId = await authAPI.getAccountData().then((res) => res.data.id) || 0
+        const accountId = await authAPI.getAccountData().then((res) => res.data.id)
         const userStatus = await profileAPI.getProfileStatus(userId || accountId)
         const profile = await profileAPI.getProfile(userId || accountId)
         dispatch(setActiveProfile(profile))

@@ -1,11 +1,11 @@
-import MessageIcon from "../../assets/icons/MessageIcon";
-import PaperIcon from "../../assets/icons/PaperIcon";
-import MusicIcon from "../../assets/icons/MusicIcon";
-import SettingsIcon from "../../assets/icons/SettingsIcon";
+import MessageIcon from "../../../assets/icons/MessageIcon";
+import PaperIcon from "../../../assets/icons/PaperIcon";
+import MusicIcon from "../../../assets/icons/MusicIcon";
+import SettingsIcon from "../../../assets/icons/SettingsIcon";
 import React from "react";
 import {Property} from "csstype";
-import {PATH} from "../../routes/types";
-import UsersIcon from "../../assets/icons/UsersIcon";
+import {PATH} from "../../../routes/types";
+import UsersIcon from "../../../assets/icons/UsersIcon";
 
 export type TNavLink = {
     id: number,

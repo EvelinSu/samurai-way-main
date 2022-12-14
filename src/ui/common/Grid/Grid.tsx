@@ -15,5 +15,4 @@ export const Grid = styled(Box)<Partial<TGridProps>>((props) => ({
     gap: props.gap || 20,
     rowGap: props.gap || 20,
     columnGap: props.gap || 20,
-
 }))

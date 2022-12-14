@@ -49,7 +49,6 @@ export const appReducer = slice.reducer;
 
 export const {
     setIsFetching,
-    setIsInitialized,
     setAppMessage,
     setAppLastMessage,
     hideAppMessage,

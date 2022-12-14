@@ -1,8 +1,7 @@
 import styled from "styled-components";
-import {theme} from "../../styles/constants";
 import {Property} from "csstype";
 
-export const SSidebar = styled.div((props) => ({
+export const SSidebar = styled.div(({theme}) => ({
     display: "flex",
     flexDirection: "column",
     backgroundColor: theme.colors.primary,
@@ -47,7 +46,7 @@ type TSSidebarItemProps = {
     isActive: boolean,
     disabled: boolean
 }
-export const SSidebarItem = styled.div<Partial<TSSidebarItemProps>>(({disabled, isActive, ...props}) => ({
+export const SSidebarItem = styled.div<Partial<TSSidebarItemProps>>(({disabled, isActive, theme, ...props}) => ({
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
@@ -97,7 +96,7 @@ export const SSidebarItem = styled.div<Partial<TSSidebarItemProps>>(({disabled, 
     }
 }))
 
-export const SSidebarItemIcon = styled.div<{ isActive?: boolean }>(({isActive}) => ({
+export const SSidebarItemIcon = styled.div<{ isActive?: boolean }>(({isActive, theme}) => ({
     display: "flex",
     alignItems: "center",
     justifyContent: "center",

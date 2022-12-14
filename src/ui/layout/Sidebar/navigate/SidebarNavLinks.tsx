@@ -1,9 +1,9 @@
 import React from 'react';
 import {navLinks} from "./navLinks";
-import {SSidebarItem, SSidebarItemIcon} from "./styled";
+import {SSidebarItem, SSidebarItemIcon} from "../styled";
 import {useLocation} from "react-router-dom";
-import {authModalToggleAC} from "../../../bll/authReducer";
-import {useAppDispatch, useAppSelector} from "../../../common/hooks";
+import {authModalToggleAC} from "../../../../bll/authReducer";
+import {useAppDispatch, useAppSelector} from "../../../../common/hooks";
 
 type TSidebarItemProps = {
     isAuth: boolean

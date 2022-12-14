@@ -1,7 +1,6 @@
 import styled from "styled-components";
-import {theme} from "../../../styles/constants";
 
-export const SDialogItem = styled.div<{ isActive?: boolean }>(({isActive}) => ({
+export const SDialogItem = styled.div<{ isActive?: boolean }>(({isActive, theme}) => ({
     display: "flex",
     flexDirection: "row",
     alignItems: "center",

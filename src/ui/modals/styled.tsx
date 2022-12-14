@@ -1,7 +1,7 @@
 import styled from "styled-components";
-import {theme} from "../styles/constants";
+import {Property} from "csstype";
 
-export const SModalWrapper = styled.div((props) => ({
+export const SModalWrapper = styled.div<{ width?: Property.Width }>(({theme, width}) => ({
     display: "flex",
     flexDirection: "column",
     justifyContent: "center",
@@ -10,6 +10,8 @@ export const SModalWrapper = styled.div((props) => ({
     padding: "40px 30px",
     backgroundColor: theme.colors.primary,
     borderRadius: theme.blockSettings.borderRadius,
-    maxWidth: 350,
+    maxWidth: width || 350,
     width: "100%",
+    height: "min-content",
+    margin: "auto  0"
 }))

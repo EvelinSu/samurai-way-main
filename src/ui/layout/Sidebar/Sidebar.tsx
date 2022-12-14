@@ -9,7 +9,7 @@ import {authModalToggleAC, logoutThunk,} from "../../../bll/authReducer";
 import defaultPhoto from '../../assets/img/default-photo.png'
 import {PATH} from "../../routes/types";
 import {useAppDispatch, useAppSelector} from "../../../common/hooks";
-import SidebarNavLinks from "./SidebarNavLinks";
+import SidebarNavLinks from "./navigate/SidebarNavLinks";
 import {SAvatar} from "../../common/Avatar/styled";
 
 const Sidebar = React.memo(() => {

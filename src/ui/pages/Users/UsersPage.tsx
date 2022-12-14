@@ -2,7 +2,7 @@ import React, {useCallback, useEffect, useLayoutEffect, useMemo, useState} from 
 import {SSiteContent} from "../../layout/styled";
 import PagePanel from "../PagePanel";
 import Pagination from "../../common/Pagination/Pagination";
-import {getUsersThunk, searchUsersThunk, setUsersFilter} from "../../../bll/usersReducer";
+import {getUsersThunk, setUsersFilter, TUsersParams} from "../../../bll/usersReducer";
 import {useHistory, useParams} from "react-router-dom";
 import UserList from "./UserList/UserList";
 import {useAppDispatch, useAppSelector} from "../../../common/hooks";
@@ -21,6 +21,7 @@ const UsersPage = React.memo(() => {
     const totalUsersCount = useAppSelector(state => state.users.totalUsersCount)
     const isFetching = useAppSelector(state => state.users.isFetching)
     const filterName = useAppSelector(state => state.users.filter.name)
+    const params: TUsersParams = {term: searchText, page: page || '1', count: pageSize}
 
     let totalPagesCount = useMemo(() => {
         return Math.ceil(totalUsersCount / pageSize)
@@ -31,7 +32,7 @@ const UsersPage = React.memo(() => {
             searchText
                 ? history.push(PATH.users + '/1/' + searchText)
                 : history.push(PATH.users + '/1')
-            dispatch(searchUsersThunk(searchText, page || '1', pageSize))
+            dispatch(getUsersThunk(params))
         }
     }, [dispatch, searchText, page, pageSize])
 
@@ -40,10 +41,7 @@ const UsersPage = React.memo(() => {
     }, [])
 
     useEffect(() => {
-        let currentPage = page ? +page : 1
-        searchText
-            ? dispatch(searchUsersThunk(searchText, page || '', pageSize))
-            : dispatch(getUsersThunk({currentPage: currentPage, pageSize: pageSize}))
+        dispatch(getUsersThunk(params))
     }, [page, pageSize])
 
     return (

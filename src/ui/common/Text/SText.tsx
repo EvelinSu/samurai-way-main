@@ -1,6 +1,5 @@
 import styled, {css} from "styled-components";
 import {Property} from "csstype";
-import {theme} from "../../styles/constants";
 
 interface TSTextProps {
     opacity?: Property.Opacity | number;
@@ -14,6 +13,7 @@ interface TSTextProps {
     whiteSpace?: Property.WhiteSpace;
     isLink?: boolean;
     isEllipsis?: boolean;
+    isDisabled?: boolean;
 }
 
 export const SText = styled.span<TSTextProps>(
@@ -39,9 +39,13 @@ export const SText = styled.span<TSTextProps>(
             overflow: hidden;
             text-overflow: ellipsis;
         `}
+        ${props.isDisabled && css`
+            pointer-events: none;
+            opacity: 0.3;
+        `}
         ${props.isLink && css`
             text-decoration: underline;
-            color: ${theme.colors.button.success};
+            color: ${({theme}) => theme.colors.button.success};
             cursor: pointer;
 
             &:hover {
@@ -49,7 +53,7 @@ export const SText = styled.span<TSTextProps>(
             }
         `}
         a {
-            color: ${theme.colors.button.success};
+            color: ${({theme}) => theme.colors.button.success};
             text-decoration: underline;
             margin: 0 5px;
             cursor: pointer;

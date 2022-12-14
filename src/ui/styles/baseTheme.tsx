@@ -1,4 +1,4 @@
-export const theme = {
+export const baseTheme = {
     colors: {
         primaryDarkAlpha: "rgba(34,39,68,0.84)",
         primaryDark: "#272c4a",
@@ -43,4 +43,6 @@ export const theme = {
         medium: 720,
         small: 540,
     }
-}
+} as const
+
+export type TDefaultTheme = typeof baseTheme

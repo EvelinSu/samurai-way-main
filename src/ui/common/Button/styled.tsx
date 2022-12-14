@@ -1,5 +1,4 @@
 import styled, {keyframes} from "styled-components";
-import {theme} from "../../styles/constants";
 import React, {DetailedHTMLProps} from "react";
 import {Property} from "csstype";
 
@@ -22,7 +21,7 @@ type TSButton = DefaultHTMLButtonType & {
     hasIcon: boolean,
 }
 
-export const SButton = styled.button<Partial<TSButton>>(({disabled, ...props}) => ({
+export const SButton = styled.button<Partial<TSButton>>(({disabled, theme, ...props}) => ({
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
@@ -59,7 +58,7 @@ export const SButton = styled.button<Partial<TSButton>>(({disabled, ...props}) =
 export const SLoadingButton = styled(SButton)`
     pointer-events: none;
     animation: 1s ${buttonLoad} ease-out infinite;
-    background-color: ${theme.colors.button.cancel};
+    background-color: ${({theme}) => theme.colors.button.cancel};
     opacity: 0.8;
     transition: 0.2s;
 `
