@@ -3,7 +3,6 @@ import Avatar from "../../common/Avatar/Avatar";
 import userPhoto from "../../assets/img/default-photo.png";
 import {Box} from "../../common/Box/Box";
 import {STitle} from "../../common/Text/STitle";
-import {theme} from "../../styles/constants";
 import EditableText from "../../common/EditableText/EditableText";
 import IconLink from "../../common/IconLink/IconLink";
 import {SText} from "../../common/Text/SText";
@@ -12,14 +11,19 @@ import {authModalToggleAC} from "../../../bll/authReducer";
 import {useAppDispatch, useAppSelector} from "../../../common/hooks";
 import {putStatus} from "../../../bll/profileReducer";
 import {iconsDictionary} from "../../assets/icons/contacts/_iconsDictionary";
+import {useTheme} from "styled-components";
+import {TDefaultTheme} from "../../styles/baseTheme";
+import {FriendsModal} from "./FriendsModal/FriendsModal";
 
 type TProfileInfo = {
     myId: number
 }
 export const ProfileInfo: FC<TProfileInfo> = (props) => {
     const dispatch = useAppDispatch()
+    const theme = useTheme() as TDefaultTheme
 
     const [follow, setIsFollow] = useState(false)
+    const [isFriendsModalOpen, setIsFriendsModalOpen] = useState(false)
 
     const isAuth = useAppSelector(state => state.auth.isAuth)
     const status = useAppSelector(state => state.profile.status)
@@ -89,7 +93,8 @@ export const ProfileInfo: FC<TProfileInfo> = (props) => {
                     />
                 )}
                 <Box>
-                    <Button label={'friends'} onClick={() => alert("in progress")} />
+                    <Button label={'friends'} onClick={() => (setIsFriendsModalOpen(true))} />
+                    {isFriendsModalOpen && <FriendsModal setIsFriendsModalOpen={setIsFriendsModalOpen} />}
                 </Box>
             </Box>
         </Box>

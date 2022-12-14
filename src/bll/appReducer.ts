@@ -27,11 +27,10 @@ const slice = createSlice({
         },
         setIsFetching(state, action: PayloadAction<boolean>) {
             state.isFetching = action.payload;
+            console.log(action.payload)
         },
     },
 });
-
-export type TThemes = "light" | "dark";
 
 type TAppMessage = {
     id: string;

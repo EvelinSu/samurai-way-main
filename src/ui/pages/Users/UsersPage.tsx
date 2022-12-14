@@ -19,7 +19,7 @@ const UsersPage = React.memo(() => {
 
     const pageSize = useAppSelector(state => state.users.pageSize)
     const totalUsersCount = useAppSelector(state => state.users.totalUsersCount)
-    const isFetching = useAppSelector(state => state.users.isFetching)
+    const isFetching = useAppSelector(state => state.app.isFetching)
     const filterName = useAppSelector(state => state.users.filter.name)
     const params: TUsersParams = {term: searchText, page: page || '1', count: pageSize}
 
@@ -54,7 +54,7 @@ const UsersPage = React.memo(() => {
                     textInUrl={name}
                 />
             </PagePanel>
-            {isFetching ? <UserList /> : <LoaderIcon />}
+            {isFetching ? <LoaderIcon /> : <UserList />}
             <Pagination
                 totalPagesCount={totalPagesCount || 1}
                 filterName={filterName}
